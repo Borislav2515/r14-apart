@@ -1,0 +1,80 @@
+.section {
+  position: relative;
+  padding: 160px 48px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.bg {
+  position: absolute; inset: 0;
+  background: center/cover no-repeat;
+}
+.bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(26,25,22,0.62);
+}
+
+.grain {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.3; pointer-events: none;
+}
+
+.content { position: relative; z-index: 2; }
+
+.label {
+  font-size: 10px; letter-spacing: 5px;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6vw, 80px);
+  font-weight: 300; line-height: 1.05;
+  color: var(--white); margin-bottom: 20px;
+}
+.title em { font-style: italic; color: var(--sand-light); }
+
+.sub {
+  font-size: 14px; color: rgba(245,240,232,0.55);
+  margin-bottom: 40px; line-height: 1.7;
+}
+
+.widgetWrap {
+  max-width: 760px;
+  margin: 0 auto 18px;
+}
+
+.btnSolid, .btnOutline {
+  display: inline-block;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 3px; text-transform: uppercase;
+  padding: 16px 40px; border-radius: 1px; margin: 8px;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.25s var(--ease-bounce), box-shadow 0.3s;
+}
+.btnSolid {
+  background: var(--gold); color: var(--charcoal);
+  border: 1px solid var(--gold);
+}
+.btnSolid:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(184,150,90,0.35);
+}
+.btnOutline {
+  background: transparent; color: var(--cream);
+  border: 1px solid rgba(184,150,90,0.55);
+}
+.btnOutline:hover {
+  background: rgba(184,150,90,0.1);
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .section { padding: 100px 24px; }
+  .btnSolid, .btnOutline { display: block; margin: 8px auto; max-width: 260px; }
+}

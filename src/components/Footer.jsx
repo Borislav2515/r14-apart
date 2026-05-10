@@ -1,0 +1,57 @@
+import { Link } from 'react-router-dom';
+import { APARTMENT } from '../data/apartment';
+import styles from './Footer.module.css';
+
+export default function Footer() {
+  const handleHash = (e, id) => {
+    e.preventDefault();
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <footer className={styles.footer}>
+      <div className={styles.grid}>
+        <div className={styles.brand}>
+          <Link to="/" className={styles.logo}>R14<span>·</span>APART</Link>
+          <p>Двухуровневые апартаменты посуточно в историческом центре Владикавказа. Умный дом, бесконтактное заселение 24/7 и онлайн-бронирование.</p>
+        </div>
+
+        <div className={styles.col}>
+          <h4>Апартаменты</h4>
+          <ul>
+            <li><a href="#about" onClick={e => handleHash(e, 'about')}>Об апартаментах</a></li>
+            <li><a href="#features" onClick={e => handleHash(e, 'features')}>Удобства</a></li>
+            <li><a href="#gallery" onClick={e => handleHash(e, 'gallery')}>Фотогалерея</a></li>
+            <li><a href="#reviews" onClick={e => handleHash(e, 'reviews')}>Отзывы</a></li>
+          </ul>
+        </div>
+
+        <div className={styles.col}>
+          <h4>Информация</h4>
+          <ul>
+            <li><a href="#faq" onClick={e => handleHash(e, 'faq')}>Вопросы и ответы</a></li>
+            <li><a href="#features" onClick={e => handleHash(e, 'features')}>Условия аренды</a></li>
+            <li><a href="#">Правила дома</a></li>
+            <li><a href="#">Конфиденциальность</a></li>
+          </ul>
+        </div>
+
+        <div className={styles.col}>
+          <h4>Контакты</h4>
+          <ul>
+            <li><a href={`tel:${APARTMENT.phone.replace(/\s/g, '')}`}>{APARTMENT.phone}</a></li>
+            <li><a href={`mailto:${APARTMENT.email}`}>{APARTMENT.email}</a></li>
+            <li><span className={styles.address}>{APARTMENT.address}</span></li>
+            <li><a href="#">Telegram</a></li>
+            <li><a href="#">WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div className={styles.bottom}>
+        <p>© {new Date().getFullYear()} R14-APART. Все права защищены.</p>
+        <p>Апартаменты посуточно во Владикавказе, ул. Революции 14</p>
+      </div>
+    </footer>
+  );
+}
