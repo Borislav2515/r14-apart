@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { APARTMENT } from '../data/apartment';
-import BookingWidget from './BookingWidget';
 import styles from './Cta.module.css';
 
 export default function Cta() {
@@ -37,10 +36,11 @@ export default function Cta() {
         <motion.div
           initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.3 }}
+          className={styles.actions}
         >
-          <div className={styles.widgetWrap}>
-            <BookingWidget containerId="hr-widget-cta" tag="site" />
-          </div>
+          <a href="#hero" className={styles.btnSolid}>
+            Открыть форму бронирования
+          </a>
           <a href={`tel:${APARTMENT.phone.replace(/\s/g, '')}`} className={styles.btnOutline}>
             Позвонить нам
           </a>

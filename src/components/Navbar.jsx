@@ -72,7 +72,7 @@ export default function Navbar() {
             </li>
           ))}
           <li>
-            <a href="tel:+79991234567" className={styles.link}>+7 999 123-45-67</a>
+            <a href="tel:+79060330014" className={styles.link}>+7 (906) 033-00-14</a>
           </li>
         </ul>
 

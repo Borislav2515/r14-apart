@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { APARTMENT } from '../data/apartment';
-import BookingWidget from './BookingWidget';
 import styles from './Hero.module.css';
+
+const SCRIPT_SRC = 'https://homereserve.ru/widget.js';
 
 const fade = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -37,6 +38,52 @@ export default function Hero() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // HomeReserve widget init in hero (#hr-widget)
+  useEffect(() => {
+    let stopped = false;
+    let retries = 0;
+
+    const initWidget = () => {
+      const container = document.getElementById('hr-widget');
+      if (stopped || !container || !window.homereserve?.initWidgetSearch) return false;
+      window.homereserve.initWidgetSearch({ token: 'lJ9CQtdlv9', tag: 'site' });
+      return true;
+    };
+
+    const tryInit = () => {
+      if (stopped) return;
+      if (initWidget()) return;
+      retries += 1;
+      if (retries < 20) setTimeout(tryInit, 250);
+    };
+
+    if (window.homereserve?.initWidgetSearch) {
+      tryInit();
+      return () => {
+        stopped = true;
+      };
+    }
+
+    let script = document.querySelector(`script[src="${SCRIPT_SRC}"]`);
+    const onLoad = () => tryInit();
+
+    if (!script) {
+      script = document.createElement('script');
+      script.type = 'module';
+      script.src = SCRIPT_SRC;
+      script.addEventListener('load', onLoad, { once: true });
+      document.head.appendChild(script);
+    } else {
+      script.addEventListener('load', onLoad, { once: true });
+      setTimeout(tryInit, 250);
+    }
+
+    return () => {
+      stopped = true;
+      script?.removeEventListener('load', onLoad);
+    };
+  }, []);
+
   return (
     <section id="hero" className={styles.hero} aria-label="Главный экран">
       <div
@@ -64,7 +111,7 @@ export default function Hero() {
         </motion.p>
 
         <motion.div className={styles.widgetWrap} {...fade(1.0)}>
-          <BookingWidget containerId="hr-widget-hero" tag="site" />
+          <div id="hr-widget" aria-label="Форма бронирования" />
         </motion.div>
       </div>
 

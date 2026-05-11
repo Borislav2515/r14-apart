@@ -1,3 +1,9 @@
+import hero from '../assets/imgs/apart/hero.jpg'
+import living from '../assets/imgs/apart/living.png'
+import bedroom from '../assets/imgs/apart/bedroom.jpg'
+import kitchen from '../assets/imgs/apart/kitchen.png'
+
+
 export const APARTMENT = {
   name: 'R14-APART',
   tagline: 'Двухуровневые апартаменты посуточно в историческом центре Владикавказа',
@@ -5,8 +11,8 @@ export const APARTMENT = {
   guests: 4,
   rating: 5.0,
   reviewCount: 247,
-  phone: '+7 999 123-45-67',
-  email: 'hello@r14-apart.com',
+  phone: '+7 906 033-00-14',
+  email: 'r14.group@gmail.com',
   address: 'Владикавказ, ул. Революции, 14',
   city: 'Владикавказ',
   region: 'Республика Северная Осетия — Алания',
@@ -14,10 +20,10 @@ export const APARTMENT = {
   description:
     'R14-APART — двухуровневые апартаменты в отдельностоящем здании с отдельным входом с улицы. Исторический центр Владикавказа, тихая улица, премиальный ремонт, умный дом и бесконтактное заселение 24/7 по паролю.',
   images: {
-    hero: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1800&q=85',
-    living: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&q=80',
-    bedroom: 'https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=75',
-    kitchen: 'https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=800&q=75',
+    hero: hero,
+    living,
+    bedroom,
+    kitchen,
     bathroom: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&q=75',
     detail1: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=700&q=75',
     detail2: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=75',

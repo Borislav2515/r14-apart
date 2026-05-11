@@ -42,8 +42,8 @@ export default function Footer() {
             <li><a href={`tel:${APARTMENT.phone.replace(/\s/g, '')}`}>{APARTMENT.phone}</a></li>
             <li><a href={`mailto:${APARTMENT.email}`}>{APARTMENT.email}</a></li>
             <li><span className={styles.address}>{APARTMENT.address}</span></li>
-            <li><a href="#">Telegram</a></li>
-            <li><a href="#">WhatsApp</a></li>
+            <li><a href="https://t.me/r14_apart">Telegram</a></li>
+            <li><a href="https://wa.me/79060330014">WhatsApp</a></li>
           </ul>
         </div>
       </div>
