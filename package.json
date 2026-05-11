@@ -7,7 +7,10 @@
     "prebuild": "node ./scripts/update-sitemap.mjs",
     "build": "vite build",
     "preview": "vite preview",
-    "go": "bash ./scripts/go.sh"
+    "go": "bash ./scripts/go.sh",
+    "setup:local-ssh": "bash ./scripts/local-ssh-config.sh",
+    "setup:copy-key": "bash ./scripts/copy-ssh-key.sh",
+    "setup:server": "bash ./scripts/run-server-bootstrap.sh"
   },
   "dependencies": {
     "framer-motion": "^11.18.2",
