@@ -42,6 +42,12 @@ server {
     location / {
         try_files $uri $uri/ /index.html;
     }
+
+    location ~* \.(?:js|css|png|jpg|jpeg|gif|webp|svg|ico|woff2?)$ {
+        expires 30d;
+        add_header Cache-Control "public, max-age=2592000, immutable";
+        access_log off;
+    }
 }
 NGINX
   rm -f /etc/nginx/sites-enabled/default
@@ -59,6 +65,12 @@ server {
     index index.html;
     location / {
         try_files $uri $uri/ /index.html;
+    }
+
+    location ~* \.(?:js|css|png|jpg|jpeg|gif|webp|svg|ico|woff2?)$ {
+        expires 30d;
+        add_header Cache-Control "public, max-age=2592000, immutable";
+        access_log off;
     }
 }
 NGINX

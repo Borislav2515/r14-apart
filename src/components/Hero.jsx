@@ -15,12 +15,23 @@ export default function Hero() {
 
   // Parallax on scroll
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+
+    let ticking = false;
     const onScroll = () => {
-      if (!bgRef.current) return;
-      const y = window.scrollY;
-      if (y < window.innerHeight) {
-        bgRef.current.style.transform = `scale(1.1) translateY(${y * 0.28}px)`;
-      }
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        if (!bgRef.current) {
+          ticking = false;
+          return;
+        }
+        const y = window.scrollY;
+        if (y < window.innerHeight) {
+          bgRef.current.style.transform = `scale(1.1) translateY(${y * 0.28}px)`;
+        }
+        ticking = false;
+      });
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);

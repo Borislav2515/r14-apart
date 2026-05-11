@@ -69,6 +69,8 @@ export default function Gallery() {
               src={p.src}
               alt={p.alt}
               loading="lazy"
+              decoding="async"
+              fetchPriority="low"
               className={styles.img}
             />
           </button>
@@ -97,6 +99,7 @@ export default function Gallery() {
             src={PANELS[activeIndex].src}
             alt={PANELS[activeIndex].alt}
             className={styles.lightboxImg}
+            decoding="async"
             onClick={(e) => e.stopPropagation()}
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
