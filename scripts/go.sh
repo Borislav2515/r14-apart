@@ -77,7 +77,7 @@ echo ">> Pushing branch '$DEPLOY_BRANCH' to GitHub..."
 git push origin "$DEPLOY_BRANCH"
 
 echo ">> Deploying to ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH} ..."
-ssh -p "$DEPLOY_PORT" "${DEPLOY_USER}@${DEPLOY_HOST}" "mkdir -p \"$DEPLOY_PATH\""
+ssh -p "$DEPLOY_PORT" "${DEPLOY_USER}@${DEPLOY_HOST}" "mkdir -p '$DEPLOY_PATH'"
 rsync -az --delete -e "ssh -p $DEPLOY_PORT" dist/ "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/"
 
 echo ">> Deploy completed."
