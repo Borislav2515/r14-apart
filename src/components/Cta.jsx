@@ -39,7 +39,7 @@ export default function Cta() {
           viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.3 }}
         >
           <div className={styles.widgetWrap}>
-            <BookingWidget containerId="hr-widget-cta" tag="site-cta" />
+            <BookingWidget containerId="hr-widget-cta" tag="site" />
           </div>
           <a href={`tel:${APARTMENT.phone.replace(/\s/g, '')}`} className={styles.btnOutline}>
             Позвонить нам

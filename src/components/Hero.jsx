@@ -64,7 +64,7 @@ export default function Hero() {
         </motion.p>
 
         <motion.div className={styles.widgetWrap} {...fade(1.0)}>
-          <BookingWidget containerId="hr-widget-hero" tag="site-hero" />
+          <BookingWidget containerId="hr-widget-hero" tag="site" />
         </motion.div>
       </div>
 
