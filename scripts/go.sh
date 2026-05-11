@@ -38,6 +38,30 @@ if ! command -v rsync >/dev/null 2>&1; then
   exit 1
 fi
 
+if ! command -v ssh >/dev/null 2>&1; then
+  echo "Error: ssh is required but not installed."
+  exit 1
+fi
+
+if ! command -v nc >/dev/null 2>&1; then
+  echo "Error: nc (netcat) is required for SSH precheck."
+  exit 1
+fi
+
+echo ">> Deploy target: ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH} (port ${DEPLOY_PORT})"
+echo ">> Checking SSH connectivity..."
+if ! nc -z -w 5 "$DEPLOY_HOST" "$DEPLOY_PORT"; then
+  echo "Error: cannot reach ${DEPLOY_HOST}:${DEPLOY_PORT} (timeout/refused)."
+  echo "Check DEPLOY_HOST/DEPLOY_PORT, server firewall/security group, and VPN/network access."
+  exit 1
+fi
+
+if ! ssh -o BatchMode=yes -o ConnectTimeout=7 -p "$DEPLOY_PORT" "${DEPLOY_USER}@${DEPLOY_HOST}" "echo connected" >/dev/null 2>&1; then
+  echo "Error: TCP port is reachable, but SSH login failed for ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PORT}."
+  echo "Check SSH key auth, user name, and authorized_keys on the server."
+  exit 1
+fi
+
 echo ">> Building project..."
 npm run build
 
