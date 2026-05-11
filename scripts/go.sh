@@ -14,7 +14,7 @@ set -euo pipefail
 
 DEPLOY_HOST="${DEPLOY_HOST:-2.26.67.126}"
 DEPLOY_USER="${DEPLOY_USER:-root}"
-DEPLOY_PATH="${DEPLOY_PATH:-/var/www/r14-apart}"
+DEPLOY_PATH="/var/www/r14-apart"
 DEPLOY_PORT="${DEPLOY_PORT:-22}"
 
 if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
