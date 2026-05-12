@@ -1,7 +1,8 @@
 import hero from '../assets/imgs/apart/hero.jpg'
-import living from '../assets/imgs/apart/living.png'
+import living from '../assets/imgs/apart/living.jpg'
 import bedroom from '../assets/imgs/apart/bedroom.jpg'
-import kitchen from '../assets/imgs/apart/kitchen.png'
+import kitchen from '../assets/imgs/apart/kitchen.jpg'
+import bathroom from '../assets/imgs/apart/bathroom.jpg'
 
 
 export const APARTMENT = {
@@ -24,7 +25,7 @@ export const APARTMENT = {
     living,
     bedroom,
     kitchen,
-    bathroom: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&q=75',
+    bathroom,
     detail1: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=700&q=75',
     detail2: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=75',
     cta: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&q=80',
