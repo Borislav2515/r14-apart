@@ -31,19 +31,22 @@ export default function Footer() {
           <ul>
             <li><a href="#faq" onClick={e => handleHash(e, 'faq')}>Вопросы и ответы</a></li>
             <li><a href="#features" onClick={e => handleHash(e, 'features')}>Условия аренды</a></li>
-            <li><a href="#">Правила дома</a></li>
-            <li><a href="#">Конфиденциальность</a></li>
+            <li><Link to="/rules">Правила дома</Link></li>
+            <li><Link to="/privacy">Конфиденциальность</Link></li>
+            <li><Link to="/consent">Согласие на обработку</Link></li>
+            <li><Link to="/cookies">Политика cookie</Link></li>
+            <li><Link to="/agreement">Пользовательское соглашение</Link></li>
           </ul>
         </div>
 
         <div className={styles.col}>
           <h4>Контакты</h4>
           <ul>
-            <li><a href={`tel:${APARTMENT.phone.replace(/\s/g, '')}`}>{APARTMENT.phone}</a></li>
+            <li><a href={`tel:${APARTMENT.phone}`}>{APARTMENT.phone}</a></li>
             <li><a href={`mailto:${APARTMENT.email}`}>{APARTMENT.email}</a></li>
             <li><span className={styles.address}>{APARTMENT.address}</span></li>
             <li><a href="https://t.me/r14_apart">Telegram</a></li>
-            <li><a href="https://wa.me/79060330014">WhatsApp</a></li>
+            <li><a href="https://wa.me/89060330014">WhatsApp</a></li>
           </ul>
         </div>
       </div>

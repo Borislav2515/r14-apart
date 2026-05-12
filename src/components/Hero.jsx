@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { APARTMENT } from '../data/apartment';
+import ResponsivePicture from './ResponsivePicture';
 import styles from './Hero.module.css';
 
 const SCRIPT_SRC = 'https://homereserve.ru/widget.js';
@@ -89,10 +90,17 @@ export default function Hero() {
       <div
         ref={bgRef}
         className={styles.bg}
-        role="img"
-        aria-label="Интерьер апартаментов R14-APART"
-        style={{ backgroundImage: `url(${APARTMENT.images.hero.avif})` }}
-      />
+        aria-hidden="true"
+      >
+        <ResponsivePicture
+          image={APARTMENT.images.hero}
+          alt=""
+          className={styles.bgImg}
+          sizes="100vw"
+          loading="eager"
+          fetchPriority="high"
+        />
+      </div>
       <div className={styles.grain} aria-hidden="true" />
 
       <div className={styles.content}>

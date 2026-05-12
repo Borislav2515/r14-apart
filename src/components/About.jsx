@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import { useScrollReveal } from '../hooks/useScrollReveal';
 import { APARTMENT } from '../data/apartment';
+import ResponsivePicture from './ResponsivePicture';
 import styles from './About.module.css';
 
 const reveal = (delay = 0) => ({
@@ -30,50 +30,24 @@ export default function About() {
       <div className={styles.showcase} itemScope itemType="https://schema.org/Apartment">
         {/* Main image */}
         <motion.div className={styles.mainWrap} {...reveal(0)}>
-        <picture itemProp="image">
+          <ResponsivePicture
+            image={APARTMENT.images.living}
+            alt="R14-APART — дизайнерские апартаменты посуточно, гостиная"
+            className={styles.mainImg}
+            sizes="(max-width: 768px) 100vw, 1400px"
+            loading="eager"
+            fetchPriority="high"
+            itemProp="image"
+          />
+          <div className={styles.badges}>
+            <span className={styles.badge}>Апартаменты</span>
+            <span className={styles.badge}>{APARTMENT.area} м²</span>
+            <span className={styles.badge}>До {APARTMENT.guests} гостей</span>
+          </div>
+        </motion.div>
 
-        <source
-
-          srcSet={APARTMENT.images.living.avif}
-
-          type="image/avif"
-
-        />
-
-        <source
-
-          srcSet={APARTMENT.images.living.webp}
-
-          type="image/webp"
-
-        />
-
-        <img
-
-          src={APARTMENT.images.living.jpg}
-
-          alt="R14-APART — дизайнерские апартаменты посуточно, гостиная"
-
-          className={styles.mainImg}
-
-          loading="eager"
-
-          decoding="async"
-
-          fetchPriority="high"
-
-        />
-
-        </picture>
-                  <div className={styles.badges}>
-                    <span className={styles.badge}>Апартаменты</span>
-                    <span className={styles.badge}>{APARTMENT.area} м²</span>
-                    <span className={styles.badge}>До {APARTMENT.guests} гостей</span>
-                  </div>
-                </motion.div>
-
-                {/* Sub images grid */}
-                <div className={styles.subGrid}>
+        {/* Sub images grid */}
+        <div className={styles.subGrid}>
           {[
             {
               image: APARTMENT.images.bedroom,
@@ -94,18 +68,13 @@ export default function About() {
               whileHover={{ scale: 1.03, filter: 'saturate(1.15)' }}
               transition={{ duration: 0.5 }}
             >
-              <picture>
-                <source srcSet={img.image.avif} type="image/avif" />
-                <source srcSet={img.image.webp} type="image/webp" />
-
-                <img
-                  src={img.image.jpg}
-                  alt={img.alt}
-                  className={styles.subImg}
-                  loading="lazy"
-                  style={{ filter: 'saturate(0.88)' }}
-                />
-              </picture>
+              <ResponsivePicture
+                image={img.image}
+                alt={img.alt}
+                className={styles.subImg}
+                sizes="(max-width: 768px) 50vw, 33vw"
+                style={{ filter: 'saturate(0.88)' }}
+              />
             </motion.div>
           ))}
         </div>

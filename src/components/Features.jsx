@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { APARTMENT } from '../data/apartment';
+import ResponsivePicture from './ResponsivePicture';
 import styles from './Features.module.css';
 
 const reveal = (delay = 0, x = 0) => ({
@@ -14,17 +15,17 @@ export default function Features() {
     <section id="features" className={styles.section} aria-labelledby="feat-heading">
       <div className={styles.layout}>
         <motion.div className={styles.imgWrap} {...reveal(0, -40)}>
-          <img
-            src={APARTMENT.images.detail1}
+          <ResponsivePicture
+            image={APARTMENT.images.living}
             alt="Уютная гостиная апартаментов R14-APART"
             className={styles.imgMain}
-            loading="lazy"
+            sizes="(max-width: 960px) 100vw, 45vw"
           />
-          <img
-            src={APARTMENT.images.detail2}
+          <ResponsivePicture
+            image={APARTMENT.images.kitchen}
             alt="Детали интерьера R14-APART"
             className={styles.imgAccent}
-            loading="lazy"
+            sizes="(max-width: 960px) 45vw, 280px"
           />
         </motion.div>
 

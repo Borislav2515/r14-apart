@@ -44,6 +44,7 @@ body.customCursorActive {
 a { text-decoration: none; color: inherit; }
 button { cursor: pointer; font-family: var(--font-body); }
 img { display: block; max-width: 100%; }
+picture { display: block; }
 
 .skipLink {
   position: fixed;

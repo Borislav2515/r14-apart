@@ -1,23 +1,28 @@
-import heroJpg from '../assets/imgs/apart/hero.jpg'
-import heroAvif from '../assets/imgs/apart/hero.avif'
-import heroWebp from '../assets/imgs/apart/hero.webp'
+const responsiveAssets = import.meta.glob(
+  '../assets/imgs/apart/responsive/*.{avif,webp,jpg}',
+  { eager: true, import: 'default' }
+);
 
-import livingJpg from '../assets/imgs/apart/living.jpg'
-import livingAvif from '../assets/imgs/apart/living.avif'
-import livingWebp from '../assets/imgs/apart/living.webp'
+const widths = [640, 960, 1400, 1800];
 
-import bedroom from '../assets/imgs/apart/bedroom.jpg'
-import bedroomAvif from '../assets/imgs/apart/bedroom.avif'
-import bedroomWebp from '../assets/imgs/apart/bedroom.webp'
+const sourcesFor = (name) => ({
+  avif: widths
+    .map((width) => `${responsiveAssets[`../assets/imgs/apart/responsive/${name}-${width}.avif`]} ${width}w`)
+    .join(', '),
+  webp: widths
+    .map((width) => `${responsiveAssets[`../assets/imgs/apart/responsive/${name}-${width}.webp`]} ${width}w`)
+    .join(', '),
+  jpg: widths
+    .map((width) => `${responsiveAssets[`../assets/imgs/apart/responsive/${name}-${width}.jpg`]} ${width}w`)
+    .join(', '),
+});
 
-import kitchen from '../assets/imgs/apart/kitchen.jpg'
-import kitchenAvif from '../assets/imgs/apart/kitchen.avif'
-import kitchenWebp from '../assets/imgs/apart/kitchen.webp'
-
-import bathroom from '../assets/imgs/apart/bathroom.jpg'
-import bathroomAvif from '../assets/imgs/apart/bathroom.avif'
-import bathroomWebp from '../assets/imgs/apart/bathroom.webp'
-
+const imageFor = (name) => ({
+  jpg: responsiveAssets[`../assets/imgs/apart/responsive/${name}-1400.jpg`],
+  avif: responsiveAssets[`../assets/imgs/apart/responsive/${name}-1400.avif`],
+  webp: responsiveAssets[`../assets/imgs/apart/responsive/${name}-1400.webp`],
+  sources: sourcesFor(name),
+});
 
 export const APARTMENT = {
   name: 'R14-APART',
@@ -26,7 +31,7 @@ export const APARTMENT = {
   guests: 4,
   rating: 5.0,
   reviewCount: 247,
-  phone: '+7 906 033-00-14',
+  phone: '89060330014',
   email: 'r14.group@gmail.com',
   address: 'Владикавказ, ул. Революции, 14',
   city: 'Владикавказ',
@@ -35,34 +40,11 @@ export const APARTMENT = {
   description:
     'R14-APART — двухуровневые апартаменты в отдельностоящем здании с отдельным входом с улицы. Исторический центр Владикавказа, тихая улица, премиальный ремонт, умный дом и бесконтактное заселение 24/7 по паролю.',
   images: {
-    hero: {
-      jpg: heroJpg,
-      avif: heroAvif,
-      webp: heroWebp,
-    },
-    living: {
-      jpg: livingJpg,
-      avif: livingAvif,
-      webp: livingWebp,
-    },
-    bedroom: {
-      jpg: bedroom,
-      avif: bedroomAvif,
-      webp: bedroomWebp,
-    },
-    kitchen: {
-      jpg: kitchen,
-      avif: kitchenAvif,
-      webp: kitchenWebp,
-    },
-    bathroom: {
-      jpg: bathroom,
-      avif: bathroomAvif,
-      webp: bathroomWebp,
-    },
-    detail1: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=700&q=75',
-    detail2: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=75',
-    cta: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&q=80',
+    hero: imageFor('hero'),
+    living: imageFor('living'),
+    bedroom: imageFor('bedroom'),
+    kitchen: imageFor('kitchen'),
+    bathroom: imageFor('bathroom'),
   },
   amenities: [
     { icon: '📶', label: 'WiFi 200 Мбит/с' },

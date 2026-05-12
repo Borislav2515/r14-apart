@@ -1,15 +1,19 @@
 import { motion } from 'framer-motion';
 import { APARTMENT } from '../data/apartment';
+import ResponsivePicture from './ResponsivePicture';
 import styles from './Cta.module.css';
 
 export default function Cta() {
   return (
     <section id="cta" className={styles.section} aria-label="Забронировать">
-      <div
-        className={styles.bg}
-        style={{ backgroundImage: `url(${APARTMENT.images.cta})` }}
-        aria-hidden="true"
-      />
+      <div className={styles.bg} aria-hidden="true">
+        <ResponsivePicture
+          image={APARTMENT.images.hero}
+          alt=""
+          className={styles.bgImg}
+          sizes="100vw"
+        />
+      </div>
       <div className={styles.grain} aria-hidden="true" />
       <div className={styles.content}>
         <motion.p

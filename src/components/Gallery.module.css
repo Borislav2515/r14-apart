@@ -1,5 +1,6 @@
 .gallery {
-  height: 80vh; min-height: 400px;
+  height: 100svh;
+  min-height: 560px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   overflow: hidden;
@@ -22,11 +23,27 @@
 }
 .panel:hover::after { background: rgba(26,25,22,0.08); }
 
+.panel picture {
+  width: 100%;
+  height: 100%;
+}
+
 .img {
-  width: 100%; height: 120%;
+  width: 100%; height: 100%;
   object-fit: cover;
   display: block;
-  will-change: transform;
+}
+
+.caption {
+  position: absolute;
+  left: 20px;
+  bottom: 18px;
+  z-index: 2;
+  color: var(--white);
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.35);
 }
 
 .lightbox {
@@ -39,6 +56,16 @@
   align-items: center;
   gap: 8px;
   padding: 20px;
+}
+
+.lightboxFrame {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.lightboxFrame picture {
+  width: 100%;
 }
 
 .lightboxImg {
@@ -58,6 +85,31 @@
   font-size: 20px;
 }
 
+.lightboxClose,
+.counter {
+  position: fixed;
+  z-index: 2;
+  color: var(--cream);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.lightboxClose {
+  top: 18px;
+  right: 20px;
+  border: 1px solid rgba(184, 150, 90, 0.5);
+  background: rgba(46, 44, 40, 0.8);
+  padding: 11px 14px;
+}
+
+.counter {
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  color: rgba(245,240,232,0.72);
+}
+
 @media (max-width: 768px) {
   .gallery { grid-template-columns: 1fr; height: auto; }
   .panel { height: 300px; }
@@ -72,4 +124,5 @@
   }
   .lightboxBtn:first-child { left: 16px; }
   .lightboxBtn:last-child { right: 16px; }
+  .counter { bottom: 28px; }
 }

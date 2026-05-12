@@ -25,7 +25,7 @@ function DeferredSection({ minHeight = 320, children }) {
           observer.disconnect();
         }
       },
-      { rootMargin: '500px 0px' }
+      { rootMargin: '320px 0px' }
     );
 
     observer.observe(target);
@@ -33,7 +33,7 @@ function DeferredSection({ minHeight = 320, children }) {
   }, []);
 
   return (
-    <section ref={holderRef} style={{ minHeight }}>
+    <section ref={holderRef} style={shouldRender ? undefined : { minHeight }}>
       {shouldRender ? <Suspense fallback={null}>{children}</Suspense> : null}
     </section>
   );

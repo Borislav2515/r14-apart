@@ -1,0 +1,144 @@
+.banner {
+  position: fixed;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  z-index: 2200;
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 18px;
+  border: 1px solid rgba(184,150,90,0.28);
+  background: rgba(17,16,13,0.94);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 48px rgba(0,0,0,0.28);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.banner p {
+  color: rgba(245,240,232,0.72);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.banner a {
+  color: var(--gold-light);
+}
+
+.banner button,
+.modal button {
+  border: 1px solid var(--gold);
+  background: var(--gold);
+  color: var(--charcoal);
+  min-height: 44px;
+  padding: 0 18px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.secondary {
+  background: transparent !important;
+  color: var(--cream) !important;
+  border-color: rgba(184,150,90,0.45) !important;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2300;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(17,16,13,0.72);
+}
+
+.modal {
+  width: min(560px, 100%);
+  border: 1px solid rgba(184,150,90,0.28);
+  background: #171611;
+  padding: 24px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.38);
+}
+
+.modal h2 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 300;
+  color: var(--cream);
+  margin-bottom: 12px;
+}
+
+.modalText {
+  color: rgba(245,240,232,0.68);
+  font-size: 13px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.options {
+  display: grid;
+  gap: 10px;
+}
+
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid rgba(184,150,90,0.16);
+  padding: 14px;
+}
+
+.option input {
+  margin-top: 3px;
+  accent-color: var(--gold);
+}
+
+.option span {
+  display: grid;
+  gap: 4px;
+}
+
+.option strong {
+  color: var(--sand-light);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.option small {
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+@media (max-width: 640px) {
+  .banner {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .actions,
+  .modalActions {
+    flex-direction: column;
+  }
+}

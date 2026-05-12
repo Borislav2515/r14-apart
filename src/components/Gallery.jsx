@@ -1,51 +1,29 @@
 import { useEffect, useRef, useState } from 'react';
 import { APARTMENT } from '../data/apartment';
+import ResponsivePicture from './ResponsivePicture';
 import styles from './Gallery.module.css';
 
 const PANELS = [
   {
     image: APARTMENT.images.kitchen,
+    label: 'Кухня',
     alt: 'Кухня R14-APART — полностью оборудованная кухня',
-    speed: 0.12,
   },
   {
     image: APARTMENT.images.bedroom,
+    label: 'Спальня',
     alt: 'Спальня R14-APART — комфортная кровать',
-    speed: 0.18,
   },
   {
     image: APARTMENT.images.bathroom,
+    label: 'Ванная',
     alt: 'Ванная R14-APART — современная ванная',
-    speed: 0.12,
   },
 ];
 
 export default function Gallery() {
-  const refs = useRef([]);
-  const sectionRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(null);
   const touchStartX = useRef(null);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const section = sectionRef.current;
-      if (!section) return;
-      const rect = section.getBoundingClientRect();
-      if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-      let progress =
-        (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-
-      progress = Math.min(1, Math.max(0, progress));
-      refs.current.forEach((el, i) => {
-        if (!el) return;
-        const dir = i === 1 ? -1 : 1;
-        el.style.transform = `translateY(${dir * progress * PANELS[i].speed * 120 - 10}%)`;
-      });
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   useEffect(() => {
     if (activeIndex === null) return undefined;
@@ -81,35 +59,22 @@ export default function Gallery() {
 
   return (
     <>
-      <div ref={sectionRef} id="gallery" className={styles.gallery} role="region" aria-label="Галерея интерьеров">
+      <div id="gallery" className={styles.gallery} role="region" aria-label="Галерея интерьеров">
         {PANELS.map((p, i) => (
           <button
-          ref={el => (refs.current[i] = el)}
           key={p.alt}
           className={styles.panel}
           onClick={() => setActiveIndex(i)}
           aria-label={`Открыть фото: ${p.alt}`}
           >
-            <picture>
-              <source
-                srcSet={p.image.avif}
-                type="image/avif"
-              />
-
-              <source
-                srcSet={p.image.webp}
-                type="image/webp"
-              />
-
-            <img
-              src={p.image.jpg}
+            <ResponsivePicture
+              image={p.image}
               alt={p.alt}
-              loading="lazy"
-              decoding="async"
-              fetchPriority="low"
               className={styles.img}
+              sizes="(max-width: 768px) 100vw, 33vw"
+              fetchPriority="low"
             />
-            </picture>
+            <span className={styles.caption}>{p.label}</span>
           </button>
         ))}
       </div>
@@ -136,28 +101,29 @@ export default function Gallery() {
           >
             ←
           </button>
-          <picture>
-            <source
-              srcSet={PANELS[activeIndex].image.avif}
-              type="image/avif"
-            />
-
-            <source
-              srcSet={PANELS[activeIndex].image.webp}
-              type="image/webp"
-            />
-
-            <img
-              src={PANELS[activeIndex].image.jpg}
+          <div className={styles.lightboxFrame}>
+            <button
+              className={styles.lightboxClose}
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveIndex(null);
+              }}
+              aria-label="Закрыть просмотр"
+            >
+              Закрыть
+            </button>
+            <ResponsivePicture
+              image={PANELS[activeIndex].image}
               alt={PANELS[activeIndex].alt}
               className={styles.lightboxImg}
-              decoding="async"
+              sizes="100vw"
               loading="eager"
               onClick={(e) => e.stopPropagation()}
               onTouchStart={onTouchStart}
               onTouchEnd={onTouchEnd}
             />
-          </picture>
+            <span className={styles.counter}>{activeIndex + 1} / {PANELS.length}</span>
+          </div>
           <button
             className={styles.lightboxBtn}
             onClick={(e) => {

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { APARTMENT } from '../data/apartment';
 import styles from './Navbar.module.css';
 
 const LINKS = [
@@ -72,7 +73,7 @@ export default function Navbar() {
             </li>
           ))}
           <li>
-            <a href="tel:+79060330014" className={styles.link}>+7 (906) 033-00-14</a>
+            <a href={`tel:${APARTMENT.phone}`} className={styles.link}>{APARTMENT.phone}</a>
           </li>
         </ul>
 
@@ -123,13 +124,13 @@ export default function Navbar() {
               </motion.a>
             ))}
             <motion.a
-              href="tel:+79991234567"
+              href={`tel:${APARTMENT.phone}`}
               className={styles.mobileLink}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 + LINKS.length * 0.08 }}
             >
-              Позвонить
+              {APARTMENT.phone}
             </motion.a>
             <motion.p
               className={styles.mobileSub}
