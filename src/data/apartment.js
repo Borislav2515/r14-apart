@@ -1,8 +1,22 @@
-import hero from '../assets/imgs/apart/hero.jpg'
-import living from '../assets/imgs/apart/living.jpg'
+import heroJpg from '../assets/imgs/apart/hero.jpg'
+import heroAvif from '../assets/imgs/apart/hero.avif'
+import heroWebp from '../assets/imgs/apart/hero.webp'
+
+import livingJpg from '../assets/imgs/apart/living.jpg'
+import livingAvif from '../assets/imgs/apart/living.avif'
+import livingWebp from '../assets/imgs/apart/living.webp'
+
 import bedroom from '../assets/imgs/apart/bedroom.jpg'
+import bedroomAvif from '../assets/imgs/apart/bedroom.avif'
+import bedroomWebp from '../assets/imgs/apart/bedroom.webp'
+
 import kitchen from '../assets/imgs/apart/kitchen.jpg'
+import kitchenAvif from '../assets/imgs/apart/kitchen.avif'
+import kitchenWebp from '../assets/imgs/apart/kitchen.webp'
+
 import bathroom from '../assets/imgs/apart/bathroom.jpg'
+import bathroomAvif from '../assets/imgs/apart/bathroom.avif'
+import bathroomWebp from '../assets/imgs/apart/bathroom.webp'
 
 
 export const APARTMENT = {
@@ -21,11 +35,31 @@ export const APARTMENT = {
   description:
     'R14-APART — двухуровневые апартаменты в отдельностоящем здании с отдельным входом с улицы. Исторический центр Владикавказа, тихая улица, премиальный ремонт, умный дом и бесконтактное заселение 24/7 по паролю.',
   images: {
-    hero: hero,
-    living,
-    bedroom,
-    kitchen,
-    bathroom,
+    hero: {
+      jpg: heroJpg,
+      avif: heroAvif,
+      webp: heroWebp,
+    },
+    living: {
+      jpg: livingJpg,
+      avif: livingAvif,
+      webp: livingWebp,
+    },
+    bedroom: {
+      jpg: bedroom,
+      avif: bedroomAvif,
+      webp: bedroomWebp,
+    },
+    kitchen: {
+      jpg: kitchen,
+      avif: kitchenAvif,
+      webp: kitchenWebp,
+    },
+    bathroom: {
+      jpg: bathroom,
+      avif: bathroomAvif,
+      webp: bathroomWebp,
+    },
     detail1: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=700&q=75',
     detail2: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=75',
     cta: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&q=80',

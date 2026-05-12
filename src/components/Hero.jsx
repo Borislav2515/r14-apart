@@ -91,7 +91,7 @@ export default function Hero() {
         className={styles.bg}
         role="img"
         aria-label="Интерьер апартаментов R14-APART"
-        style={{ backgroundImage: `url(${APARTMENT.images.hero})` }}
+        style={{ backgroundImage: `url(${APARTMENT.images.hero.avif})` }}
       />
       <div className={styles.grain} aria-hidden="true" />
 

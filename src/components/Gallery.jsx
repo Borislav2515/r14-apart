@@ -3,16 +3,28 @@ import { APARTMENT } from '../data/apartment';
 import styles from './Gallery.module.css';
 
 const PANELS = [
-  { src: APARTMENT.images.kitchen, alt: 'Кухня R14-APART — полностью оборудованная кухня', speed: 0.12 },
-  { src: APARTMENT.images.bedroom, alt: 'Спальня R14-APART — комфортная кровать', speed: 0.18 },
-  { src: APARTMENT.images.bathroom, alt: 'Ванная R14-APART — современная ванная', speed: 0.12 },
+  {
+    image: APARTMENT.images.kitchen,
+    alt: 'Кухня R14-APART — полностью оборудованная кухня',
+    speed: 0.12,
+  },
+  {
+    image: APARTMENT.images.bedroom,
+    alt: 'Спальня R14-APART — комфортная кровать',
+    speed: 0.18,
+  },
+  {
+    image: APARTMENT.images.bathroom,
+    alt: 'Ванная R14-APART — современная ванная',
+    speed: 0.12,
+  },
 ];
 
 export default function Gallery() {
   const refs = useRef([]);
   const sectionRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(null);
-  const touchStartX = useRef(0);
+  const touchStartX = useRef(null);
 
   useEffect(() => {
     const onScroll = () => {
@@ -20,7 +32,10 @@ export default function Gallery() {
       if (!section) return;
       const rect = section.getBoundingClientRect();
       if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-      const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+      let progress =
+        (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+
+      progress = Math.min(1, Math.max(0, progress));
       refs.current.forEach((el, i) => {
         if (!el) return;
         const dir = i === 1 ? -1 : 1;
@@ -48,10 +63,20 @@ export default function Gallery() {
   };
 
   const onTouchEnd = (e) => {
-    const delta = e.changedTouches[0].clientX - touchStartX.current;
+    if (touchStartX.current === null) return;
+  
+    const delta =
+      e.changedTouches[0].clientX - touchStartX.current;
+  
+    touchStartX.current = null;
+  
     if (Math.abs(delta) < 40) return;
-    if (delta < 0) setActiveIndex((v) => (v + 1) % PANELS.length);
-    else setActiveIndex((v) => (v - 1 + PANELS.length) % PANELS.length);
+  
+    if (delta < 0) {
+      setActiveIndex((v) => (v + 1) % PANELS.length);
+    } else {
+      setActiveIndex((v) => (v - 1 + PANELS.length) % PANELS.length);
+    }
   };
 
   return (
@@ -59,20 +84,32 @@ export default function Gallery() {
       <div ref={sectionRef} id="gallery" className={styles.gallery} role="region" aria-label="Галерея интерьеров">
         {PANELS.map((p, i) => (
           <button
-            key={p.alt}
-            className={styles.panel}
-            onClick={() => setActiveIndex(i)}
-            aria-label={`Открыть фото: ${p.alt}`}
+          ref={el => (refs.current[i] = el)}
+          key={p.alt}
+          className={styles.panel}
+          onClick={() => setActiveIndex(i)}
+          aria-label={`Открыть фото: ${p.alt}`}
           >
+            <picture>
+              <source
+                srcSet={p.image.avif}
+                type="image/avif"
+              />
+
+              <source
+                srcSet={p.image.webp}
+                type="image/webp"
+              />
+
             <img
-              ref={el => (refs.current[i] = el)}
-              src={p.src}
+              src={p.image.jpg}
               alt={p.alt}
               loading="lazy"
               decoding="async"
               fetchPriority="low"
               className={styles.img}
             />
+            </picture>
           </button>
         ))}
       </div>
@@ -83,7 +120,11 @@ export default function Gallery() {
           role="dialog"
           aria-modal="true"
           aria-label="Просмотр фото"
-          onClick={() => setActiveIndex(null)}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setActiveIndex(null);
+            }
+          }}
         >
           <button
             className={styles.lightboxBtn}
@@ -95,15 +136,28 @@ export default function Gallery() {
           >
             ←
           </button>
-          <img
-            src={PANELS[activeIndex].src}
-            alt={PANELS[activeIndex].alt}
-            className={styles.lightboxImg}
-            decoding="async"
-            onClick={(e) => e.stopPropagation()}
-            onTouchStart={onTouchStart}
-            onTouchEnd={onTouchEnd}
-          />
+          <picture>
+            <source
+              srcSet={PANELS[activeIndex].image.avif}
+              type="image/avif"
+            />
+
+            <source
+              srcSet={PANELS[activeIndex].image.webp}
+              type="image/webp"
+            />
+
+            <img
+              src={PANELS[activeIndex].image.jpg}
+              alt={PANELS[activeIndex].alt}
+              className={styles.lightboxImg}
+              decoding="async"
+              loading="eager"
+              onClick={(e) => e.stopPropagation()}
+              onTouchStart={onTouchStart}
+              onTouchEnd={onTouchEnd}
+            />
+          </picture>
           <button
             className={styles.lightboxBtn}
             onClick={(e) => {

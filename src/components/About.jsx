@@ -30,38 +30,83 @@ export default function About() {
       <div className={styles.showcase} itemScope itemType="https://schema.org/Apartment">
         {/* Main image */}
         <motion.div className={styles.mainWrap} {...reveal(0)}>
-          <img
-            src={APARTMENT.images.living}
-            alt="R14-APART — дизайнерские апартаменты посуточно, гостиная"
-            className={styles.mainImg}
-            itemProp="image"
-            loading="eager"
-          />
-          <div className={styles.badges}>
-            <span className={styles.badge}>Апартаменты</span>
-            <span className={styles.badge}>{APARTMENT.area} м²</span>
-            <span className={styles.badge}>До {APARTMENT.guests} гостей</span>
-          </div>
-        </motion.div>
+        <picture itemProp="image">
 
-        {/* Sub images grid */}
-        <div className={styles.subGrid}>
+        <source
+
+          srcSet={APARTMENT.images.living.avif}
+
+          type="image/avif"
+
+        />
+
+        <source
+
+          srcSet={APARTMENT.images.living.webp}
+
+          type="image/webp"
+
+        />
+
+        <img
+
+          src={APARTMENT.images.living.jpg}
+
+          alt="R14-APART — дизайнерские апартаменты посуточно, гостиная"
+
+          className={styles.mainImg}
+
+          loading="eager"
+
+          decoding="async"
+
+          fetchPriority="high"
+
+        />
+
+        </picture>
+                  <div className={styles.badges}>
+                    <span className={styles.badge}>Апартаменты</span>
+                    <span className={styles.badge}>{APARTMENT.area} м²</span>
+                    <span className={styles.badge}>До {APARTMENT.guests} гостей</span>
+                  </div>
+                </motion.div>
+
+                {/* Sub images grid */}
+                <div className={styles.subGrid}>
           {[
-            { src: APARTMENT.images.bedroom, alt: 'Спальня R14-APART — удобная кровать, качественное бельё' },
-            { src: APARTMENT.images.kitchen, alt: 'Кухня R14-APART — полностью оснащённая кухня' },
-            { src: APARTMENT.images.bathroom, alt: 'Ванная R14-APART — современная ванная комната' },
+            {
+              image: APARTMENT.images.bedroom,
+              alt: 'Спальня R14-APART — удобная кровать, качественное бельё',
+            },
+            {
+              image: APARTMENT.images.kitchen,
+              alt: 'Кухня R14-APART — полностью оснащённая кухня',
+            },
+            {
+              image: APARTMENT.images.bathroom,
+              alt: 'Ванная R14-APART — современная ванная комната',
+            },
           ].map((img, i) => (
-            <motion.img
+            <motion.div
               key={img.alt}
-              src={img.src}
-              alt={img.alt}
-              className={styles.subImg}
-              loading="lazy"
               {...reveal(0.1 * (i + 1))}
               whileHover={{ scale: 1.03, filter: 'saturate(1.15)' }}
-              style={{ filter: 'saturate(0.88)' }}
               transition={{ duration: 0.5 }}
-            />
+            >
+              <picture>
+                <source srcSet={img.image.avif} type="image/avif" />
+                <source srcSet={img.image.webp} type="image/webp" />
+
+                <img
+                  src={img.image.jpg}
+                  alt={img.alt}
+                  className={styles.subImg}
+                  loading="lazy"
+                  style={{ filter: 'saturate(0.88)' }}
+                />
+              </picture>
+            </motion.div>
           ))}
         </div>
 
