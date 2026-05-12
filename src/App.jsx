@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Cursor from './components/Cursor';
 import CookieConsent from './components/CookieConsent';
+import SkipLink from './components/SkipLink';
 import Home from './pages/Home';
 import LegalPage from './pages/LegalPage';
 
@@ -26,7 +27,7 @@ function AnimatedRoutes() {
 export default function App() {
   return (
     <BrowserRouter>
-      <a href="#hero" className="skipLink">Перейти к контенту</a>
+      <SkipLink />
       <Cursor />
       <Navbar />
       <AnimatedRoutes />

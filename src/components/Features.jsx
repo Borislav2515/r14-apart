@@ -12,7 +12,7 @@ const reveal = (delay = 0, x = 0) => ({
 
 export default function Features() {
   return (
-    <section id="features" className={styles.section} aria-labelledby="feat-heading">
+    <section className={styles.section} aria-labelledby="feat-heading">
       <div className={styles.layout}>
         <motion.div className={styles.imgWrap} {...reveal(0, -40)}>
           <ResponsivePicture

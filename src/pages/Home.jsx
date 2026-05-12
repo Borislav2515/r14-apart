@@ -1,7 +1,9 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 import Hero from '../components/Hero';
 import StatsBar from '../components/StatsBar';
+import { scrollToSection } from '../hooks/useSectionNavigation';
 
 const About = lazy(() => import('../components/About'));
 const Gallery = lazy(() => import('../components/Gallery'));
@@ -10,7 +12,7 @@ const Reviews = lazy(() => import('../components/Reviews'));
 const FaqSection = lazy(() => import('../components/FaqSection'));
 const Cta = lazy(() => import('../components/Cta'));
 
-function DeferredSection({ minHeight = 320, children }) {
+function DeferredSection({ id, minHeight = 320, children }) {
   const [shouldRender, setShouldRender] = useState(false);
   const holderRef = useRef(null);
 
@@ -33,13 +35,26 @@ function DeferredSection({ minHeight = 320, children }) {
   }, []);
 
   return (
-    <section ref={holderRef} style={shouldRender ? undefined : { minHeight }}>
+    <section id={id} ref={holderRef} style={shouldRender ? undefined : { minHeight }}>
       {shouldRender ? <Suspense fallback={null}>{children}</Suspense> : null}
     </section>
   );
 }
 
 export default function Home() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const id = location.state?.scrollTo;
+    if (!id) return undefined;
+
+    const timer = window.setTimeout(() => {
+      scrollToSection(id);
+    }, 80);
+
+    return () => window.clearTimeout(timer);
+  }, [location.state]);
+
   return (
     <motion.main
       initial={{ opacity: 0 }}
@@ -49,22 +64,22 @@ export default function Home() {
     >
       <Hero />
       <StatsBar />
-      <DeferredSection minHeight={420}>
+      <DeferredSection id="about" minHeight={420}>
         <About />
       </DeferredSection>
-      <DeferredSection minHeight={420}>
+      <DeferredSection id="gallery" minHeight={420}>
         <Gallery />
       </DeferredSection>
-      <DeferredSection minHeight={420}>
+      <DeferredSection id="features" minHeight={420}>
         <Features />
       </DeferredSection>
-      <DeferredSection minHeight={420}>
+      <DeferredSection id="reviews" minHeight={420}>
         <Reviews />
       </DeferredSection>
-      <DeferredSection minHeight={320}>
+      <DeferredSection id="faq" minHeight={320}>
         <FaqSection />
       </DeferredSection>
-      <DeferredSection minHeight={360}>
+      <DeferredSection id="cta" minHeight={360}>
         <Cta />
       </DeferredSection>
     </motion.main>

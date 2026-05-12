@@ -2,19 +2,21 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { APARTMENT } from '../data/apartment';
+import { useSectionNavigation } from '../hooks/useSectionNavigation';
 import styles from './Navbar.module.css';
 
 const LINKS = [
-  { to: '/#about', label: 'Апартаменты' },
-  { to: '/#features', label: 'Удобства' },
-  { to: '/#reviews', label: 'Отзывы' },
-  { to: '/#faq', label: 'FAQ' },
+  { id: 'about', label: 'Апартаменты' },
+  { id: 'features', label: 'Удобства' },
+  { id: 'reviews', label: 'Отзывы' },
+  { id: 'faq', label: 'FAQ' },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const goToSection = useSectionNavigation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -40,21 +42,10 @@ export default function Navbar() {
     return () => window.removeEventListener('keydown', onEsc);
   }, [open]);
 
-  const handleHashLink = (e, to) => {
-    if (to.startsWith('/#')) {
-      e.preventDefault();
-      setOpen(false);
-      const id = to.replace('/#', '');
-      const el = document.getElementById(id);
-      if (el) {
-        const navOffset = 80;
-        const y = el.getBoundingClientRect().top + window.scrollY - navOffset;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }
-      else {
-        window.location.href = to;
-      }
-    }
+  const handleSectionLink = (e, id) => {
+    e.preventDefault();
+    setOpen(false);
+    goToSection(id);
   };
 
   return (
@@ -66,8 +57,8 @@ export default function Navbar() {
 
         <ul className={styles.links}>
           {LINKS.map(link => (
-            <li key={link.to}>
-              <a href={link.to} onClick={e => handleHashLink(e, link.to)} className={styles.link}>
+            <li key={link.id}>
+              <a href="/" onClick={e => handleSectionLink(e, link.id)} className={styles.link}>
                 {link.label}
               </a>
             </li>
@@ -112,9 +103,9 @@ export default function Navbar() {
             </button>
             {LINKS.map((link, i) => (
               <motion.a
-                key={link.to}
-                href={link.to}
-                onClick={e => handleHashLink(e, link.to)}
+                key={link.id}
+                href="/"
+                onClick={e => handleSectionLink(e, link.id)}
                 className={styles.mobileLink}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}

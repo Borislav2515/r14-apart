@@ -48,7 +48,7 @@ export default function FaqSection() {
   const toggle = (id) => setOpenId(v => v === id ? null : id);
 
   return (
-    <section id="faq" className={styles.section} aria-labelledby="faq-heading">
+    <section className={styles.section} aria-labelledby="faq-heading">
       <motion.p
         className={styles.label}
         initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}

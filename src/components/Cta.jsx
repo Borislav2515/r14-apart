@@ -1,11 +1,14 @@
 import { motion } from 'framer-motion';
 import { APARTMENT } from '../data/apartment';
+import { useSectionNavigation } from '../hooks/useSectionNavigation';
 import ResponsivePicture from './ResponsivePicture';
 import styles from './Cta.module.css';
 
 export default function Cta() {
+  const goToSection = useSectionNavigation();
+
   return (
-    <section id="cta" className={styles.section} aria-label="Забронировать">
+    <section className={styles.section} aria-label="Забронировать">
       <div className={styles.bg} aria-hidden="true">
         <ResponsivePicture
           image={APARTMENT.images.hero}
@@ -42,7 +45,14 @@ export default function Cta() {
           viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.3 }}
           className={styles.actions}
         >
-          <a href="#hero" className={styles.btnSolid}>
+          <a
+            href="/"
+            className={styles.btnSolid}
+            onClick={(e) => {
+              e.preventDefault();
+              goToSection('hero');
+            }}
+          >
             Открыть форму бронирования
           </a>
           <a href={`tel:${APARTMENT.phone.replace(/\s/g, '')}`} className={styles.btnOutline}>

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { APARTMENT } from '../data/apartment';
+import { useSectionNavigation } from '../hooks/useSectionNavigation';
 import ResponsivePicture from './ResponsivePicture';
 import styles from './About.module.css';
 
@@ -11,8 +12,10 @@ const reveal = (delay = 0) => ({
 });
 
 export default function About() {
+  const goToSection = useSectionNavigation();
+
   return (
-    <section id="about" className={styles.section} aria-labelledby="about-heading">
+    <section className={styles.section} aria-labelledby="about-heading">
       <div className={styles.header}>
         <motion.div {...reveal(0)}>
           <p className={styles.label}>Апартаменты во Владикавказе</p>
@@ -97,11 +100,11 @@ export default function About() {
             </div>
           </div>
           <a
-            href="#hero"
+            href="/"
             className={styles.btnBook}
             onClick={e => {
               e.preventDefault();
-              document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' });
+              goToSection('hero');
             }}
           >
             Забронировать онлайн

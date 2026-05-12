@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom';
 import { APARTMENT } from '../data/apartment';
+import { useSectionNavigation } from '../hooks/useSectionNavigation';
 import styles from './Footer.module.css';
 
 export default function Footer() {
-  const handleHash = (e, id) => {
+  const goToSection = useSectionNavigation();
+
+  const handleSectionLink = (e, id) => {
     e.preventDefault();
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    goToSection(id);
   };
 
   return (
@@ -19,18 +22,18 @@ export default function Footer() {
         <div className={styles.col}>
           <h4>Апартаменты</h4>
           <ul>
-            <li><a href="#about" onClick={e => handleHash(e, 'about')}>Об апартаментах</a></li>
-            <li><a href="#features" onClick={e => handleHash(e, 'features')}>Удобства</a></li>
-            <li><a href="#gallery" onClick={e => handleHash(e, 'gallery')}>Фотогалерея</a></li>
-            <li><a href="#reviews" onClick={e => handleHash(e, 'reviews')}>Отзывы</a></li>
+            <li><a href="/" onClick={e => handleSectionLink(e, 'about')}>Об апартаментах</a></li>
+            <li><a href="/" onClick={e => handleSectionLink(e, 'features')}>Удобства</a></li>
+            <li><a href="/" onClick={e => handleSectionLink(e, 'gallery')}>Фотогалерея</a></li>
+            <li><a href="/" onClick={e => handleSectionLink(e, 'reviews')}>Отзывы</a></li>
           </ul>
         </div>
 
         <div className={styles.col}>
           <h4>Информация</h4>
           <ul>
-            <li><a href="#faq" onClick={e => handleHash(e, 'faq')}>Вопросы и ответы</a></li>
-            <li><a href="#features" onClick={e => handleHash(e, 'features')}>Условия аренды</a></li>
+            <li><a href="/" onClick={e => handleSectionLink(e, 'faq')}>Вопросы и ответы</a></li>
+            <li><a href="/" onClick={e => handleSectionLink(e, 'features')}>Условия аренды</a></li>
             <li><Link to="/rules">Правила дома</Link></li>
             <li><Link to="/privacy">Конфиденциальность</Link></li>
             <li><Link to="/consent">Согласие на обработку</Link></li>

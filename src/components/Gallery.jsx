@@ -59,7 +59,7 @@ export default function Gallery() {
 
   return (
     <>
-      <div id="gallery" className={styles.gallery} role="region" aria-label="Галерея интерьеров">
+      <div className={styles.gallery} role="region" aria-label="Галерея интерьеров">
         {PANELS.map((p, i) => (
           <button
           key={p.alt}
