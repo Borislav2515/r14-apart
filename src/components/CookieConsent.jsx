@@ -18,6 +18,7 @@ export default function CookieConsent() {
 
   const saveConsent = (value) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+    window.dispatchEvent(new CustomEvent('r14apart-cookie-consent', { detail: value }));
     setVisible(false);
     setSettingsOpen(false);
   };

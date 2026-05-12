@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { APARTMENT } from '../data/apartment';
 import styles from './LegalPage.module.css';
@@ -175,13 +174,7 @@ export default function LegalPage({ type }) {
   const page = PAGES[type] ?? PAGES.rules;
 
   return (
-    <motion.main
-      className={styles.page}
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.45 }}
-    >
+    <main className={styles.page}>
       <div className={styles.inner}>
         <Link to="/" className={styles.back}>На главную</Link>
         <p className={styles.eyebrow}>{page.eyebrow}</p>
@@ -201,6 +194,6 @@ export default function LegalPage({ type }) {
           ))}
         </div>
       </div>
-    </motion.main>
+    </main>
   );
 }

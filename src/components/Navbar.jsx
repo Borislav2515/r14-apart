@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 import { APARTMENT } from '../data/apartment';
 import { useSectionNavigation } from '../hooks/useSectionNavigation';
 import styles from './Navbar.module.css';
@@ -81,59 +80,44 @@ export default function Navbar() {
         </button>
       </nav>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            id="mobileMenu"
-            className={styles.mobileMenu}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Меню навигации"
-            initial={{ clipPath: 'circle(0% at calc(100% - 60px) 36px)' }}
-            animate={{ clipPath: 'circle(150% at calc(100% - 60px) 36px)' }}
-            exit={{ clipPath: 'circle(0% at calc(100% - 60px) 36px)' }}
-            transition={{ duration: 0.7, ease: [0.77, 0, 0.175, 1] }}
+      {open && (
+        <div
+          id="mobileMenu"
+          className={styles.mobileMenu}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Меню навигации"
+        >
+          <button
+            className={styles.mobileClose}
+            onClick={() => setOpen(false)}
+            aria-label="Закрыть меню"
           >
-            <button
-              className={styles.mobileClose}
-              onClick={() => setOpen(false)}
-              aria-label="Закрыть меню"
-            >
-              Закрыть
-            </button>
-            {LINKS.map((link, i) => (
-              <motion.a
-                key={link.id}
-                href="/"
-                onClick={e => handleSectionLink(e, link.id)}
-                className={styles.mobileLink}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 + i * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
-              >
-                {link.label}
-              </motion.a>
-            ))}
-            <motion.a
-              href={`tel:${APARTMENT.phone}`}
+            Закрыть
+          </button>
+          {LINKS.map((link, i) => (
+            <a
+              key={link.id}
+              href="/"
+              onClick={e => handleSectionLink(e, link.id)}
               className={styles.mobileLink}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 + LINKS.length * 0.08 }}
+              style={{ transitionDelay: `${i * 40}ms` }}
             >
-              {APARTMENT.phone}
-            </motion.a>
-            <motion.p
-              className={styles.mobileSub}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-            >
-              R14-APART · Онлайн-бронирование
-            </motion.p>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              {link.label}
+            </a>
+          ))}
+          <a
+            href={`tel:${APARTMENT.phone}`}
+            className={styles.mobileLink}
+            style={{ transitionDelay: `${LINKS.length * 40}ms` }}
+          >
+            {APARTMENT.phone}
+          </a>
+          <p className={styles.mobileSub}>
+            R14-APART · Онлайн-бронирование
+          </p>
+        </div>
+      )}
     </>
   );
 }

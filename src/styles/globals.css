@@ -46,6 +46,67 @@ button { cursor: pointer; font-family: var(--font-body); }
 img { display: block; max-width: 100%; }
 picture { display: block; }
 
+@font-face {
+  font-family: 'Fraunces';
+  src: url('/fonts/fraunces-300.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fraunces';
+  src: url('/fonts/fraunces-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fraunces';
+  src: url('/fonts/fraunces-italic-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  src: url('/fonts/manrope-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  src: url('/fonts/manrope-500.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  src: url('/fonts/manrope-600.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translate3d(var(--reveal-x, 0), var(--reveal-y, 28px), 0);
+  transition:
+    opacity 0.7s var(--ease-smooth) var(--reveal-delay, 0s),
+    transform 0.7s var(--ease-smooth) var(--reveal-delay, 0s);
+}
+
+.revealVisible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
 .skipLink {
   position: fixed;
   top: 10px;

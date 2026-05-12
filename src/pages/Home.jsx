@@ -1,5 +1,4 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import Hero from '../components/Hero';
 import StatsBar from '../components/StatsBar';
@@ -56,12 +55,7 @@ export default function Home() {
   }, [location.state]);
 
   return (
-    <motion.main
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.4 }}
-    >
+    <main>
       <Hero />
       <StatsBar />
       <DeferredSection id="about" minHeight={420}>
@@ -82,6 +76,6 @@ export default function Home() {
       <DeferredSection id="cta" minHeight={360}>
         <Cta />
       </DeferredSection>
-    </motion.main>
+    </main>
   );
 }

@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion';
 import { APARTMENT } from '../data/apartment';
 import { useSectionNavigation } from '../hooks/useSectionNavigation';
+import Reveal from './Reveal';
 import ResponsivePicture from './ResponsivePicture';
 import styles from './Cta.module.css';
 
@@ -19,32 +19,16 @@ export default function Cta() {
       </div>
       <div className={styles.grain} aria-hidden="true" />
       <div className={styles.content}>
-        <motion.p
-          className={styles.label}
-          initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.7 }}
-        >
+        <Reveal as="p" className={styles.label} y={24}>
           Готовы к заезду?
-        </motion.p>
-        <motion.h2
-          className={styles.title}
-          initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.1 }}
-        >
+        </Reveal>
+        <Reveal as="h2" className={styles.title} delay={0.1} y={24}>
           Забронируйте<br /><em>R14-APART</em>
-        </motion.h2>
-        <motion.p
-          className={styles.sub}
-          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}
-        >
+        </Reveal>
+        <Reveal as="p" className={styles.sub} delay={0.2} y={20}>
           Онлайн-оплата · Подтверждение за 5 минут · Заезд 24/7
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.3 }}
-          className={styles.actions}
-        >
+        </Reveal>
+        <Reveal className={styles.actions} delay={0.3} y={20}>
           <a
             href="/"
             className={styles.btnSolid}
@@ -58,7 +42,7 @@ export default function Cta() {
           <a href={`tel:${APARTMENT.phone.replace(/\s/g, '')}`} className={styles.btnOutline}>
             Позвонить нам
           </a>
-        </motion.div>
+        </Reveal>
       </div>
     </section>
   );

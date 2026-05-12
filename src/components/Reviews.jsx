@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
 import { REVIEWS } from '../data/apartment';
+import Reveal from './Reveal';
 import styles from './Reviews.module.css';
 
 const ALL = [...REVIEWS, ...REVIEWS]; // duplicate for seamless loop
@@ -9,20 +9,12 @@ const DATES = ['апрель 2026', 'март 2026', 'февраль 2026', 'я�
 export default function Reviews() {
   return (
     <section className={styles.section} aria-labelledby="rev-heading">
-      <motion.p
-        className={styles.label}
-        initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }} transition={{ duration: 0.8 }}
-      >
+      <Reveal as="p" className={styles.label} y={30}>
         Отзывы гостей
-      </motion.p>
-      <motion.h2
-        className={styles.title} id="rev-heading"
-        initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.1 }}
-      >
+      </Reveal>
+      <Reveal as="h2" className={styles.title} id="rev-heading" delay={0.1} y={30}>
         Они уже<br /><em>побывали</em>
-      </motion.h2>
+      </Reveal>
 
       <div className={styles.trackWrap} role="region" aria-label="Лента отзывов">
         <div className={styles.track}>

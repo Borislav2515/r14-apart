@@ -41,11 +41,12 @@ server {
     index index.html;
     location / {
         try_files $uri $uri/ /index.html;
+        add_header Cache-Control "no-cache";
     }
 
-    location ~* \.(?:js|css|png|jpg|jpeg|gif|webp|svg|ico|woff2?)$ {
-        expires 30d;
-        add_header Cache-Control "public, max-age=2592000, immutable";
+    location ~* \.(?:js|css|png|jpg|jpeg|gif|webp|avif|svg|ico|woff2?|ttf)$ {
+        expires 1y;
+        add_header Cache-Control "public, max-age=31536000, immutable";
         access_log off;
     }
 }
@@ -65,11 +66,12 @@ server {
     index index.html;
     location / {
         try_files $uri $uri/ /index.html;
+        add_header Cache-Control "no-cache";
     }
 
-    location ~* \.(?:js|css|png|jpg|jpeg|gif|webp|svg|ico|woff2?)$ {
-        expires 30d;
-        add_header Cache-Control "public, max-age=2592000, immutable";
+    location ~* \.(?:js|css|png|jpg|jpeg|gif|webp|avif|svg|ico|woff2?|ttf)$ {
+        expires 1y;
+        add_header Cache-Control "public, max-age=31536000, immutable";
         access_log off;
     }
 }

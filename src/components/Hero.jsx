@@ -1,16 +1,10 @@
 import { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
 import { APARTMENT } from '../data/apartment';
+import Reveal from './Reveal';
 import ResponsivePicture from './ResponsivePicture';
 import styles from './Hero.module.css';
 
 const SCRIPT_SRC = 'https://homereserve.ru/widget.js';
-
-const fade = (delay = 0) => ({
-  initial: { opacity: 0, y: 24 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.9, delay, ease: [0.25, 0.46, 0.45, 0.94] },
-});
 
 export default function Hero() {
   const bgRef = useRef(null);
@@ -104,35 +98,29 @@ export default function Hero() {
       <div className={styles.grain} aria-hidden="true" />
 
       <div className={styles.content}>
-        <motion.p className={styles.eyebrow} {...fade(0.3)}>
+        <Reveal as="p" className={styles.eyebrow} delay={0.3} y={24} immediate>
           Исторический центр Владикавказа · Бронирование онлайн
-        </motion.p>
+        </Reveal>
 
-        <motion.h1 className={styles.title} {...fade(0.55)}>
+        <Reveal as="h1" className={styles.title} delay={0.55} y={24} immediate>
           R14<span className={styles.dot}>·</span>
           <br />
           <em>APART</em>
-        </motion.h1>
+        </Reveal>
 
-        <motion.p className={styles.subtitle} {...fade(0.8)}>
+        <Reveal as="p" className={styles.subtitle} delay={0.8} y={24} immediate>
           Двухуровневые апартаменты посуточно во Владикавказе: ул. Революции, 14. Умный дом, бесконтактное заселение 24/7 по паролю, тихая улица в историческом центре.
-        </motion.p>
+        </Reveal>
 
-        <motion.div className={styles.widgetWrap} {...fade(1.0)}>
+        <Reveal className={styles.widgetWrap} delay={1} y={24} immediate>
           <div id="hr-widget" aria-label="Форма бронирования" />
-        </motion.div>
+        </Reveal>
       </div>
 
-      <motion.div
-        className={styles.scroll}
-        aria-hidden="true"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 1 }}
-      >
+      <div className={styles.scroll} aria-hidden="true">
         <div className={styles.scrollLine} />
         <span>Скролл</span>
-      </motion.div>
+      </div>
     </section>
   );
 }
