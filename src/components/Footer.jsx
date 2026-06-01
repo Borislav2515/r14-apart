@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { APARTMENT } from '../data/apartment';
 import { useSectionNavigation } from '../hooks/useSectionNavigation';
+import { trackPhone, trackTelegram, trackWhatsapp, telegramHref, whatsappHref } from '../utils/analytics';
 import styles from './Footer.module.css';
 
 export default function Footer() {
@@ -26,6 +27,7 @@ export default function Footer() {
             <li><a href="/" onClick={e => handleSectionLink(e, 'features')}>Удобства</a></li>
             <li><a href="/" onClick={e => handleSectionLink(e, 'gallery')}>Фотогалерея</a></li>
             <li><a href="/" onClick={e => handleSectionLink(e, 'reviews')}>Отзывы</a></li>
+            <li><Link to="/blog">Блог</Link></li>
           </ul>
         </div>
 
@@ -39,17 +41,19 @@ export default function Footer() {
             <li><Link to="/consent">Согласие на обработку</Link></li>
             <li><Link to="/cookies">Политика cookie</Link></li>
             <li><Link to="/agreement">Пользовательское соглашение</Link></li>
+            <li><Link to="/apartments-vladikavkaz">Апартаменты посуточно</Link></li>
+            <li><Link to="/tourism-vladikavkaz">Туризм в Осетии</Link></li>
           </ul>
         </div>
 
         <div className={styles.col}>
           <h4>Контакты</h4>
           <ul>
-            <li><a href={`tel:${APARTMENT.phone}`}>{APARTMENT.phone}</a></li>
+            <li><a href={`tel:${APARTMENT.phone}`} onClick={trackPhone}>{APARTMENT.phone}</a></li>
             <li><a href={`mailto:${APARTMENT.email}`}>{APARTMENT.email}</a></li>
             <li><span className={styles.address}>{APARTMENT.address}</span></li>
-            <li><a href="https://t.me/r14_apart">Telegram</a></li>
-            <li><a href="https://wa.me/89060330014">WhatsApp</a></li>
+            <li><a href={telegramHref} onClick={trackTelegram}>Telegram</a></li>
+            <li><a href={whatsappHref} onClick={trackWhatsapp}>WhatsApp</a></li>
           </ul>
         </div>
       </div>

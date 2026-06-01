@@ -1,5 +1,6 @@
 import { APARTMENT } from '../data/apartment';
 import { useSectionNavigation } from '../hooks/useSectionNavigation';
+import { trackBookingOpen } from '../utils/analytics';
 import Reveal from './Reveal';
 import ResponsivePicture from './ResponsivePicture';
 import styles from './About.module.css';
@@ -96,6 +97,7 @@ export default function About() {
             className={styles.btnBook}
             onClick={e => {
               e.preventDefault();
+              trackBookingOpen();
               goToSection('hero');
             }}
           >

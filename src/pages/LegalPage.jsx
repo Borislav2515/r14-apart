@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { APARTMENT } from '../data/apartment';
+import usePageMeta from '../hooks/usePageMeta';
 import styles from './LegalPage.module.css';
 
 const PAGES = {
@@ -172,6 +173,14 @@ const PAGES = {
 
 export default function LegalPage({ type }) {
   const page = PAGES[type] ?? PAGES.rules;
+  const isServicePage = ['privacy', 'consent', 'cookies', 'agreement'].includes(type);
+
+  usePageMeta({
+    title: `${page.title} | R14-APART`,
+    description: page.lead,
+    path: `/${type}`,
+    robots: isServicePage ? 'noindex, nofollow' : 'index, follow',
+  });
 
   return (
     <main className={styles.page}>

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { APARTMENT } from '../data/apartment';
+import { trackBookingOpen, trackTelegram, trackWhatsapp, telegramHref, whatsappHref } from '../utils/analytics';
 import Reveal from './Reveal';
 import ResponsivePicture from './ResponsivePicture';
 import styles from './Hero.module.css';
@@ -110,6 +111,28 @@ export default function Hero() {
 
         <Reveal as="p" className={styles.subtitle} delay={0.8} y={24} immediate>
           Двухуровневые апартаменты посуточно во Владикавказе: ул. Революции, 14. Умный дом, бесконтактное заселение 24/7 по паролю, тихая улица в историческом центре.
+        </Reveal>
+
+        <Reveal className={styles.facts} delay={0.9} y={20} immediate>
+          <span>{APARTMENT.city}</span>
+          <span>{APARTMENT.address}</span>
+          <span>от {APARTMENT.priceFrom.toLocaleString('ru-RU')} ₽/сутки</span>
+          <span>до {APARTMENT.guests} гостей</span>
+          <span>Wi-Fi</span>
+          <span>парковка</span>
+          <span>самостоятельное заселение</span>
+        </Reveal>
+
+        <Reveal className={styles.actions} delay={0.96} y={20} immediate>
+          <a href="#hr-widget" className={styles.btnPrimary} onClick={trackBookingOpen}>
+            Бронировать
+          </a>
+          <a href={whatsappHref} className={styles.btnGhost} onClick={trackWhatsapp}>
+            WhatsApp
+          </a>
+          <a href={telegramHref} className={styles.btnGhost} onClick={trackTelegram}>
+            Telegram
+          </a>
         </Reveal>
 
         <Reveal className={styles.widgetWrap} delay={1} y={24} immediate>

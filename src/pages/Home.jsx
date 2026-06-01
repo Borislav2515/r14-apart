@@ -2,7 +2,10 @@ import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Hero from '../components/Hero';
 import StatsBar from '../components/StatsBar';
+import StructuredData from '../components/StructuredData';
+import usePageMeta from '../hooks/usePageMeta';
 import { scrollToSection } from '../hooks/useSectionNavigation';
+import { seoDefaults } from '../data/seo';
 
 const About = lazy(() => import('../components/About'));
 const Gallery = lazy(() => import('../components/Gallery'));
@@ -10,6 +13,7 @@ const Features = lazy(() => import('../components/Features'));
 const Reviews = lazy(() => import('../components/Reviews'));
 const FaqSection = lazy(() => import('../components/FaqSection'));
 const Cta = lazy(() => import('../components/Cta'));
+const MapSection = lazy(() => import('../components/MapSection'));
 
 function DeferredSection({ id, minHeight = 320, children }) {
   const [shouldRender, setShouldRender] = useState(false);
@@ -43,6 +47,12 @@ function DeferredSection({ id, minHeight = 320, children }) {
 export default function Home() {
   const location = useLocation();
 
+  usePageMeta({
+    title: seoDefaults.home.title,
+    description: seoDefaults.home.description,
+    path: '/',
+  });
+
   useEffect(() => {
     const id = location.state?.scrollTo;
     if (!id) return undefined;
@@ -56,6 +66,7 @@ export default function Home() {
 
   return (
     <main>
+      <StructuredData />
       <Hero />
       <StatsBar />
       <DeferredSection id="about" minHeight={420}>
@@ -72,6 +83,9 @@ export default function Home() {
       </DeferredSection>
       <DeferredSection id="faq" minHeight={320}>
         <FaqSection />
+      </DeferredSection>
+      <DeferredSection id="map" minHeight={420}>
+        <MapSection />
       </DeferredSection>
       <DeferredSection id="cta" minHeight={360}>
         <Cta />

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { APARTMENT } from '../data/apartment';
 import { useSectionNavigation } from '../hooks/useSectionNavigation';
+import { trackPhone, trackWhatsapp, trackTelegram, telegramHref, whatsappHref } from '../utils/analytics';
 import styles from './Navbar.module.css';
 
 const LINKS = [
@@ -9,6 +10,11 @@ const LINKS = [
   { id: 'features', label: 'Удобства', meta: 'Умный дом и комфорт' },
   { id: 'reviews', label: 'Отзывы', meta: '5.0 от гостей' },
   { id: 'faq', label: 'FAQ', meta: 'Правила и заселение' },
+];
+
+const PAGE_LINKS = [
+  { to: '/blog', label: 'Блог', meta: 'Маршруты и гиды' },
+  { to: '/apartments-vladikavkaz', label: 'SEO', meta: 'Посуточно во Владикавказе' },
 ];
 
 export default function Navbar() {
@@ -93,7 +99,10 @@ export default function Navbar() {
             </li>
           ))}
           <li>
-            <a href={`tel:${APARTMENT.phone}`} className={styles.link}>{APARTMENT.phone}</a>
+            <Link to="/blog" className={styles.link}>Блог</Link>
+          </li>
+          <li>
+            <a href={`tel:${APARTMENT.phone}`} className={styles.link} onClick={trackPhone}>{APARTMENT.phone}</a>
           </li>
         </ul>
 
@@ -157,6 +166,24 @@ export default function Navbar() {
                   <span className={styles.mobileArrow} aria-hidden="true" />
                 </a>
               ))}
+              {PAGE_LINKS.map((link, i) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  onClick={() => setOpen(false)}
+                  className={styles.mobileLink}
+                  onPointerEnter={() => setActiveItem(LINKS.length + i)}
+                  onFocus={() => setActiveItem(LINKS.length + i)}
+                  style={{ '--item-index': LINKS.length + i }}
+                >
+                  <span className={styles.mobileIndex}>{String(LINKS.length + i + 1).padStart(2, '0')}</span>
+                  <span className={styles.mobileText}>
+                    <span className={styles.mobileLabel}>{link.label}</span>
+                    <span className={styles.mobileMeta}>{link.meta}</span>
+                  </span>
+                  <span className={styles.mobileArrow} aria-hidden="true" />
+                </Link>
+              ))}
             </div>
           </div>
           <div className={styles.mobileBottom}>
@@ -164,11 +191,14 @@ export default function Navbar() {
               R14<span>·</span>APART
             </Link>
             <div className={styles.mobileActions}>
-              <a href={`tel:${APARTMENT.phone}`} className={styles.mobileCall} onClick={() => setOpen(false)}>
+              <a href={`tel:${APARTMENT.phone}`} className={styles.mobileCall} onClick={() => { trackPhone(); setOpen(false); }}>
                 +7 906 033 00 14
               </a>
-              <a href={`mailto:${APARTMENT.email}`} className={styles.mobileMail} onClick={() => setOpen(false)}>
-                Написать
+              <a href={whatsappHref} className={styles.mobileMail} onClick={() => { trackWhatsapp(); setOpen(false); }}>
+                WhatsApp
+              </a>
+              <a href={telegramHref} className={styles.mobileMail} onClick={() => { trackTelegram(); setOpen(false); }}>
+                Telegram
               </a>
             </div>
           </div>

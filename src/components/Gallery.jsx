@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { APARTMENT } from '../data/apartment';
+import { trackGalleryOpen } from '../utils/analytics';
 import ResponsivePicture from './ResponsivePicture';
 import styles from './Gallery.module.css';
 
@@ -64,7 +65,10 @@ export default function Gallery() {
           <button
           key={p.alt}
           className={styles.panel}
-          onClick={() => setActiveIndex(i)}
+          onClick={() => {
+            trackGalleryOpen();
+            setActiveIndex(i);
+          }}
           aria-label={`Открыть фото: ${p.alt}`}
           >
             <ResponsivePicture
