@@ -15,6 +15,12 @@ function AnimatedRoutes() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/apartments-vladikavkaz" element={<SeoPage />} />
+      <Route path="/kvartira-posutochno-vladikavkaz" element={<SeoPage />} />
+      <Route path="/snyat-kvartiru-posutochno-vladikavkaz" element={<SeoPage />} />
+      <Route path="/kvartira-na-sutki-vladikavkaz" element={<SeoPage />} />
+      <Route path="/kvartira-posutochno-vladikavkaz-center" element={<SeoPage />} />
+      <Route path="/komandirovka-vladikavkaz" element={<SeoPage />} />
+      <Route path="/bez-posrednikov" element={<SeoPage />} />
       <Route path="/center-vladikavkaz" element={<SeoPage />} />
       <Route path="/family-apartment" element={<SeoPage />} />
       <Route path="/weekend-vladikavkaz" element={<SeoPage />} />

@@ -6,6 +6,7 @@
     "dev": "vite",
     "prebuild": "node ./scripts/update-sitemap.mjs",
     "build": "vite build",
+    "postbuild": "node ./scripts/prerender-seo.mjs",
     "preview": "vite preview",
     "go": "bash ./scripts/go.sh",
     "setup:local-ssh": "bash ./scripts/local-ssh-config.sh",
