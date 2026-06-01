@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CookieConsent from './components/CookieConsent';
@@ -9,6 +10,18 @@ import LegalPage from './pages/LegalPage';
 import SeoPage from './pages/SeoPage';
 import BlogIndex from './pages/BlogIndex';
 import BlogPost from './pages/BlogPost';
+
+function LegacyHashRedirect() {
+  useEffect(() => {
+    const { hash, origin } = window.location;
+    if (!hash.startsWith('#/')) return;
+
+    const path = hash.slice(1) || '/';
+    window.history.replaceState(null, '', `${origin}${path}`);
+  }, []);
+
+  return null;
+}
 
 function AnimatedRoutes() {
   return (
@@ -40,6 +53,7 @@ function AnimatedRoutes() {
 export default function App() {
   return (
     <BrowserRouter>
+      <LegacyHashRedirect />
       <SkipLink />
       <Navbar />
       <AnimatedRoutes />
