@@ -7,6 +7,13 @@
     <link rel="apple-touch-icon" href="/favicon.svg" />
     <link rel="mask-icon" href="/favicon.svg" color="#1A1916" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        if (!window.location.hash || !window.location.hash.startsWith('#/')) return;
+        var path = window.location.hash.slice(1) || '/';
+        window.history.replaceState(null, '', path + window.location.search);
+      }());
+    </script>
     <meta name="theme-color" content="#1A1916" />
     <title>Квартира посуточно во Владикавказе | R14-APART, ул. Революции 14</title>
     <meta name="description" content="Снять квартиру посуточно во Владикавказе: R14-APART в историческом центре, ул. Революции 14. До 4 гостей, 45 м², Wi-Fi, парковка, бесконтактное заселение 24/7, от 7500 ₽." />

@@ -13,11 +13,11 @@ import BlogPost from './pages/BlogPost';
 
 function LegacyHashRedirect() {
   useEffect(() => {
-    const { hash, origin } = window.location;
+    const { hash, search } = window.location;
     if (!hash.startsWith('#/')) return;
 
     const path = hash.slice(1) || '/';
-    window.history.replaceState(null, '', `${origin}${path}`);
+    window.history.replaceState(null, '', `${path}${search}`);
   }, []);
 
   return null;
@@ -33,7 +33,7 @@ function ScrollToTop() {
   }, []);
 
   useEffect(() => {
-    if (location.hash || location.state?.scrollTo) return;
+    if ((location.hash && !location.hash.startsWith('#/')) || location.state?.scrollTo) return;
     window.requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: 'auto' }));
   }, [location.hash, location.key, location.pathname, location.state]);
 
