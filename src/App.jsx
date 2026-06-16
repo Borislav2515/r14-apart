@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -19,6 +19,23 @@ function LegacyHashRedirect() {
     const path = hash.slice(1) || '/';
     window.history.replaceState(null, '', `${origin}${path}`);
   }, []);
+
+  return null;
+}
+
+function ScrollToTop() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+  }, []);
+
+  useEffect(() => {
+    if (location.hash || location.state?.scrollTo) return;
+    window.requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: 'auto' }));
+  }, [location.hash, location.key, location.pathname, location.state]);
 
   return null;
 }
@@ -54,6 +71,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <LegacyHashRedirect />
+      <ScrollToTop />
       <SkipLink />
       <Navbar />
       <AnimatedRoutes />

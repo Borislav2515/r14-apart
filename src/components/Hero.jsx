@@ -12,7 +12,14 @@ export default function Hero() {
 
   // Parallax on scroll
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const compactViewport = window.matchMedia('(max-width: 768px)');
+    const coarsePointer = window.matchMedia('(pointer: coarse)');
+
+    if (reduceMotion.matches || compactViewport.matches || coarsePointer.matches) {
+      if (bgRef.current) bgRef.current.style.transform = 'scale(1.1)';
+      return undefined;
+    }
 
     let ticking = false;
     const onScroll = () => {
