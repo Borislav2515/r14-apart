@@ -50,9 +50,7 @@
 }
 
 .eyebrow {
-  font-size: 11px; letter-spacing: 5px;
-  text-transform: uppercase; color: var(--gold);
-  margin-bottom: 24px;
+  display: none;
 }
 
 .title {
@@ -154,6 +152,10 @@
 }
 
 @media (max-width: 768px) {
+  .content {
+    padding-top: calc(var(--nav-h) + 20px);
+  }
+
   .subtitle { font-size: 14px; }
   .facts { gap: 6px; }
   .facts span { font-size: 11px; padding: 7px 9px; }

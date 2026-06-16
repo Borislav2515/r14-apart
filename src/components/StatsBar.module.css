@@ -1,70 +1,300 @@
 .bar {
+  --card-w: 218px;
+  --card-h: 160px;
+  --gap: 18px;
   background: var(--charcoal-mid);
   border-top: 1px solid rgba(184, 150, 90, 0.12);
   border-bottom: 1px solid rgba(184, 150, 90, 0.12);
-  padding: 14px 20px;
+  padding: 14px 0;
+  overflow: hidden;
 }
 
-.inner {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px 12px;
-  max-width: 640px;
+.scroller {
+  width: min(100%, 980px);
+  height: calc(var(--card-h) + 18px);
   margin: 0 auto;
-  align-items: start;
-}
-
-.item {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: stretch;
+  gap: var(--gap);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-padding-inline: calc((100% - var(--card-w)) / 2);
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 9px calc((100% - var(--card-w)) / 2);
+}
+
+.scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.card {
+  flex: 0 0 var(--card-w);
+  height: var(--card-h);
+  scroll-snap-align: center;
+  display: grid;
+  grid-template-rows: 34px 28px 28px 24px;
+  align-content: center;
+  justify-items: center;
+  gap: 8px;
+  border: 1px solid rgba(184, 150, 90, 0.14);
+  border-radius: 8px;
+  padding: 18px 20px;
+  background:
+    radial-gradient(circle at 52% 0%, rgba(184, 150, 90, 0.1), transparent 42%),
+    rgba(21, 20, 18, 0.78);
+  color: var(--cream);
   text-align: center;
-  gap: 4px;
-  padding: 6px 4px;
+  box-shadow:
+    inset 0 1px 0 rgba(245, 240, 232, 0.04),
+    0 14px 26px rgba(0, 0, 0, 0.16);
+  transition:
+    transform 0.24s var(--ease-smooth),
+    border-color 0.24s var(--ease-smooth),
+    background 0.24s var(--ease-smooth);
+}
+
+.card:hover,
+.featured {
+  border-color: rgba(212, 175, 122, 0.34);
+  background:
+    radial-gradient(circle at 52% 0%, rgba(212, 175, 122, 0.16), transparent 44%),
+    rgba(28, 26, 23, 0.86);
+}
+
+.card:hover {
+  transform: translateY(-1px);
+}
+
+.featured {
+  transform: scale(1.08);
+  z-index: 1;
+}
+
+.featured:hover {
+  transform: scale(1.08) translateY(-1px);
+}
+
+.brand {
   min-width: 0;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  align-self: end;
 }
 
-.num {
-  font-family: var(--font-display);
-  font-size: clamp(20px, 2.4vw, 28px);
-  font-weight: 500;
-  color: var(--gold);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+.name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: 0;
+  color: var(--white);
 }
 
-.label {
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: lowercase;
-  line-height: 1.25;
-  color: var(--text-muted);
-  max-width: 11em;
+.stars {
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  color: var(--gold-light);
+  text-shadow: 0 2px 8px rgba(212, 175, 122, 0.18);
+  white-space: nowrap;
 }
 
-/* Узкие экраны: два столбца, компактная сетка 2×2 */
-@media (max-width: 640px) {
+.score {
+  font-size: 23px;
+  line-height: 1;
+  color: rgba(245, 240, 232, 0.9);
+}
+
+.reviews {
+  font-size: 19px;
+  line-height: 1.15;
+  color: rgba(245, 240, 232, 0.72);
+}
+
+.icon {
+  position: relative;
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+}
+
+.sutochnoIcon {
+  border: 2px solid rgba(245, 240, 232, 0.92);
+  border-radius: 4px;
+}
+
+.sutochnoIcon::before,
+.sutochnoIcon::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  width: 4px;
+  height: 8px;
+  border-radius: 2px;
+  background: rgba(245, 240, 232, 0.92);
+}
+
+.sutochnoIcon::before {
+  left: 5px;
+}
+
+.sutochnoIcon::after {
+  right: 5px;
+}
+
+.ostrovokIcon {
+  border: 6px solid rgba(245, 240, 232, 0.96);
+  border-radius: 50%;
+}
+
+.ostrovokIcon::after {
+  content: '';
+  position: absolute;
+  right: -9px;
+  top: 3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(245, 240, 232, 0.96);
+}
+
+.avitoIcon {
+  width: 28px;
+  height: 28px;
+}
+
+.avitoIcon i {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+
+.avitoIcon i:nth-child(1) {
+  left: 1px;
+  top: 2px;
+  background: #7557ff;
+}
+
+.avitoIcon i:nth-child(2) {
+  right: 1px;
+  top: 2px;
+  background: #00b341;
+}
+
+.avitoIcon i:nth-child(3) {
+  left: 1px;
+  bottom: 2px;
+  background: #00aaff;
+}
+
+.avitoIcon i:nth-child(4) {
+  right: 1px;
+  bottom: 2px;
+  background: #ff5c45;
+}
+
+.yandexIcon {
+  border-radius: 50%;
+  background: var(--gold-light);
+}
+
+.yandexIcon::before {
+  content: '★';
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--charcoal);
+  font-size: 15px;
+  line-height: 1;
+}
+
+.tvilIcon {
+  border-radius: 50%;
+  border: 2px solid var(--gold-light);
+}
+
+.tvilIcon::before {
+  content: 'T';
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--gold-light);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+@media (max-width: 760px) {
   .bar {
-    padding: 12px 14px;
+    --card-w: 160px;
+    --card-h: 120px;
+    --gap: 12px;
+    padding: 12px 0;
   }
 
-  .inner {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px 14px;
-    max-width: 340px;
+  .scroller {
+    width: 100%;
   }
 
-  .item {
-    padding: 4px 2px;
+  .card {
+    grid-template-rows: 20px 20px 20px 20px;
+    gap: 5px;
+    padding: 16px 14px;
   }
 
-  .num {
-    font-size: clamp(22px, 6vw, 26px);
+  .brand {
+    gap: 7px;
   }
 
-  .label {
-    font-size: 9px;
+  .name {
+    font-size: 14px;
+  }
+
+  .stars {
+    font-size: 20px;
     letter-spacing: 0.05em;
+  }
+
+  .score {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 12px;
+    padding: 5px 8px;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .reviews {
+    font-size: 12px;
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .avitoIcon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .avitoIcon i {
+    width: 9px;
+    height: 9px;
   }
 }

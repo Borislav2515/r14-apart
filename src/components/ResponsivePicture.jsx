@@ -37,7 +37,7 @@ export default function ResponsivePicture({
         className={className}
         loading={loading}
         decoding={decoding}
-        fetchPriority={fetchPriority}
+        fetchpriority={fetchPriority}
         {...props}
       />
     </picture>

@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import Breadcrumbs, { breadcrumbSchema } from '../components/Breadcrumbs';
 import StructuredData, { faqSchema } from '../components/StructuredData';
 import ResponsivePicture from '../components/ResponsivePicture';
 import { APARTMENT } from '../data/apartment';
@@ -32,6 +33,10 @@ export default function SeoPage() {
   const slug = location.pathname.replace(/^\/+/, '') || 'apartments-vladikavkaz';
   const page = getPageBySlug(slug) ?? getPageBySlug('apartments-vladikavkaz');
   const isFaq = page.slug === 'faq';
+  const crumbs = [
+    { label: 'Главная', to: '/' },
+    { label: page.h1, to: page.path },
+  ];
 
   usePageMeta({
     title: page.title,
@@ -42,6 +47,7 @@ export default function SeoPage() {
   return (
     <main className={styles.page}>
       <StructuredData data={isFaq ? [faqSchema] : undefined} />
+      <StructuredData data={breadcrumbSchema(crumbs)} />
       <section className={styles.hero}>
         <ResponsivePicture
           image={isFaq ? APARTMENT.images.living : APARTMENT.images.hero}
@@ -52,6 +58,7 @@ export default function SeoPage() {
           fetchPriority="high"
         />
         <div className={styles.heroInner}>
+          <Breadcrumbs items={crumbs} />
           <p className={styles.eyebrow}>{page.eyebrow}</p>
           <h1 className={styles.title}>{page.h1}</h1>
           <p className={styles.lead}>{page.lead}</p>

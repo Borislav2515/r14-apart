@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .ratings-proof {
+  padding: 56px 20px;
+  background: #15130f;
+  color: #f7f1e8;
+}
+
+.ratings-proof__inner {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  text-align: center;
+  border: 1px solid rgba(218, 177, 99, 0.35);
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(218, 177, 99, 0.16), transparent 42%),
+    linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015));
+}
+
+.ratings-proof__stars {
+  margin-bottom: 10px;
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  color: #dab163;
+}
+
+.ratings-proof__score {
+  margin-bottom: 14px;
+  font-size: clamp(56px, 14vw, 92px);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+  color: #fffaf0;
+}
+
+.ratings-proof__title {
+  margin: 0 0 12px;
+  font-size: clamp(24px, 7vw, 40px);
+  font-weight: 500;
+  line-height: 1.05;
+}
+
+.ratings-proof__text {
+  max-width: 420px;
+  margin: 0 auto 28px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: rgba(247, 241, 232, 0.72);
+}
+
+.ratings-proof__platforms {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.ratings-proof__platforms span {
+  padding: 10px 14px;
+  border: 1px solid rgba(218, 177, 99, 0.35);
+  border-radius: 999px;
+  font-size: 14px;
+  color: #f7f1e8;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.ratings-proof__note {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(218, 177, 99, 0.9);
+}
+
+@media (max-width: 480px) {
+  .ratings-proof {
+    padding: 40px 16px;
+  }
+
+  .ratings-proof__inner {
+    padding: 34px 18px;
+    border-radius: 26px;
+  }
+
+  .ratings-proof__stars {
+    font-size: 26px;
+  }
+}
+    </style>
+</head>
+<body>
+    <section class="ratings-proof" aria-labelledby="ratings-title">
+  <div class="ratings-proof__inner">
+    <div class="ratings-proof__stars" aria-label="Рейтинг 5 из 5">
+      ★★★★★
+    </div>
+
+    <div class="ratings-proof__score">5.0</div>
+
+    <h2 class="ratings-proof__title" id="ratings-title">
+      Максимальный рейтинг гостей
+    </h2>
+
+    <p class="ratings-proof__text">
+      R14·APART получает высшие оценки на популярных площадках бронирования.
+    </p>
+
+    <div class="ratings-proof__platforms" aria-label="Площадки бронирования">
+      <span>Суточно.ру</span>
+      <span>Островок</span>
+      <span>Авито</span>
+      <span>Яндекс Путешествия</span>
+    </div>
+
+    <p class="ratings-proof__note">
+      Проверенные отзывы реальных гостей
+    </p>
+  </div>
+</section>
+</body>
+</html>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Breadcrumbs, { breadcrumbSchema } from '../components/Breadcrumbs';
 import StructuredData from '../components/StructuredData';
 import ResponsivePicture from '../components/ResponsivePicture';
 import { APARTMENT } from '../data/apartment';
@@ -7,6 +8,11 @@ import usePageMeta from '../hooks/usePageMeta';
 import styles from './SeoPage.module.css';
 
 export default function BlogIndex() {
+  const crumbs = [
+    { label: 'Главная', to: '/' },
+    { label: 'Блог', to: '/blog' },
+  ];
+
   usePageMeta({
     title: blogIndexMeta.title,
     description: blogIndexMeta.description,
@@ -16,6 +22,7 @@ export default function BlogIndex() {
   return (
     <main className={styles.page}>
       <StructuredData />
+      <StructuredData data={breadcrumbSchema(crumbs)} />
       <section className={styles.hero}>
         <ResponsivePicture
           image={APARTMENT.images.kitchen}
@@ -26,6 +33,7 @@ export default function BlogIndex() {
           fetchPriority="high"
         />
         <div className={styles.heroInner}>
+          <Breadcrumbs items={crumbs} />
           <p className={styles.eyebrow}>Блог R14-APART</p>
           <h1 className={styles.title}>Владикавказ и Северная Осетия</h1>
           <p className={styles.lead}>
@@ -48,4 +56,3 @@ export default function BlogIndex() {
     </main>
   );
 }
-

@@ -181,6 +181,26 @@ export const seoRoutes = [
     schemaType: 'BlogPosting',
   },
   {
+    path: '/blog/business-trip-vladikavkaz',
+    title: 'Командировка во Владикавказ: где остановиться | R14-APART',
+    description:
+      'Как выбрать жильё для командировки во Владикавказе: документы, Wi-Fi, поздний заезд, центр города и удобная самостоятельная логистика.',
+    changefreq: 'monthly',
+    priority: '0.7',
+    type: 'article',
+    schemaType: 'BlogPosting',
+  },
+  {
+    path: '/blog/apartment-with-self-checkin-vladikavkaz',
+    title: 'Апартаменты с самостоятельным заселением во Владикавказе | R14-APART',
+    description:
+      'Почему самостоятельное заселение удобно для поездки во Владикавказ: ночной заезд, смарт-замок, приватность и меньше ожидания.',
+    changefreq: 'monthly',
+    priority: '0.7',
+    type: 'article',
+    schemaType: 'BlogPosting',
+  },
+  {
     path: '/rules',
     title: 'Правила дома | R14-APART',
     description:

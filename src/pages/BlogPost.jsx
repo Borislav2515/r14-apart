@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
+import Breadcrumbs, { breadcrumbSchema } from '../components/Breadcrumbs';
 import StructuredData from '../components/StructuredData';
 import ResponsivePicture from '../components/ResponsivePicture';
 import { APARTMENT } from '../data/apartment';
@@ -10,6 +11,11 @@ import styles from './SeoPage.module.css';
 export default function BlogPost() {
   const { slug = '' } = useParams();
   const post = getPostBySlug(slug) ?? blogPosts[0];
+  const crumbs = [
+    { label: 'Главная', to: '/' },
+    { label: 'Блог', to: '/blog' },
+    { label: post.h1, to: post.path },
+  ];
 
   usePageMeta({
     title: post.title,
@@ -40,6 +46,7 @@ export default function BlogPost() {
   return (
     <main className={styles.page}>
       <StructuredData data={articleSchema} />
+      <StructuredData data={breadcrumbSchema(crumbs)} />
       <section className={styles.hero}>
         <ResponsivePicture
           image={APARTMENT.images.bedroom}
@@ -50,6 +57,7 @@ export default function BlogPost() {
           fetchPriority="high"
         />
         <div className={styles.heroInner}>
+          <Breadcrumbs items={crumbs} />
           <p className={styles.eyebrow}>Блог R14-APART</p>
           <h1 className={styles.title}>{post.h1}</h1>
           <p className={styles.lead}>{post.excerpt}</p>
@@ -88,4 +96,3 @@ export default function BlogPost() {
     </main>
   );
 }
-
