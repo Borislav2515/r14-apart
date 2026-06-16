@@ -97,9 +97,8 @@
   letter-spacing: 0;
   color: var(--white);
 }
-
 .stars {
-  font-size: 24px;
+  font-size: 20px;
   line-height: 1;
   letter-spacing: 0.08em;
   color: var(--gold-light);
@@ -107,14 +106,21 @@
   white-space: nowrap;
 }
 
-.score {
-  font-size: 23px;
-  line-height: 1;
-  color: rgba(245, 240, 232, 0.9);
-}
+  .score {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 12px;
+    padding: 5px 8px;
+    color: #fff;
+    font-weight: 600;
+  }
 
 .reviews {
-  font-size: 19px;
+  font-size: 12px;
   line-height: 1.15;
   color: rgba(245, 240, 232, 0.72);
 }
@@ -254,11 +260,25 @@
   }
 
   .brand {
-    gap: 7px;
+    min-width: 0;
+    max-width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    align-self: end;
   }
 
   .name {
-    font-size: 14px;
+     min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: 0;
+    color: var(--white);
   }
 
   .stars {
