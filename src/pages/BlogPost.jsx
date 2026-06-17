@@ -8,6 +8,104 @@ import usePageMeta from '../hooks/usePageMeta';
 import { trackBookingOpen } from '../utils/analytics';
 import styles from './SeoPage.module.css';
 
+function RichBlocks({ blocks }) {
+  return blocks.map((block) => {
+    if (block.type === 'photo') {
+      return (
+        <figure key={block.title} className={styles.photoPlaceholder}>
+          <div className={styles.photoFrame}>
+            <span>{block.title}</span>
+            <small>{block.fileHint}</small>
+          </div>
+          <figcaption>{block.caption}</figcaption>
+        </figure>
+      );
+    }
+
+    if (block.type === 'heading') {
+      return (
+        <section key={block.title} className={styles.section}>
+          <h2>{block.title}</h2>
+          {block.texts?.map((text) => <p key={text}>{text}</p>)}
+          {block.list && (
+            <ul>
+              {block.list.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          )}
+        </section>
+      );
+    }
+
+    if (block.type === 'links') {
+      return (
+        <section key={block.title} className={styles.section}>
+          <h2>{block.title}</h2>
+          <div className={styles.inlineLinks}>
+            {block.items.map((item) => (
+              <Link key={item.to} to={item.to}>{item.label}</Link>
+            ))}
+          </div>
+        </section>
+      );
+    }
+
+    if (block.type === 'faq') {
+      return (
+        <section key={block.title} className={styles.section}>
+          <h2>{block.title}</h2>
+          <div className={styles.articleFaq}>
+            {block.items.map((item) => (
+              <article key={item.q}>
+                <h3>{item.q}</h3>
+                <p>{item.a}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      );
+    }
+
+    if (block.type === 'table') {
+      return (
+        <section key={block.title} className={styles.section}>
+          <h2>{block.title}</h2>
+          <div className={styles.tableWrap}>
+            <table className={styles.articleTable}>
+              <thead>
+                <tr>{block.headers.map((header) => <th key={header}>{header}</th>)}</tr>
+              </thead>
+              <tbody>
+                {block.rows.map((row) => (
+                  <tr key={row.join('-')}>
+                    {row.map((cell) => <td key={cell}>{cell}</td>)}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      );
+    }
+
+    if (block.type === 'cta') {
+      return (
+        <section key={block.text} className={styles.section}>
+          <p>{block.text}</p>
+          <Link to="/" state={{ scrollTo: 'hero' }} className={styles.articleCta} onClick={trackBookingOpen}>
+            Проверить даты и забронировать апартаменты
+          </Link>
+        </section>
+      );
+    }
+
+    return (
+      <section key={block.text} className={styles.section}>
+        <p>{block.text}</p>
+      </section>
+    );
+  });
+}
+
 export default function BlogPost() {
   const { slug = '' } = useParams();
   const post = getPostBySlug(slug) ?? blogPosts[0];
@@ -42,11 +140,23 @@ export default function BlogPost() {
     },
     mainEntityOfPage: `${seoDefaults.siteUrl}${post.path}`,
   };
+  const postFaq = post.blocks?.find((block) => block.type === 'faq');
+  const postFaqSchema = postFaq && {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: postFaq.items.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.a,
+      },
+    })),
+  };
 
   return (
     <main className={styles.page}>
-      <StructuredData data={articleSchema} />
-      <StructuredData data={breadcrumbSchema(crumbs)} />
+      <StructuredData data={postFaqSchema ? [articleSchema, breadcrumbSchema(crumbs), postFaqSchema] : [articleSchema, breadcrumbSchema(crumbs)]} />
       <section className={styles.hero}>
         <ResponsivePicture
           image={APARTMENT.images.bedroom}
@@ -75,12 +185,26 @@ export default function BlogPost() {
       <div className={styles.content}>
         <div className={styles.grid}>
           <article className={styles.sections}>
-            {post.sections.map(([title, text]) => (
-              <section key={title} className={styles.section}>
-                <h2>{title}</h2>
-                <p>{text}</p>
+            {post.blocks ? (
+              <RichBlocks blocks={post.blocks} />
+            ) : (
+              post.sections.map(([title, text]) => (
+                <section key={title} className={styles.section}>
+                  <h2>{title}</h2>
+                  <p>{text}</p>
+                </section>
+              ))
+            )}
+            {post.related && (
+              <section className={styles.section}>
+                <h2>Читайте также</h2>
+                <div className={styles.inlineLinks}>
+                  {post.related.map((item) => (
+                    <Link key={item.to} to={item.to}>{item.label}</Link>
+                  ))}
+                </div>
               </section>
-            ))}
+            )}
           </article>
           <aside className={styles.aside}>
             <strong>R14-APART</strong>

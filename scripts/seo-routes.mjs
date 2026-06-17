@@ -201,6 +201,36 @@ export const seoRoutes = [
     schemaType: 'BlogPosting',
   },
   {
+    path: '/blog/gde-ostanovitsya-vo-vladikavkaze',
+    title: 'Где остановиться во Владикавказе: апартаменты, гостиница или хостел | R14-APART',
+    description:
+      'Сравниваем гостиницы, хостелы и апартаменты посуточно во Владикавказе — что выбрать туристу, семье или командировочному в 2026 году.',
+    changefreq: 'monthly',
+    priority: '0.7',
+    type: 'article',
+    schemaType: 'BlogPosting',
+  },
+  {
+    path: '/blog/kak-dobratsya-do-vladikavkaza',
+    title: 'Как добраться до Владикавказа: самолёт, поезд, машина | R14-APART',
+    description:
+      'Все способы доехать до Владикавказа в 2026 году — самолётом через аэропорт Беслан, поездом из Москвы, на машине по трассам Кавказа. Время в пути и что учесть.',
+    changefreq: 'monthly',
+    priority: '0.7',
+    type: 'article',
+    schemaType: 'BlogPosting',
+  },
+  {
+    path: '/blog/kurtatinskoe-ushchelye-kadarganvanskiy-kanyon',
+    title: 'Куртатинское ущелье и Кадаргаванский каньон: как добраться и что посмотреть | R14-APART',
+    description:
+      'Маршрут по Куртатинскому ущелью — Кадаргаванский каньон, Тропа чудес, крепость Дзивгис. Как доехать из Владикавказа, сколько времени закладывать и что взять с собой.',
+    changefreq: 'monthly',
+    priority: '0.7',
+    type: 'article',
+    schemaType: 'BlogPosting',
+  },
+  {
     path: '/rules',
     title: 'Правила дома | R14-APART',
     description:
