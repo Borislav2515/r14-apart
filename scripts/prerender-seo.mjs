@@ -211,6 +211,20 @@ const staticService = (route) => `
       <p>${escapeHtml(route.description)}</p>
     </main>`;
 
+const staticNotFound = () => `
+    <main>
+      <p>404</p>
+      <h1>Страница не найдена</h1>
+      <p>Такой страницы на сайте R14-APART нет. Можно вернуться на главную, открыть блог или проверить даты для бронирования.</p>
+      <nav aria-label="Полезные ссылки">
+        <ul>
+          <li><a href="/">Главная</a></li>
+          <li><a href="/blog">Блог</a></li>
+          <li><a href="/apartments-vladikavkaz">Об апартаментах</a></li>
+        </ul>
+      </nav>
+    </main>`;
+
 const staticContentFor = (route) => {
   const content =
     route.schemaType === 'BlogPosting'
@@ -224,6 +238,13 @@ const staticContentFor = (route) => {
             : staticCommercialPage(route);
 
   return `<div class="prerender-content" data-prerender="true">${content}</div>`;
+};
+
+const notFoundRoute = {
+  path: '/404',
+  title: 'Страница не найдена | R14-APART',
+  description: 'Такой страницы на сайте R14-APART нет. Можно вернуться на главную, открыть блог или проверить даты для бронирования.',
+  robots: 'noindex, nofollow',
 };
 
 const renderHtml = (route) => {
@@ -318,4 +339,13 @@ routes.forEach((route) => {
   writeFileSync(outputPath, renderHtml(route), 'utf8');
 });
 
-console.log(`Prerendered SEO head and static content for ${routes.length} routes`);
+writeFileSync(
+  join(distDir, '404.html'),
+  renderHtml(notFoundRoute).replace(
+    /<div id="root">.*?<\/div>/s,
+    `<div id="root"><div class="prerender-content" data-prerender="true">${staticNotFound()}</div></div>`
+  ),
+  'utf8'
+);
+
+console.log(`Prerendered SEO head and static content for ${routes.length} routes plus 404.html`);

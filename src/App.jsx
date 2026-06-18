@@ -10,6 +10,7 @@ import LegalPage from './pages/LegalPage';
 import SeoPage from './pages/SeoPage';
 import BlogIndex from './pages/BlogIndex';
 import BlogPost from './pages/BlogPost';
+import NotFound from './pages/NotFound';
 
 function LegacyHashRedirect() {
   useEffect(() => {
@@ -63,6 +64,7 @@ function AnimatedRoutes() {
       <Route path="/consent" element={<LegalPage type="consent" />} />
       <Route path="/cookies" element={<LegalPage type="cookies" />} />
       <Route path="/agreement" element={<LegalPage type="agreement" />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

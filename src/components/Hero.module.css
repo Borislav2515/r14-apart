@@ -8,9 +8,12 @@
 }
 
 .bg {
-  position: absolute; inset: 0;
-  transform: scale(1.1);
+  position: absolute;
+  inset: -12svh 0;
+  transform: translate3d(0, 0, 0) scale(1.04);
   will-change: transform;
+  backface-visibility: hidden;
+  contain: paint;
 }
 
 .bg picture,
@@ -130,7 +133,13 @@
 }
 
 .widgetWrap {
-  max-width: 760px; margin: 0 auto;
+  max-width: 760px;
+  min-height: 112px;
+  margin: 0 auto;
+}
+
+.widgetWrap > div {
+  min-height: 112px;
 }
 
 /* Scroll indicator */
@@ -159,6 +168,10 @@
   .subtitle { font-size: 14px; }
   .facts { gap: 6px; }
   .facts span { font-size: 11px; padding: 7px 9px; }
+  .widgetWrap,
+  .widgetWrap > div {
+    min-height: 138px;
+  }
   .scroll { display: none; }
 }
 

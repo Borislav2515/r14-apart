@@ -6,45 +6,85 @@ import ResponsivePicture from './ResponsivePicture';
 import styles from './Hero.module.css';
 
 const SCRIPT_SRC = 'https://homereserve.ru/widget.js';
+const LOAD_BOOKING_WIDGET_EVENT = 'r14apart-load-booking-widget';
+
+const requestBookingWidget = () => {
+  window.dispatchEvent(new Event(LOAD_BOOKING_WIDGET_EVENT));
+};
 
 export default function Hero() {
+  const heroRef = useRef(null);
   const bgRef = useRef(null);
 
   // Parallax on scroll
   useEffect(() => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const compactViewport = window.matchMedia('(max-width: 768px)');
-    const coarsePointer = window.matchMedia('(pointer: coarse)');
 
-    if (reduceMotion.matches || compactViewport.matches || coarsePointer.matches) {
-      if (bgRef.current) bgRef.current.style.transform = 'scale(1.1)';
+    if (reduceMotion.matches) {
+      if (bgRef.current) bgRef.current.style.transform = 'translate3d(0, 0, 0) scale(1.04)';
       return undefined;
     }
 
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(() => {
-        if (!bgRef.current) {
-          ticking = false;
-          return;
-        }
-        const y = window.scrollY;
-        if (y < window.innerHeight) {
-          bgRef.current.style.transform = `scale(1.1) translateY(${y * 0.28}px)`;
-        }
-        ticking = false;
-      });
+    const mobileViewport = window.matchMedia('(max-width: 768px)');
+    let frameId = 0;
+    let current = 0;
+    let target = 0;
+
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+    const measure = () => {
+      if (!heroRef.current) return;
+
+      const rect = heroRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      const factor = mobileViewport.matches ? 0.14 : 0.28;
+      const maxOffset = viewportHeight * (mobileViewport.matches ? 0.12 : 0.24);
+
+      target = rect.bottom > 0 && rect.top < viewportHeight
+        ? clamp(-rect.top * factor, 0, maxOffset)
+        : 0;
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+
+    const render = () => {
+      if (!bgRef.current) return;
+
+      current += (target - current) * 0.18;
+      if (Math.abs(target - current) < 0.08) current = target;
+
+      bgRef.current.style.transform = `translate3d(0, ${current.toFixed(2)}px, 0) scale(1.04)`;
+
+      if (current !== target) {
+        frameId = window.requestAnimationFrame(render);
+      } else {
+        frameId = 0;
+      }
+    };
+
+    const update = () => {
+      measure();
+      if (!frameId) frameId = window.requestAnimationFrame(render);
+    };
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    window.visualViewport?.addEventListener('resize', update);
+
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+      window.visualViewport?.removeEventListener('resize', update);
+      if (frameId) window.cancelAnimationFrame(frameId);
+    };
   }, []);
 
   // HomeReserve widget init in hero (#hr-widget)
   useEffect(() => {
     let stopped = false;
     let retries = 0;
+    let scriptRequested = false;
+    let idleId;
+    let timerId;
 
     const initWidget = () => {
       const container = document.getElementById('hr-widget');
@@ -67,28 +107,45 @@ export default function Hero() {
       };
     }
 
-    let script = document.querySelector(`script[src="${SCRIPT_SRC}"]`);
     const onLoad = () => tryInit();
 
-    if (!script) {
-      script = document.createElement('script');
-      script.type = 'module';
-      script.src = SCRIPT_SRC;
-      script.addEventListener('load', onLoad, { once: true });
-      document.head.appendChild(script);
+    const loadScript = () => {
+      if (stopped || scriptRequested) return;
+      scriptRequested = true;
+
+      let script = document.querySelector(`script[src="${SCRIPT_SRC}"]`);
+
+      if (!script) {
+        script = document.createElement('script');
+        script.type = 'module';
+        script.src = SCRIPT_SRC;
+        script.addEventListener('load', onLoad, { once: true });
+        document.head.appendChild(script);
+      } else {
+        script.addEventListener('load', onLoad, { once: true });
+        setTimeout(tryInit, 250);
+      }
+    };
+
+    window.addEventListener(LOAD_BOOKING_WIDGET_EVENT, loadScript);
+
+    if ('requestIdleCallback' in window) {
+      idleId = window.requestIdleCallback(loadScript, { timeout: 3500 });
     } else {
-      script.addEventListener('load', onLoad, { once: true });
-      setTimeout(tryInit, 250);
+      timerId = window.setTimeout(loadScript, 2400);
     }
 
     return () => {
       stopped = true;
-      script?.removeEventListener('load', onLoad);
+      window.removeEventListener(LOAD_BOOKING_WIDGET_EVENT, loadScript);
+      if (idleId) window.cancelIdleCallback(idleId);
+      if (timerId) window.clearTimeout(timerId);
+      document.querySelector(`script[src="${SCRIPT_SRC}"]`)?.removeEventListener('load', onLoad);
     };
   }, []);
 
   return (
-    <section id="hero" className={styles.hero} aria-label="Главный экран">
+    <section ref={heroRef} id="hero" className={styles.hero} aria-label="Главный экран">
       <div
         ref={bgRef}
         className={styles.bg}
@@ -131,7 +188,16 @@ export default function Hero() {
         </Reveal>
 
         <Reveal className={styles.actions} delay={0.96} y={20} immediate>
-          <a href="#hr-widget" className={styles.btnPrimary} onClick={trackBookingOpen}>
+          <a
+            href="#hr-widget"
+            className={styles.btnPrimary}
+            onClick={() => {
+              requestBookingWidget();
+              trackBookingOpen();
+            }}
+            onFocus={requestBookingWidget}
+            onMouseEnter={requestBookingWidget}
+          >
             Бронировать
           </a>
           <a href={whatsappHref} className={styles.btnGhost} onClick={trackWhatsapp}>

@@ -1,0 +1,23 @@
+# R14-APART
+
+R14-APART is a short-term apartment rental website for a two-level apartment in the historic center of Vladikavkaz at 14 Revolyutsii Street.
+
+## Important Pages
+
+- [Home](https://r14-apart.com/)
+- [Apartment details](https://r14-apart.com/apartamenty-posutochno-vladikavkaz-tsentr)
+- [Location guide](https://r14-apart.com/kvartira-posutochno-vladikavkaz-centr)
+- [Blog](https://r14-apart.com/blog)
+- [How to get to Vladikavkaz](https://r14-apart.com/blog/kak-dobratsya-do-vladikavkaza)
+- [Where to stay in Vladikavkaz](https://r14-apart.com/blog/gde-ostanovitsya-vo-vladikavkaze)
+- [Kurtatinsky Gorge and Kadargavan Canyon](https://r14-apart.com/blog/kurtatinskoe-ushchelye-kadarganvanskiy-kanyon)
+- [Sitemap](https://r14-apart.com/sitemap.xml)
+- [Robots.txt](https://r14-apart.com/robots.txt)
+
+## Site Purpose
+
+The site helps guests find and book R14-APART, compare apartment features, learn about the location, and plan a trip to Vladikavkaz and North Ossetia.
+
+## Crawling Guidance
+
+Public pages may be indexed by search engines and AI agents. Please use the sitemap for canonical URLs and respect robots.txt restrictions for legal and consent pages.
