@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { safeGetItem, safeSetItem } from '../utils/safeStorage';
 
 const COUNTER_ID = 109137147;
 const CONSENT_KEY = 'r14apart-cookie-consent';
@@ -7,7 +8,7 @@ const UTM_KEY = 'r14apart-utm';
 
 const hasAnalyticsConsent = () => {
   try {
-    const raw = localStorage.getItem(CONSENT_KEY);
+    const raw = safeGetItem(CONSENT_KEY);
     if (!raw) return false;
     if (raw === 'accepted') return true;
     return Boolean(JSON.parse(raw).analytics);
@@ -53,7 +54,7 @@ const saveUtm = () => {
   });
 
   if (Object.keys(utm).length > 0) {
-    localStorage.setItem(UTM_KEY, JSON.stringify({ ...utm, capturedAt: new Date().toISOString() }));
+    safeSetItem(UTM_KEY, JSON.stringify({ ...utm, capturedAt: new Date().toISOString() }));
   }
 };
 

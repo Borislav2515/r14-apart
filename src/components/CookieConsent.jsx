@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { safeGetItem, safeSetItem } from '../utils/safeStorage';
 import styles from './CookieConsent.module.css';
 
 const STORAGE_KEY = 'r14apart-cookie-consent';
@@ -13,11 +14,11 @@ export default function CookieConsent() {
   });
 
   useEffect(() => {
-    setVisible(!localStorage.getItem(STORAGE_KEY));
+    setVisible(!safeGetItem(STORAGE_KEY));
   }, []);
 
   const saveConsent = (value) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+    safeSetItem(STORAGE_KEY, JSON.stringify(value));
     window.dispatchEvent(new CustomEvent('r14apart-cookie-consent', { detail: value }));
     setVisible(false);
     setSettingsOpen(false);

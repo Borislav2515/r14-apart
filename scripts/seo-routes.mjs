@@ -1,6 +1,13 @@
 export const SITE_URL = 'https://r14-apart.com';
 export const OG_IMAGE = `${SITE_URL}/og-r14-apart.jpg`;
 
+export const canonicalPathFor = (path) => {
+  if (path === '/') return '/';
+  return `${path.replace(/\/+$/, '')}/`;
+};
+
+export const canonicalUrlFor = (path) => new URL(canonicalPathFor(path), SITE_URL).toString();
+
 export const seoRoutes = [
   {
     path: '/',
@@ -242,6 +249,13 @@ export const seoRoutes = [
 ];
 
 export const serviceRoutes = [
+  {
+    path: '/guest-guide',
+    title: 'Инструкция для гостей | R14-APART',
+    description:
+      'Краткая инструкция для гостей R14-APART: команды Алисы, свет, кондиционер, терморегуляторы, техника и правила проживания.',
+    robots: 'noindex, nofollow',
+  },
   {
     path: '/privacy',
     title: 'Политика конфиденциальности | R14-APART',

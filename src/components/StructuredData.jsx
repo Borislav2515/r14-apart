@@ -80,6 +80,10 @@ export const faqSchema = {
 };
 
 export default function StructuredData({ data = [lodgingSchema, faqSchema] }) {
+  if (typeof document !== 'undefined' && document.querySelector('script[data-prerender-schema="true"]')) {
+    return null;
+  }
+
   return (
     <>
       {(Array.isArray(data) ? data : [data]).map((item, index) => (
@@ -92,4 +96,3 @@ export default function StructuredData({ data = [lodgingSchema, faqSchema] }) {
     </>
   );
 }
-

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Hero from '../components/Hero';
 import StatsBar from '../components/StatsBar';
@@ -15,31 +15,12 @@ const FaqSection = lazy(() => import('../components/FaqSection'));
 const Cta = lazy(() => import('../components/Cta'));
 const MapSection = lazy(() => import('../components/MapSection'));
 
-function DeferredSection({ id, minHeight = 320, children }) {
-  const [shouldRender, setShouldRender] = useState(false);
-  const holderRef = useRef(null);
-
-  useEffect(() => {
-    const target = holderRef.current;
-    if (!target) return undefined;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) {
-          setShouldRender(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: '320px 0px' }
-    );
-
-    observer.observe(target);
-    return () => observer.disconnect();
-  }, []);
-
+function HomeSection({ id, minHeight = 320, children }) {
   return (
-    <section id={id} ref={holderRef} style={shouldRender ? undefined : { minHeight }}>
-      {shouldRender ? <Suspense fallback={null}>{children}</Suspense> : null}
+    <section id={id}>
+      <Suspense fallback={<div style={{ minHeight }} aria-hidden="true" />}>
+        {children}
+      </Suspense>
     </section>
   );
 }
@@ -69,27 +50,27 @@ export default function Home() {
       <StructuredData />
       <Hero />
       <StatsBar />
-      <DeferredSection id="about" minHeight={420}>
+      <HomeSection id="about" minHeight={420}>
         <About />
-      </DeferredSection>
-      <DeferredSection id="gallery" minHeight={420}>
+      </HomeSection>
+      <HomeSection id="gallery" minHeight={420}>
         <Gallery />
-      </DeferredSection>
-      <DeferredSection id="features" minHeight={420}>
+      </HomeSection>
+      <HomeSection id="features" minHeight={420}>
         <Features />
-      </DeferredSection>
-      <DeferredSection id="reviews" minHeight={420}>
+      </HomeSection>
+      <HomeSection id="reviews" minHeight={420}>
         <Reviews />
-      </DeferredSection>
-      <DeferredSection id="faq" minHeight={320}>
+      </HomeSection>
+      <HomeSection id="faq" minHeight={320}>
         <FaqSection />
-      </DeferredSection>
-      <DeferredSection id="map" minHeight={420}>
+      </HomeSection>
+      <HomeSection id="map" minHeight={420}>
         <MapSection />
-      </DeferredSection>
-      <DeferredSection id="cta" minHeight={360}>
+      </HomeSection>
+      <HomeSection id="cta" minHeight={360}>
         <Cta />
-      </DeferredSection>
+      </HomeSection>
     </main>
   );
 }

@@ -46,6 +46,19 @@ button { cursor: pointer; font-family: var(--font-body); }
 img { display: block; max-width: 100%; }
 picture { display: block; }
 
+.prerender-content {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: normal;
+  border: 0;
+}
+
 @font-face {
   font-family: 'Fraunces';
   src: url('/fonts/fraunces-300.ttf?v=20260618') format('truetype');

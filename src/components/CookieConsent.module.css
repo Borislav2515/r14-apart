@@ -135,10 +135,33 @@
     bottom: 12px;
     align-items: stretch;
     flex-direction: column;
+    gap: 10px;
+    padding: 12px;
   }
 
   .actions,
   .modalActions {
-    flex-direction: column;
+    flex-direction: row;
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .banner p {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .banner button {
+    width: 100%;
+    padding: 0 12px;
+  }
+
+  .banner a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
   }
 }

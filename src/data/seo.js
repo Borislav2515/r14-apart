@@ -6,6 +6,13 @@ const UPDATED_AT = '2026-06-01';
 
 const baseTitle = 'R14-APART';
 
+export const canonicalPathFor = (path) => {
+  if (path === '/') return '/';
+  return `${path.replace(/\/+$/, '')}/`;
+};
+
+export const canonicalUrlFor = (path) => new URL(canonicalPathFor(path), SITE_URL).toString();
+
 export const seoDefaults = {
   siteUrl: SITE_URL,
   image: OG_IMAGE,

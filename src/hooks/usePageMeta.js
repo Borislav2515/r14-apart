@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { seoDefaults } from '../data/seo';
+import { canonicalUrlFor, seoDefaults } from '../data/seo';
 
 const upsertMeta = (selector, attrs) => {
   let element = document.head.querySelector(selector);
@@ -32,7 +32,7 @@ export default function usePageMeta({
   robots = 'index, follow',
 }) {
   useEffect(() => {
-    const url = new URL(path, seoDefaults.siteUrl).toString();
+    const url = canonicalUrlFor(path);
 
     document.title = title;
     upsertMeta('meta[name="description"]', { name: 'description', content: description });
@@ -51,4 +51,3 @@ export default function usePageMeta({
     upsertMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: image });
   }, [description, image, path, robots, title, type]);
 }
-

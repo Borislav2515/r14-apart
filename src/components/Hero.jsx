@@ -1,16 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { APARTMENT } from '../data/apartment';
-import { trackBookingOpen, trackTelegram, trackWhatsapp, telegramHref, whatsappHref } from '../utils/analytics';
+import { trackTelegram, trackWhatsapp, telegramHref, whatsappHref } from '../utils/analytics';
 import Reveal from './Reveal';
 import ResponsivePicture from './ResponsivePicture';
 import styles from './Hero.module.css';
 
 const SCRIPT_SRC = 'https://homereserve.ru/widget.js';
-const LOAD_BOOKING_WIDGET_EVENT = 'r14apart-load-booking-widget';
-
-const requestBookingWidget = () => {
-  window.dispatchEvent(new Event(LOAD_BOOKING_WIDGET_EVENT));
-};
 
 export default function Hero() {
   const heroRef = useRef(null);
@@ -83,13 +78,11 @@ export default function Hero() {
     let stopped = false;
     let retries = 0;
     let scriptRequested = false;
-    let idleId;
-    let timerId;
 
     const initWidget = () => {
       const container = document.getElementById('hr-widget');
       if (stopped || !container || !window.homereserve?.initWidgetSearch) return false;
-      window.homereserve.initWidgetSearch({ token: 'lJ9CQtdlv9', tag: 'site' });
+      window.homereserve.initWidgetSearch({ token: 'lJ9CQtdlv9' });
       return true;
     };
 
@@ -127,19 +120,10 @@ export default function Hero() {
       }
     };
 
-    window.addEventListener(LOAD_BOOKING_WIDGET_EVENT, loadScript);
-
-    if ('requestIdleCallback' in window) {
-      idleId = window.requestIdleCallback(loadScript, { timeout: 3500 });
-    } else {
-      timerId = window.setTimeout(loadScript, 2400);
-    }
+    loadScript();
 
     return () => {
       stopped = true;
-      window.removeEventListener(LOAD_BOOKING_WIDGET_EVENT, loadScript);
-      if (idleId) window.cancelIdleCallback(idleId);
-      if (timerId) window.clearTimeout(timerId);
       document.querySelector(`script[src="${SCRIPT_SRC}"]`)?.removeEventListener('load', onLoad);
     };
   }, []);
@@ -168,9 +152,12 @@ export default function Hero() {
         </Reveal>
 
         <Reveal as="h1" className={styles.title} delay={0.55} y={24} immediate>
-          R14<span className={styles.dot}>·</span>
-          <br />
-          <em>APART</em>
+          <span className={styles.brandLine}>
+            R14<span className={styles.dot}>·</span>
+            <br />
+            <em>APART</em>
+          </span>
+          <span className={styles.seoLine}>Квартира посуточно во Владикавказе</span>
         </Reveal>
 
         <Reveal as="p" className={styles.subtitle} delay={0.8} y={24} immediate>
@@ -187,29 +174,17 @@ export default function Hero() {
           <span>самостоятельное заселение</span>
         </Reveal>
 
-        <Reveal className={styles.actions} delay={0.96} y={20} immediate>
-          <a
-            href="#hr-widget"
-            className={styles.btnPrimary}
-            onClick={() => {
-              requestBookingWidget();
-              trackBookingOpen();
-            }}
-            onFocus={requestBookingWidget}
-            onMouseEnter={requestBookingWidget}
-          >
-            Бронировать
-          </a>
+        <Reveal className={styles.widgetWrap} delay={0.96} y={24} immediate>
+          <div id="hr-widget" aria-label="Форма бронирования" />
+        </Reveal>
+
+        <Reveal className={styles.actions} delay={1} y={20} immediate>
           <a href={whatsappHref} className={styles.btnGhost} onClick={trackWhatsapp}>
             WhatsApp
           </a>
           <a href={telegramHref} className={styles.btnGhost} onClick={trackTelegram}>
             Telegram
           </a>
-        </Reveal>
-
-        <Reveal className={styles.widgetWrap} delay={1} y={24} immediate>
-          <div id="hr-widget" aria-label="Форма бронирования" />
         </Reveal>
       </div>
 

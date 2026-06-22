@@ -39,8 +39,14 @@ server {
     server_name _;
     root /var/www/r14-apart;
     index index.html;
+    error_page 404 /404.html;
+
+    location = /404.html {
+        add_header Cache-Control "no-cache";
+    }
+
     location / {
-        try_files $uri $uri/ /index.html;
+        try_files $uri $uri/ =404;
         add_header Cache-Control "no-cache";
     }
 
@@ -64,8 +70,14 @@ server {
     server_name _;
     root /var/www/r14-apart;
     index index.html;
+    error_page 404 /404.html;
+
+    location = /404.html {
+        add_header Cache-Control "no-cache";
+    }
+
     location / {
-        try_files $uri $uri/ /index.html;
+        try_files $uri $uri/ =404;
         add_header Cache-Control "no-cache";
     }
 

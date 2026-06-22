@@ -1,12 +1,12 @@
 import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { seoRoutes, SITE_URL } from './seo-routes.mjs';
+import { canonicalUrlFor, seoRoutes } from './seo-routes.mjs';
 
 const lastmod = new Date().toISOString().slice(0, 10);
 
 const urlEntries = seoRoutes
   .map(({ path, changefreq, priority }) => `  <url>
-    <loc>${SITE_URL}${path}</loc>
+    <loc>${canonicalUrlFor(path)}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>

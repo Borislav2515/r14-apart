@@ -10,6 +10,7 @@ import LegalPage from './pages/LegalPage';
 import SeoPage from './pages/SeoPage';
 import BlogIndex from './pages/BlogIndex';
 import BlogPost from './pages/BlogPost';
+import GuestGuide from './pages/GuestGuide';
 import NotFound from './pages/NotFound';
 
 function LegacyHashRedirect() {
@@ -60,6 +61,7 @@ function AnimatedRoutes() {
       <Route path="/blog" element={<BlogIndex />} />
       <Route path="/blog/:slug" element={<BlogPost />} />
       <Route path="/rules" element={<LegalPage type="rules" />} />
+      <Route path="/guest-guide" element={<GuestGuide />} />
       <Route path="/privacy" element={<LegalPage type="privacy" />} />
       <Route path="/consent" element={<LegalPage type="consent" />} />
       <Route path="/cookies" element={<LegalPage type="cookies" />} />
