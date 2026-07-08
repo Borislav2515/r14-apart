@@ -130,38 +130,49 @@
 
 @media (max-width: 640px) {
   .banner {
-    left: 12px;
-    right: 12px;
-    bottom: 12px;
-    align-items: stretch;
-    flex-direction: column;
-    gap: 10px;
-    padding: 12px;
-  }
-
-  .actions,
-  .modalActions {
+    left: 16px;
+    right: 16px;
+    bottom: max(10px, env(safe-area-inset-bottom));
+    align-items: center;
     flex-direction: row;
+    gap: 10px;
+    padding: 10px;
+    border-color: rgba(184,150,90,0.2);
+    background: rgba(17,16,13,0.88);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.24);
   }
 
   .actions {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: auto auto;
+    gap: 6px;
   }
 
   .banner p {
-    font-size: 12px;
-    line-height: 1.45;
+    font-size: 11px;
+    line-height: 1.35;
+    color: rgba(245,240,232,0.82);
   }
 
   .banner button {
-    width: 100%;
-    padding: 0 12px;
+    min-height: 44px;
+    padding: 0 10px;
+    font-size: 10px;
+    letter-spacing: 1.4px;
   }
 
   .banner a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
+    min-height: auto;
+  }
+}
+
+@media (max-width: 380px) {
+  .banner {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .actions {
+    grid-template-columns: 1fr 1fr;
   }
 }

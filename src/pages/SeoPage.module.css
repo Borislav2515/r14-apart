@@ -134,7 +134,7 @@
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  transition: transform 0.3s var(--ease-bounce), background 0.3s var(--ease-smooth);
+  transition: transform 0.3s var(--ease-out-expo), background 0.3s var(--ease-smooth);
 }
 
 .primary {
@@ -349,7 +349,7 @@
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  transition: transform 0.3s var(--ease-bounce);
+  transition: transform 0.3s var(--ease-out-expo);
 }
 
 .articleCta:hover {

@@ -14,3 +14,11 @@ pnpm-debug.log*
 
 .idea/
 .vscode/
+
+# AI coding tool configs/skill installs (per-tool, not project source)
+.claude/
+.cursor/
+.codex/
+.gemini/
+.agents/
+.impeccable/

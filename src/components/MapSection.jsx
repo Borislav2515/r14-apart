@@ -11,7 +11,6 @@ export default function MapSection() {
     <section className={styles.section} aria-labelledby="map-heading">
       <div className={styles.inner}>
         <Reveal className={styles.copy} y={32}>
-          <p className={styles.label}>Локация</p>
           <h2 id="map-heading" className={styles.title}>
             Центр<br /><em>Владикавказа</em>
           </h2>

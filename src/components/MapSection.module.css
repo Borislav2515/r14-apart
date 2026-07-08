@@ -1,6 +1,6 @@
 .section {
-  background: var(--cream);
-  color: var(--charcoal);
+  background: var(--charcoal);
+  color: var(--cream);
   padding: 96px 48px;
 }
 
@@ -17,15 +17,6 @@
   min-width: 0;
   position: relative;
   z-index: 1;
-}
-
-.label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 18px;
 }
 
 .title {
@@ -57,18 +48,21 @@
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background: var(--charcoal);
+  border: 1px solid rgba(184,150,90,0.45);
+  background: rgba(245,240,232,0.06);
   color: var(--cream);
   padding: 0 22px;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  transition: transform 0.3s var(--ease-bounce);
+  transition: transform 0.3s var(--ease-out-expo), background 0.3s var(--ease-smooth), border-color 0.3s var(--ease-smooth);
 }
 
 .route:hover {
   transform: translateY(-2px);
+  background: rgba(184,150,90,0.14);
+  border-color: var(--gold);
 }
 
 .mapWrap {
@@ -77,8 +71,8 @@
   min-height: 420px;
   border-radius: 8px;
   overflow: hidden;
-  border: 1px solid rgba(26,25,22,0.12);
-  background: var(--cream-dark);
+  border: 1px solid rgba(184,150,90,0.18);
+  background: var(--charcoal-mid);
 }
 
 .map {

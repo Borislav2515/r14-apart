@@ -1,15 +1,15 @@
 import { useEffect, useRef } from 'react';
 import { APARTMENT } from '../data/apartment';
 import { trackTelegram, trackWhatsapp, telegramHref, whatsappHref } from '../utils/analytics';
+import { useBookingModal } from '../context/BookingModalContext';
 import Reveal from './Reveal';
 import ResponsivePicture from './ResponsivePicture';
 import styles from './Hero.module.css';
 
-const SCRIPT_SRC = 'https://homereserve.ru/widget.js';
-
 export default function Hero() {
   const heroRef = useRef(null);
   const bgRef = useRef(null);
+  const { setHeroSlot } = useBookingModal();
 
   // Parallax on scroll
   useEffect(() => {
@@ -22,41 +22,26 @@ export default function Hero() {
 
     const mobileViewport = window.matchMedia('(max-width: 768px)');
     let frameId = 0;
-    let current = 0;
-    let target = 0;
 
     const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
-    const measure = () => {
-      if (!heroRef.current) return;
+    const render = () => {
+      frameId = 0;
+      if (!heroRef.current || !bgRef.current) return;
 
       const rect = heroRef.current.getBoundingClientRect();
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
       const factor = mobileViewport.matches ? 0.14 : 0.28;
       const maxOffset = viewportHeight * (mobileViewport.matches ? 0.12 : 0.24);
 
-      target = rect.bottom > 0 && rect.top < viewportHeight
+      const offset = rect.bottom > 0 && rect.top < viewportHeight
         ? clamp(-rect.top * factor, 0, maxOffset)
         : 0;
-    };
 
-    const render = () => {
-      if (!bgRef.current) return;
-
-      current += (target - current) * 0.18;
-      if (Math.abs(target - current) < 0.08) current = target;
-
-      bgRef.current.style.transform = `translate3d(0, ${current.toFixed(2)}px, 0) scale(1.04)`;
-
-      if (current !== target) {
-        frameId = window.requestAnimationFrame(render);
-      } else {
-        frameId = 0;
-      }
+      bgRef.current.style.transform = `translate3d(0, ${offset.toFixed(2)}px, 0) scale(1.04)`;
     };
 
     const update = () => {
-      measure();
       if (!frameId) frameId = window.requestAnimationFrame(render);
     };
 
@@ -70,61 +55,6 @@ export default function Hero() {
       window.removeEventListener('resize', update);
       window.visualViewport?.removeEventListener('resize', update);
       if (frameId) window.cancelAnimationFrame(frameId);
-    };
-  }, []);
-
-  // HomeReserve widget init in hero (#hr-widget)
-  useEffect(() => {
-    let stopped = false;
-    let retries = 0;
-    let scriptRequested = false;
-
-    const initWidget = () => {
-      const container = document.getElementById('hr-widget');
-      if (stopped || !container || !window.homereserve?.initWidgetSearch) return false;
-      window.homereserve.initWidgetSearch({ token: 'lJ9CQtdlv9' });
-      return true;
-    };
-
-    const tryInit = () => {
-      if (stopped) return;
-      if (initWidget()) return;
-      retries += 1;
-      if (retries < 20) setTimeout(tryInit, 250);
-    };
-
-    if (window.homereserve?.initWidgetSearch) {
-      tryInit();
-      return () => {
-        stopped = true;
-      };
-    }
-
-    const onLoad = () => tryInit();
-
-    const loadScript = () => {
-      if (stopped || scriptRequested) return;
-      scriptRequested = true;
-
-      let script = document.querySelector(`script[src="${SCRIPT_SRC}"]`);
-
-      if (!script) {
-        script = document.createElement('script');
-        script.type = 'module';
-        script.src = SCRIPT_SRC;
-        script.addEventListener('load', onLoad, { once: true });
-        document.head.appendChild(script);
-      } else {
-        script.addEventListener('load', onLoad, { once: true });
-        setTimeout(tryInit, 250);
-      }
-    };
-
-    loadScript();
-
-    return () => {
-      stopped = true;
-      document.querySelector(`script[src="${SCRIPT_SRC}"]`)?.removeEventListener('load', onLoad);
     };
   }, []);
 
@@ -165,17 +95,14 @@ export default function Hero() {
         </Reveal>
 
         <Reveal className={styles.facts} delay={0.9} y={20} immediate>
-          <span>{APARTMENT.city}</span>
           <span>{APARTMENT.address}</span>
           <span>от {APARTMENT.priceFrom.toLocaleString('ru-RU')} ₽/сутки</span>
           <span>до {APARTMENT.guests} гостей</span>
-          <span>Wi-Fi</span>
-          <span>парковка</span>
           <span>самостоятельное заселение</span>
         </Reveal>
 
         <Reveal className={styles.widgetWrap} delay={0.96} y={24} immediate>
-          <div id="hr-widget" aria-label="Форма бронирования" />
+          <div ref={setHeroSlot} />
         </Reveal>
 
         <Reveal className={styles.actions} delay={1} y={20} immediate>

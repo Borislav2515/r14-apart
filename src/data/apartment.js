@@ -30,7 +30,7 @@ export const APARTMENT = {
   area: 45,
   guests: 4,
   rating: 5.0,
-  reviewCount: 247,
+  reviewCount: 91,
   phone: '89060330014',
   email: 'r14.group@gmail.com',
   address: 'Владикавказ, ул. Революции, 14',
@@ -49,19 +49,19 @@ export const APARTMENT = {
     bathroom: imageFor('bathroom'),
   },
   amenities: [
-    { icon: '📶', label: 'WiFi 200 Мбит/с' },
-    { icon: '📺', label: 'Смарт-ТВ' },
-    { icon: '☕', label: 'Кофемашина' },
-    { icon: '🫧', label: 'Стиральная машина' },
-    { icon: '❄️', label: 'Кондиционер' },
-    { icon: '🔥', label: 'Умное отопление' },
-    { icon: '💡', label: 'Умное освещение' },
-    { icon: '🍳', label: 'Полная кухня' },
-    { icon: '🛁', label: 'Ванна' },
-    { icon: '🅿️', label: 'Парковка' },
-    { icon: '🔑', label: 'Смарт-замок' },
-    { icon: '🛎', label: 'Заселение 24/7' },
-    { icon: '🧾', label: 'Отчётные документы' },
+    { icon: '📶', label: 'WiFi 200 Мбит/с', group: 'Комфорт' },
+    { icon: '📺', label: 'Смарт-ТВ', group: 'Комфорт' },
+    { icon: '☕', label: 'Кофемашина', group: 'Комфорт' },
+    { icon: '❄️', label: 'Кондиционер', group: 'Комфорт' },
+    { icon: '🔥', label: 'Умное отопление', group: 'Умный дом' },
+    { icon: '💡', label: 'Умное освещение', group: 'Умный дом' },
+    { icon: '🔑', label: 'Смарт-замок', group: 'Умный дом' },
+    { icon: '🛎', label: 'Заселение 24/7', group: 'Умный дом' },
+    { icon: '🫧', label: 'Стиральная машина', group: 'Быт' },
+    { icon: '🍳', label: 'Полная кухня', group: 'Быт' },
+    { icon: '🛁', label: 'Ванна', group: 'Быт' },
+    { icon: '🅿️', label: 'Парковка', group: 'Быт' },
+    { icon: '🧾', label: 'Отчётные документы', group: 'Быт' },
   ],
   features: [
     {
@@ -94,6 +94,7 @@ export const REVIEWS = [
     author: 'Анна К.',
     city: 'Москва',
     stars: 5,
+    source: 'Яндекс Путешествия',
   },
   {
     id: 2,
@@ -101,6 +102,7 @@ export const REVIEWS = [
     author: 'Дмитрий П.',
     city: 'Санкт-Петербург',
     stars: 5,
+    source: 'Островок',
   },
   {
     id: 3,
@@ -108,6 +110,7 @@ export const REVIEWS = [
     author: 'Мария С.',
     city: 'Екатеринбург',
     stars: 5,
+    source: 'Суточно.ру',
   },
   {
     id: 4,
@@ -115,6 +118,7 @@ export const REVIEWS = [
     author: 'Семья Воронцовых',
     city: 'Казань',
     stars: 5,
+    source: 'Авито',
   },
   {
     id: 5,
@@ -122,6 +126,7 @@ export const REVIEWS = [
     author: 'Игорь Б.',
     city: 'Новосибирск',
     stars: 5,
+    source: 'Твил',
   },
 ];
 

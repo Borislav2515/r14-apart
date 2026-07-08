@@ -22,5 +22,12 @@ export function useSectionNavigation() {
     }
 
     scrollToSection(id);
+    navigate(`#${id}`, { replace: false });
   }, [location.pathname, navigate]);
 }
+
+// Lets section links be real, shareable anchors (`/#about`) while still getting
+// the smooth-scroll + fixed-nav-offset treatment on a plain click; modified
+// clicks (new tab, copy link, etc.) fall through to native browser behavior.
+export const isPlainLeftClick = (e) =>
+  e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey;

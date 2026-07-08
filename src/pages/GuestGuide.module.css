@@ -83,7 +83,7 @@
   font-weight: 800;
   letter-spacing: 1.6px;
   text-transform: uppercase;
-  transition: transform 0.25s var(--ease-bounce), background 0.25s var(--ease-smooth);
+  transition: transform 0.25s var(--ease-out-expo), background 0.25s var(--ease-smooth);
 }
 
 .quickNav a,

@@ -38,10 +38,7 @@ export default function FaqSection() {
 
   return (
     <section className={styles.section} aria-labelledby="faq-heading">
-      <Reveal as="p" className={styles.label} y={30}>
-        Вопросы и ответы
-      </Reveal>
-      <Reveal as="h2" className={styles.title} id="faq-heading" delay={0.1} y={30}>
+      <Reveal as="h2" className={styles.title} id="faq-heading" y={30}>
         Часто<br /><em>спрашивают</em>
       </Reveal>
 

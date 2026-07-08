@@ -55,7 +55,7 @@
 
 .itemText {
   font-size: 13px; line-height: 1.7;
-  color: var(--text-muted);
+  color: rgba(245,240,232,0.78);
 }
 
 @media (max-width: 1024px) {

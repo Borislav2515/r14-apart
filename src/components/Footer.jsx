@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { APARTMENT } from '../data/apartment';
-import { useSectionNavigation } from '../hooks/useSectionNavigation';
+import { APARTMENT, REVIEW_PLATFORMS } from '../data/apartment';
+import { useSectionNavigation, isPlainLeftClick } from '../hooks/useSectionNavigation';
 import { trackPhone, trackTelegram, trackWhatsapp, telegramHref, whatsappHref } from '../utils/analytics';
 import styles from './Footer.module.css';
 
@@ -8,6 +8,7 @@ export default function Footer() {
   const goToSection = useSectionNavigation();
 
   const handleSectionLink = (e, id) => {
+    if (!isPlainLeftClick(e)) return;
     e.preventDefault();
     goToSection(id);
   };
@@ -21,21 +22,21 @@ export default function Footer() {
         </div>
 
         <div className={styles.col}>
-          <h4>Апартаменты</h4>
+          <h3>Апартаменты</h3>
           <ul>
-            <li><a href="/" onClick={e => handleSectionLink(e, 'about')}>Об апартаментах</a></li>
-            <li><a href="/" onClick={e => handleSectionLink(e, 'features')}>Удобства</a></li>
-            <li><a href="/" onClick={e => handleSectionLink(e, 'gallery')}>Фотогалерея</a></li>
-            <li><a href="/" onClick={e => handleSectionLink(e, 'reviews')}>Отзывы</a></li>
+            <li><a href="/#about" onClick={e => handleSectionLink(e, 'about')}>Об апартаментах</a></li>
+            <li><a href="/#features" onClick={e => handleSectionLink(e, 'features')}>Удобства</a></li>
+            <li><a href="/#about" onClick={e => handleSectionLink(e, 'about')}>Фотогалерея</a></li>
+            <li><a href="/#reviews" onClick={e => handleSectionLink(e, 'reviews')}>Отзывы</a></li>
             <li><Link to="/blog">Блог</Link></li>
           </ul>
         </div>
 
         <div className={styles.col}>
-          <h4>Информация</h4>
+          <h3>Информация</h3>
           <ul>
-            <li><a href="/" onClick={e => handleSectionLink(e, 'faq')}>Вопросы и ответы</a></li>
-            <li><a href="/" onClick={e => handleSectionLink(e, 'features')}>Условия аренды</a></li>
+            <li><a href="/#faq" onClick={e => handleSectionLink(e, 'faq')}>Вопросы и ответы</a></li>
+            <li><a href="/#features" onClick={e => handleSectionLink(e, 'features')}>Условия аренды</a></li>
             <li><Link to="/rules">Правила дома</Link></li>
             <li><Link to="/privacy">Конфиденциальность</Link></li>
             <li><Link to="/consent">Согласие на обработку</Link></li>
@@ -47,13 +48,24 @@ export default function Footer() {
         </div>
 
         <div className={styles.col}>
-          <h4>Контакты</h4>
+          <h3>Контакты</h3>
           <ul>
             <li><a href={`tel:${APARTMENT.phone}`} onClick={trackPhone}>{APARTMENT.phone}</a></li>
             <li><a href={`mailto:${APARTMENT.email}`}>{APARTMENT.email}</a></li>
             <li><span className={styles.address}>{APARTMENT.address}</span></li>
             <li><a href={telegramHref} onClick={trackTelegram}>Telegram</a></li>
             <li><a href={whatsappHref} onClick={trackWhatsapp}>WhatsApp</a></li>
+          </ul>
+        </div>
+
+        <div className={styles.col}>
+          <h3>Отзывы на площадках</h3>
+          <ul>
+            {REVIEW_PLATFORMS.map((platform) => (
+              <li key={platform.name}>
+                <a href={platform.href} target="_blank" rel="noreferrer">{platform.name}</a>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

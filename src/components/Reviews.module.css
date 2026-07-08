@@ -5,12 +5,6 @@
   overflow: hidden;
 }
 
-.label {
-  font-size: 10px; letter-spacing: 5px;
-  text-transform: uppercase; color: var(--gold);
-  margin-bottom: 20px;
-}
-
 .title {
   font-family: var(--font-display);
   font-size: clamp(36px, 5vw, 72px);
@@ -33,12 +27,33 @@
 .trackWrap::before { left: 0; background: linear-gradient(to right, var(--charcoal), transparent); }
 .trackWrap::after { right: 0; background: linear-gradient(to left, var(--charcoal), transparent); }
 
+.pauseBtn {
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  margin: 0 auto 32px;
+  border: 1px solid rgba(184, 150, 90, 0.3);
+  border-radius: 50%;
+  background: rgba(23, 22, 17, 0.7);
+  color: var(--gold-light);
+  font-size: 11px;
+  transition: border-color 0.3s var(--ease-smooth), background 0.3s var(--ease-smooth);
+}
+.pauseBtn:hover {
+  border-color: rgba(212, 175, 122, 0.6);
+  background: rgba(184, 150, 90, 0.16);
+}
+
 .track {
   display: flex; gap: 28px;
   width: max-content;
   animation: scroll 45s linear infinite;
 }
-.track:hover { animation-play-state: paused; }
+.track:hover,
+.track.paused {
+  animation-play-state: paused;
+}
 
 @keyframes scroll {
   from { transform: translateX(0); }

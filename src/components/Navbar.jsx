@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { APARTMENT } from '../data/apartment';
-import { useSectionNavigation } from '../hooks/useSectionNavigation';
+import { useSectionNavigation, isPlainLeftClick } from '../hooks/useSectionNavigation';
+import { useFocusTrap } from '../hooks/useFocusTrap';
 import { trackPhone, trackWhatsapp, trackTelegram, telegramHref, whatsappHref } from '../utils/analytics';
 import styles from './Navbar.module.css';
 
@@ -20,9 +21,10 @@ const PAGE_LINKS = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState(0);
   const location = useLocation();
   const goToSection = useSectionNavigation();
+  const mobileMenuRef = useRef(null);
+  const mobileCloseRef = useRef(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -62,16 +64,10 @@ export default function Navbar() {
     };
   }, [open]);
 
-  useEffect(() => {
-    if (!open) return undefined;
-    const onEsc = (e) => {
-      if (e.key === 'Escape') setOpen(false);
-    };
-    window.addEventListener('keydown', onEsc);
-    return () => window.removeEventListener('keydown', onEsc);
-  }, [open]);
+  useFocusTrap(open, mobileMenuRef, { onClose: () => setOpen(false), initialFocusRef: mobileCloseRef });
 
   const handleSectionLink = (e, id) => {
+    if (!isPlainLeftClick(e)) return;
     e.preventDefault();
     setOpen(false);
     window.setTimeout(() => goToSection(id), 0);
@@ -90,21 +86,24 @@ export default function Navbar() {
           R14<span>·</span>APART
         </Link>
 
-        <ul className={styles.links}>
-          {LINKS.map(link => (
-            <li key={link.id}>
-              <a href="/" onClick={e => handleSectionLink(e, link.id)} className={styles.link}>
-                {link.label}
-              </a>
+        <div className={styles.navEnd}>
+          <ul className={styles.links}>
+            {LINKS.map(link => (
+              <li key={link.id}>
+                <a href={`/#${link.id}`} onClick={e => handleSectionLink(e, link.id)} className={styles.link}>
+                  {link.label}
+                </a>
+              </li>
+            ))}
+            <li>
+              <Link to="/blog" className={styles.link}>Блог</Link>
             </li>
-          ))}
-          <li>
-            <Link to="/blog" className={styles.link}>Блог</Link>
-          </li>
-          <li>
-            <a href={`tel:${APARTMENT.phone}`} className={styles.link} onClick={trackPhone}>{APARTMENT.phone}</a>
-          </li>
-        </ul>
+          </ul>
+
+          <a href={`tel:${APARTMENT.phone}`} className={styles.navPhone} onClick={trackPhone}>
+            {APARTMENT.phone}
+          </a>
+        </div>
 
         <button
           className={`${styles.burger} ${open ? styles.burgerOpen : ''}`}
@@ -123,6 +122,7 @@ export default function Navbar() {
       {open && (
         <div
           id="mobileMenu"
+          ref={mobileMenuRef}
           className={styles.mobileMenu}
           onPointerMove={handleMenuPointer}
           role="dialog"
@@ -135,6 +135,7 @@ export default function Navbar() {
             <span>Владикавказ</span>
           </div>
           <button
+            ref={mobileCloseRef}
             className={styles.mobileClose}
             onClick={() => setOpen(false)}
             aria-label="Закрыть меню"
@@ -145,20 +146,16 @@ export default function Navbar() {
           <div className={styles.mobileInner}>
             <div className={styles.mobileIntro} aria-hidden="true">
               <span>Навигация</span>
-              <strong>{String(activeItem + 1).padStart(2, '0')}</strong>
             </div>
             <div className={styles.mobileLinks}>
               {LINKS.map((link, i) => (
                 <a
                   key={link.id}
-                  href="/"
+                  href={`/#${link.id}`}
                   onClick={e => handleSectionLink(e, link.id)}
                   className={styles.mobileLink}
-                  onPointerEnter={() => setActiveItem(i)}
-                  onFocus={() => setActiveItem(i)}
                   style={{ '--item-index': i }}
                 >
-                  <span className={styles.mobileIndex}>{String(i + 1).padStart(2, '0')}</span>
                   <span className={styles.mobileText}>
                     <span className={styles.mobileLabel}>{link.label}</span>
                     <span className={styles.mobileMeta}>{link.meta}</span>
@@ -172,11 +169,8 @@ export default function Navbar() {
                   to={link.to}
                   onClick={() => setOpen(false)}
                   className={styles.mobileLink}
-                  onPointerEnter={() => setActiveItem(LINKS.length + i)}
-                  onFocus={() => setActiveItem(LINKS.length + i)}
                   style={{ '--item-index': LINKS.length + i }}
                 >
-                  <span className={styles.mobileIndex}>{String(LINKS.length + i + 1).padStart(2, '0')}</span>
                   <span className={styles.mobileText}>
                     <span className={styles.mobileLabel}>{link.label}</span>
                     <span className={styles.mobileMeta}>{link.meta}</span>

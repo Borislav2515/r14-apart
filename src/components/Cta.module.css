@@ -33,12 +33,6 @@
 
 .content { position: relative; z-index: 2; }
 
-.label {
-  font-size: 10px; letter-spacing: 5px;
-  text-transform: uppercase; color: var(--gold);
-  margin-bottom: 20px;
-}
-
 .title {
   font-family: var(--font-display);
   font-size: clamp(40px, 6vw, 80px);
@@ -48,7 +42,7 @@
 .title em { font-style: italic; color: var(--sand-light); }
 
 .sub {
-  font-size: 14px; color: rgba(245,240,232,0.55);
+  font-size: 14px; color: rgba(245,240,232,0.78);
   margin-bottom: 40px; line-height: 1.7;
 }
 
@@ -66,7 +60,7 @@
   letter-spacing: 3px; text-transform: uppercase;
   padding: 16px 40px; border-radius: 1px; margin: 8px;
   text-decoration: none;
-  transition: background 0.3s, transform 0.25s var(--ease-bounce), box-shadow 0.3s;
+  transition: background 0.3s, transform 0.25s var(--ease-out-expo), box-shadow 0.3s;
 }
 .btnSolid {
   background: var(--gold); color: var(--charcoal);

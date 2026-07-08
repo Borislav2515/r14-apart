@@ -1,0 +1,105 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2400;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(17, 16, 13, 0.78);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease-smooth), visibility 0s linear 0.35s;
+}
+.overlay.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.35s var(--ease-smooth), visibility 0s linear 0s;
+}
+
+.panel {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: min(720px, 90vh);
+  overflow-y: auto;
+  border: 1px solid rgba(184, 150, 90, 0.28);
+  background: #171611;
+  padding: 40px 32px 32px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+  transform: translateY(16px) scale(0.98);
+  transition: transform 0.35s var(--ease-out-expo);
+}
+.overlay.open .panel {
+  transform: translateY(0) scale(1);
+}
+
+.close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(245, 240, 232, 0.18);
+  border-radius: 50%;
+  background: rgba(17, 16, 14, 0.4);
+  transition: transform 0.35s var(--ease-out-expo), border-color 0.35s var(--ease-smooth), background 0.35s var(--ease-smooth);
+}
+.close:hover {
+  transform: rotate(90deg) scale(1.04);
+  border-color: rgba(212, 175, 122, 0.6);
+  background: rgba(184, 150, 90, 0.16);
+}
+.close span {
+  position: absolute;
+  left: 14px;
+  top: 21px;
+  width: 16px;
+  height: 1px;
+  background: var(--cream);
+}
+.close span:first-child { transform: rotate(45deg); }
+.close span:last-child { transform: rotate(-45deg); }
+
+.eyebrow {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 300;
+  color: var(--cream);
+  margin-bottom: 24px;
+}
+
+.widgetSlot {
+  min-height: 112px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .panel {
+    transition-duration: 0.01ms;
+  }
+}
+
+@media (max-width: 640px) {
+  .overlay {
+    padding: 12px;
+    align-items: flex-end;
+  }
+  .panel {
+    width: 100%;
+    max-height: min(640px, 88vh);
+    padding: 32px 20px 24px;
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+  }
+}
