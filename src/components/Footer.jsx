@@ -42,8 +42,8 @@ export default function Footer() {
             <li><Link to="/consent">Согласие на обработку</Link></li>
             <li><Link to="/cookies">Политика cookie</Link></li>
             <li><Link to="/agreement">Пользовательское соглашение</Link></li>
-            <li><Link to="/apartments-vladikavkaz">Апартаменты посуточно</Link></li>
-            <li><Link to="/tourism-vladikavkaz">Туризм в Осетии</Link></li>
+            <li><Link to="/bez-posrednikov">Без посредников</Link></li>
+            <li><Link to="/komandirovka-vladikavkaz">Для командировки</Link></li>
           </ul>
         </div>
 

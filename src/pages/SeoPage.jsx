@@ -30,8 +30,8 @@ function BookingAside() {
 
 export default function SeoPage() {
   const location = useLocation();
-  const slug = location.pathname.replace(/^\/+/, '') || 'apartments-vladikavkaz';
-  const page = getPageBySlug(slug) ?? getPageBySlug('apartments-vladikavkaz');
+  const slug = location.pathname.replace(/^\/+|\/+$/g, '') || 'bez-posrednikov';
+  const page = getPageBySlug(slug) ?? getPageBySlug('bez-posrednikov');
   const isFaq = page.slug === 'faq';
   const crumbs = [
     { label: 'Главная', to: '/' },
@@ -109,6 +109,39 @@ export default function SeoPage() {
                   <p>{section.text}</p>
                 </section>
               ))}
+              {page.priceCompare && (
+                <section className={styles.section}>
+                  <h2>{page.priceCompare.title}</h2>
+                  <p>{page.priceCompare.intro}</p>
+                  <div className={styles.tableWrap}>
+                    <table className={styles.articleTable}>
+                      <thead>
+                        <tr>
+                          <th>Площадка</th>
+                          <th>Цена</th>
+                          <th>Комментарий</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {page.priceCompare.rows.map((row) => (
+                          <tr key={row.source}>
+                            <td>
+                              {row.href ? (
+                                <a href={row.href} target="_blank" rel="noreferrer">{row.source}</a>
+                              ) : (
+                                row.source
+                              )}
+                            </td>
+                            <td>{row.price}</td>
+                            <td>{row.note}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  {page.priceCompare.note && <p>{page.priceCompare.note}</p>}
+                </section>
+              )}
               <section className={styles.section}>
                 <h2>Почему выбирают R14-APART</h2>
                 <ul>

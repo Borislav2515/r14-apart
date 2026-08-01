@@ -179,10 +179,10 @@ export const REVIEW_PLATFORMS = [
     name: 'Островок',
     rating: '10 из 10',
     score: 'Превосходно',
-    reviews: '20+ отзывов',
+    reviews: '11 отзывов',
     brand: 'ostrovok',
     color: '#25ac01',
-    href: 'https://ostrovok.ru/hotel/russia/vladikavkaz/mid13166131/r14_flat/?dates=20.06.2026-21.06.2026&guests=2&type_group=apart&room=s-f1b5470e-ac7f-50fc-8e16-fc53b8dd9cc6&q=2650',
+    href: 'https://ostrovok.ru/hotel/russia/vladikavkaz/mid13166131/r14_flat/',
   },
   {
     name: 'Суточно.ру',
@@ -191,7 +191,7 @@ export const REVIEW_PLATFORMS = [
     color: '#d28a00',
     reviews: '25+ отзывов',
     brand: 'sutochno',
-    href: 'https://sutochno.ru/front/searchapp/detail/1938216?occupied=2026-06-18%3B2026-06-19&guests_adults=2&id=281425&type=city&term=%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BA%D0%B0%D0%B2%D0%BA%D0%B0%D0%B7&price_per=1&SW.lat=42.955195&SW.lng=44.603788&NE.lat=43.087553&NE.lng=44.742165',
+    href: 'https://sutochno.ru/front/searchapp/detail/1938216',
   },
   {
     name: 'Авито',

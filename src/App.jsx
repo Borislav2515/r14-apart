@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -46,18 +46,21 @@ function AnimatedRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/apartments-vladikavkaz" element={<SeoPage />} />
-      <Route path="/kvartira-posutochno-vladikavkaz" element={<SeoPage />} />
-      <Route path="/snyat-kvartiru-posutochno-vladikavkaz" element={<SeoPage />} />
-      <Route path="/kvartira-na-sutki-vladikavkaz" element={<SeoPage />} />
       <Route path="/kvartira-posutochno-vladikavkaz-center" element={<SeoPage />} />
       <Route path="/komandirovka-vladikavkaz" element={<SeoPage />} />
       <Route path="/bez-posrednikov" element={<SeoPage />} />
-      <Route path="/center-vladikavkaz" element={<SeoPage />} />
-      <Route path="/family-apartment" element={<SeoPage />} />
-      <Route path="/weekend-vladikavkaz" element={<SeoPage />} />
-      <Route path="/tourism-vladikavkaz" element={<SeoPage />} />
       <Route path="/faq" element={<SeoPage />} />
+      {/* Consolidated 11 -> 5 SEO pages (2026-08). Real 301s live in nginx
+          (scripts/server-bootstrap.sh); these are a client-side safety net
+          for anyone landing here before that config is deployed. */}
+      <Route path="/apartments-vladikavkaz" element={<Navigate to="/" replace />} />
+      <Route path="/kvartira-posutochno-vladikavkaz" element={<Navigate to="/" replace />} />
+      <Route path="/snyat-kvartiru-posutochno-vladikavkaz" element={<Navigate to="/" replace />} />
+      <Route path="/kvartira-na-sutki-vladikavkaz" element={<Navigate to="/" replace />} />
+      <Route path="/family-apartment" element={<Navigate to="/" replace />} />
+      <Route path="/weekend-vladikavkaz" element={<Navigate to="/" replace />} />
+      <Route path="/tourism-vladikavkaz" element={<Navigate to="/" replace />} />
+      <Route path="/center-vladikavkaz" element={<Navigate to="/kvartira-posutochno-vladikavkaz-center" replace />} />
       <Route path="/blog" element={<BlogIndex />} />
       <Route path="/blog/:slug" element={<BlogPost />} />
       <Route path="/rules" element={<LegalPage type="rules" />} />

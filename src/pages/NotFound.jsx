@@ -27,7 +27,7 @@ export default function NotFound() {
           <Link to="/blog" className={styles.secondaryAction}>
             Открыть блог
           </Link>
-          <Link to="/apartments-vladikavkaz" className={styles.secondaryAction}>
+          <Link to="/bez-posrednikov" className={styles.secondaryAction}>
             Об апартаментах
           </Link>
         </div>

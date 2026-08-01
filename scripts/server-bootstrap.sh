@@ -1,6 +1,18 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# !!! УСТАРЕЛО, НЕ ЗАПУСКАТЬ БЕЗ ПРАВКИ (проверено на проде 2026-08-01) !!!
+# Живой /etc/nginx/sites-available/r14-apart давно разошёлся с этим шаблоном:
+# на сервере shared VPS (ещё один сайт wb-deals), HTTPS через Certbot для
+# r14-apart.com/www и отдельного ha.r14-apart.com (проксирует на Home Assistant,
+# порт 18123), плюс proxy_pass на /webhooks/realty-calendar/ (порт 8010).
+# Этот скрипт затирает sites-available/r14-apart голым HTTP-конфигом без
+# всего перечисленного и рестартует nginx — прямой путь уронить HTTPS,
+# ha.r14-apart.com и вебхук. Redirect-правила для 11->5 SEO-страниц уже
+# накатаны точечным патчем на живой конфиг вручную, а не через этот скрипт.
+# Прежде чем запускать npm run setup:server — сначала обнови этот файл под
+# реальную живую конфигурацию (или выполняй изменения точечно, как редиректы).
+
 # Запускать на сервере от root (или через: ssh root@IP 'bash -s' < scripts/server-bootstrap.sh).
 # Debian/Ubuntu: nginx, статика из /var/www/r14-apart, автозапуск nginx, keepalive для sshd.
 
@@ -41,6 +53,25 @@ server {
     index index.html;
     error_page 404 /404.html;
 
+    # 11 -> 5 SEO page consolidation (2026-08). Must be real HTTP 301s, not
+    # client-side JS redirects, so crawlers pass link equity to the new URL.
+    location = /apartments-vladikavkaz { return 301 /; }
+    location = /apartments-vladikavkaz/ { return 301 /; }
+    location = /kvartira-posutochno-vladikavkaz { return 301 /; }
+    location = /kvartira-posutochno-vladikavkaz/ { return 301 /; }
+    location = /snyat-kvartiru-posutochno-vladikavkaz { return 301 /; }
+    location = /snyat-kvartiru-posutochno-vladikavkaz/ { return 301 /; }
+    location = /kvartira-na-sutki-vladikavkaz { return 301 /; }
+    location = /kvartira-na-sutki-vladikavkaz/ { return 301 /; }
+    location = /family-apartment { return 301 /; }
+    location = /family-apartment/ { return 301 /; }
+    location = /weekend-vladikavkaz { return 301 /; }
+    location = /weekend-vladikavkaz/ { return 301 /; }
+    location = /tourism-vladikavkaz { return 301 /; }
+    location = /tourism-vladikavkaz/ { return 301 /; }
+    location = /center-vladikavkaz { return 301 /kvartira-posutochno-vladikavkaz-center/; }
+    location = /center-vladikavkaz/ { return 301 /kvartira-posutochno-vladikavkaz-center/; }
+
     location = /404.html {
         add_header Cache-Control "no-cache";
     }
@@ -71,6 +102,25 @@ server {
     root /var/www/r14-apart;
     index index.html;
     error_page 404 /404.html;
+
+    # 11 -> 5 SEO page consolidation (2026-08). Must be real HTTP 301s, not
+    # client-side JS redirects, so crawlers pass link equity to the new URL.
+    location = /apartments-vladikavkaz { return 301 /; }
+    location = /apartments-vladikavkaz/ { return 301 /; }
+    location = /kvartira-posutochno-vladikavkaz { return 301 /; }
+    location = /kvartira-posutochno-vladikavkaz/ { return 301 /; }
+    location = /snyat-kvartiru-posutochno-vladikavkaz { return 301 /; }
+    location = /snyat-kvartiru-posutochno-vladikavkaz/ { return 301 /; }
+    location = /kvartira-na-sutki-vladikavkaz { return 301 /; }
+    location = /kvartira-na-sutki-vladikavkaz/ { return 301 /; }
+    location = /family-apartment { return 301 /; }
+    location = /family-apartment/ { return 301 /; }
+    location = /weekend-vladikavkaz { return 301 /; }
+    location = /weekend-vladikavkaz/ { return 301 /; }
+    location = /tourism-vladikavkaz { return 301 /; }
+    location = /tourism-vladikavkaz/ { return 301 /; }
+    location = /center-vladikavkaz { return 301 /kvartira-posutochno-vladikavkaz-center/; }
+    location = /center-vladikavkaz/ { return 301 /kvartira-posutochno-vladikavkaz-center/; }
 
     location = /404.html {
         add_header Cache-Control "no-cache";

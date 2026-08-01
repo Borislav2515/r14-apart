@@ -19,33 +19,6 @@ export const seoRoutes = [
     type: 'website',
   },
   {
-    path: '/kvartira-posutochno-vladikavkaz',
-    title: 'Квартира посуточно во Владикавказе | R14-APART',
-    description:
-      'Квартира посуточно во Владикавказе R14-APART: центр города, ул. Революции 14, до 4 гостей, Wi-Fi, кухня, парковка, отчётные документы и заезд 24/7.',
-    changefreq: 'monthly',
-    priority: '0.95',
-    type: 'website',
-  },
-  {
-    path: '/snyat-kvartiru-posutochno-vladikavkaz',
-    title: 'Снять квартиру посуточно во Владикавказе | R14-APART',
-    description:
-      'Снять квартиру посуточно во Владикавказе в R14-APART: онлайн-бронирование, самостоятельное заселение, центр, кухня, Wi-Fi, парковка и размещение до 4 гостей.',
-    changefreq: 'monthly',
-    priority: '0.95',
-    type: 'website',
-  },
-  {
-    path: '/kvartira-na-sutki-vladikavkaz',
-    title: 'Квартира на сутки во Владикавказе | R14-APART',
-    description:
-      'Квартира на сутки во Владикавказе: R14-APART в центре города, самостоятельное заселение 24/7, Wi-Fi, кухня, парковка, до 4 гостей.',
-    changefreq: 'monthly',
-    priority: '0.9',
-    type: 'website',
-  },
-  {
     path: '/kvartira-posutochno-vladikavkaz-center',
     title: 'Квартира посуточно в центре Владикавказа | R14-APART',
     description:
@@ -70,51 +43,6 @@ export const seoRoutes = [
       'Квартира посуточно во Владикавказе без посредников: R14-APART, прямое бронирование, центр, самостоятельное заселение, Wi-Fi, парковка.',
     changefreq: 'monthly',
     priority: '0.85',
-    type: 'website',
-  },
-  {
-    path: '/apartments-vladikavkaz',
-    title: 'Апартаменты посуточно во Владикавказе | R14-APART',
-    description:
-      'Двухуровневые апартаменты R14-APART посуточно во Владикавказе: 45 м², до 4 гостей, отдельный вход, Wi-Fi, кухня, парковка и заселение 24/7.',
-    changefreq: 'monthly',
-    priority: '0.9',
-    type: 'website',
-  },
-  {
-    path: '/center-vladikavkaz',
-    title: 'Квартира в центре Владикавказа посуточно | R14-APART',
-    description:
-      'R14-APART — квартира и апартаменты в центре Владикавказа рядом с прогулочными маршрутами, кафе, музеями и проспектом Мира.',
-    changefreq: 'monthly',
-    priority: '0.85',
-    type: 'website',
-  },
-  {
-    path: '/family-apartment',
-    title: 'Апартаменты для семьи во Владикавказе | R14-APART',
-    description:
-      'Семейные апартаменты во Владикавказе до 4 гостей: кухня, Wi-Fi, ванная, самостоятельное заселение, можно с детьми и воспитанными животными.',
-    changefreq: 'monthly',
-    priority: '0.85',
-    type: 'website',
-  },
-  {
-    path: '/weekend-vladikavkaz',
-    title: 'Где остановиться во Владикавказе на выходные | R14-APART',
-    description:
-      'Идея для выходных во Владикавказе: остановиться в R14-APART в центре города, гулять пешком и выезжать в горы Северной Осетии.',
-    changefreq: 'monthly',
-    priority: '0.8',
-    type: 'website',
-  },
-  {
-    path: '/tourism-vladikavkaz',
-    title: 'Проживание для поездок по Северной Осетии | R14-APART',
-    description:
-      'R14-APART во Владикавказе как база для поездок по Северной Осетии: Даргавс, горные ущелья, маршруты выходного дня и комфортный ночлег в центре.',
-    changefreq: 'monthly',
-    priority: '0.8',
     type: 'website',
   },
   {

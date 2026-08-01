@@ -15,7 +15,7 @@ const LINKS = [
 
 const PAGE_LINKS = [
   { to: '/blog', label: 'Блог', meta: 'Маршруты и гиды' },
-  { to: '/apartments-vladikavkaz', label: 'SEO', meta: 'Посуточно во Владикавказе' },
+  { to: '/bez-posrednikov', label: 'SEO', meta: 'Посуточно во Владикавказе' },
 ];
 
 export default function Navbar() {

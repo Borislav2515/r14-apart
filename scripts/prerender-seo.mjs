@@ -44,7 +44,7 @@ const apartment = {
   guests: 4,
   priceFrom: 7500,
   rating: 5.0,
-  reviewCount: 247,
+  reviewCount: 91,
   amenities: [
     'Wi-Fi 200 Мбит/с',
     'Смарт-ТВ',
@@ -410,7 +410,7 @@ const staticNotFound = () => `
         <ul>
           <li><a href="/">Главная</a></li>
           <li><a href="/blog">Блог</a></li>
-          <li><a href="/apartments-vladikavkaz">Об апартаментах</a></li>
+          <li><a href="/bez-posrednikov">Об апартаментах</a></li>
         </ul>
       </nav>
     </main>`;
