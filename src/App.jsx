@@ -15,11 +15,24 @@ import NotFound from './pages/NotFound';
 
 function LegacyHashRedirect() {
   useEffect(() => {
-    const { hash, search } = window.location;
-    if (!hash.startsWith('#/')) return;
+    const stripStrayHash = () => {
+      const { hash, search } = window.location;
+      if (!hash.startsWith('#/')) return;
 
-    const path = hash.slice(1) || '/';
-    window.history.replaceState(null, '', `${path}${search}`);
+      const path = hash.slice(1) || '/';
+      window.history.replaceState(null, '', `${path}${search}`);
+    };
+
+    stripStrayHash();
+
+    // The embedded HomeReserve booking widget (homereserve.ru/widget.js) runs
+    // in this same document (not an iframe) and calls its own router's
+    // history.replaceState(..., '#/') once it finishes initializing — which
+    // happens asynchronously, after this effect's mount-time check already
+    // ran. Poll instead of a single check so it gets cleaned up whenever it
+    // actually appears.
+    const interval = window.setInterval(stripStrayHash, 1000);
+    return () => window.clearInterval(interval);
   }, []);
 
   return null;
