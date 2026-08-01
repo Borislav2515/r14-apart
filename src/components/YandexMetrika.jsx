@@ -84,24 +84,10 @@ const setupGoals = () => {
     }
   };
 
-  const onBookingClick = (event) => {
-    const widget = document.getElementById('hr-widget');
-    if (!widget || !widget.contains(event.target)) return;
-    const clickable = event.target.closest('button, a, input[type="submit"]');
-    if (!clickable) return;
-
-    const text = `${clickable.textContent ?? ''} ${clickable.value ?? ''}`.toLowerCase();
-    if (text.includes('заброн') || text.includes('оплат') || text.includes('submit')) {
-      reachGoal('booking_submit');
-    }
-  };
-
   window.addEventListener('scroll', onScroll, { passive: true });
-  document.addEventListener('click', onBookingClick, true);
 
   return () => {
     window.removeEventListener('scroll', onScroll);
-    document.removeEventListener('click', onBookingClick, true);
   };
 };
 

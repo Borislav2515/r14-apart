@@ -8,7 +8,7 @@ import {
   seoRoutes,
   serviceRoutes,
 } from './seo-routes.mjs';
-import { APARTMENT_INFO, REVIEW_PLATFORMS } from '../src/data/apartment-data.js';
+import { APARTMENT_INFO, FAQ, REVIEW_PLATFORMS } from '../src/data/apartment-data.js';
 import { seoPages, blogPosts, faqItems } from '../src/data/seo.js';
 
 const distDir = resolve(process.cwd(), 'dist');
@@ -26,7 +26,9 @@ const escapeHtml = (value) =>
 const pageUrl = canonicalUrlFor;
 const stripBrand = (title) => title.replace(/\s*\|\s*R14-APART.*$/, '');
 
-const blogRoutes = seoRoutes.filter((route) => route.schemaType === 'BlogPosting');
+const blogRoutes = seoRoutes.filter(
+  (route) => route.schemaType === 'BlogPosting' && !route.robots?.includes('noindex')
+);
 const commercialRoutes = seoRoutes.filter(
   (route) => route.type !== 'article' && !['/blog', '/rules'].includes(route.path)
 );
@@ -43,9 +45,17 @@ const lodgingGraphFor = (route) => {
   const url = pageUrl(route.path);
   const lodgingId = `${SITE_URL}/#lodging`;
   const apartmentId = `${SITE_URL}/#apartment`;
-  const offerId = `${url}#offer`;
+  const addressId = `${SITE_URL}/#address`;
 
   return [
+    {
+      '@type': 'PostalAddress',
+      '@id': addressId,
+      streetAddress: 'ул. Революции, 14',
+      addressLocality: APARTMENT_INFO.city,
+      addressRegion: APARTMENT_INFO.region,
+      addressCountry: 'RU',
+    },
     {
       '@type': 'LodgingBusiness',
       '@id': lodgingId,
@@ -56,30 +66,19 @@ const lodgingGraphFor = (route) => {
       telephone: `+7${APARTMENT_INFO.phone.slice(1)}`,
       email: APARTMENT_INFO.email,
       priceRange: `от ${APARTMENT_INFO.priceFrom} RUB`,
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: 'ул. Революции, 14',
-        addressLocality: APARTMENT_INFO.city,
-        addressRegion: APARTMENT_INFO.region,
-        addressCountry: 'RU',
-      },
+      address: { '@id': addressId },
       geo: {
         '@type': 'GeoCoordinates',
         latitude: APARTMENT_INFO.latitude,
         longitude: APARTMENT_INFO.longitude,
       },
-      sameAs: REVIEW_PLATFORMS.map((platform) => platform.href),
+      sameAs: REVIEW_PLATFORMS.filter((platform) => platform.sameAs !== false).map((platform) => platform.href),
       petsAllowed: true,
       amenityFeature: APARTMENT_INFO.amenities.map((amenity) => ({
         '@type': 'LocationFeatureSpecification',
         name: amenity.label,
         value: true,
       })),
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: String(APARTMENT_INFO.rating),
-        reviewCount: String(APARTMENT_INFO.reviewCount),
-      },
     },
     {
       '@type': 'Apartment',
@@ -88,7 +87,7 @@ const lodgingGraphFor = (route) => {
       description: APARTMENT_INFO.description,
       url,
       image: [OG_IMAGE],
-      address: { '@id': lodgingId },
+      address: { '@id': addressId },
       floorSize: {
         '@type': 'QuantitativeValue',
         value: String(APARTMENT_INFO.area),
@@ -100,16 +99,6 @@ const lodgingGraphFor = (route) => {
       },
       numberOfRooms: '2',
     },
-    {
-      '@type': 'Offer',
-      '@id': offerId,
-      url,
-      priceCurrency: 'RUB',
-      price: String(APARTMENT_INFO.priceFrom),
-      availability: 'https://schema.org/InStock',
-      itemOffered: { '@id': apartmentId },
-      offeredBy: { '@id': lodgingId },
-    },
   ];
 };
 
@@ -117,7 +106,7 @@ const faqSchemaFor = (route) => ({
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   '@id': `${pageUrl(route.path)}#faq`,
-  mainEntity: faqItems.map((item) => ({
+  mainEntity: (route.path === '/' ? FAQ : faqItems).map((item) => ({
     '@type': 'Question',
     name: item.q,
     acceptedAnswer: {
@@ -146,12 +135,14 @@ const schemaFor = (route) => {
   };
 
   if (route.schemaType === 'BlogPosting') {
+    const post = blogPosts.find((item) => item.path === route.path);
     return {
       ...base,
       '@type': 'BlogPosting',
       headline: route.title.replace(' | R14-APART', ''),
       image: OG_IMAGE,
-      datePublished: renderedAt,
+      ...(post?.publishedAt ? { datePublished: post.publishedAt } : {}),
+      ...(post?.modifiedAt ? { dateModified: post.modifiedAt } : {}),
       author: {
         '@type': 'Organization',
         name: 'R14-APART',
@@ -168,6 +159,7 @@ const schemaFor = (route) => {
     return {
       ...base,
       '@type': 'FAQPage',
+      '@id': `${url}#faq`,
       mainEntity: faqItems.map((item) => ({
         '@type': 'Question',
         name: item.q,

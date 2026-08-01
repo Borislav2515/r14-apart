@@ -106,10 +106,10 @@ export default function Hero() {
         </Reveal>
 
         <Reveal className={styles.actions} delay={1} y={20} immediate>
-          <a href={whatsappHref} className={styles.btnGhost} onClick={trackWhatsapp}>
+          <a href={whatsappHref} className={styles.btnGhost} onClick={() => trackWhatsapp({ placement: 'hero' })}>
             WhatsApp
           </a>
-          <a href={telegramHref} className={styles.btnGhost} onClick={trackTelegram}>
+          <a href={telegramHref} className={styles.btnGhost} onClick={() => trackTelegram({ placement: 'hero' })}>
             Telegram
           </a>
         </Reveal>

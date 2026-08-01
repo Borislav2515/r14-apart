@@ -44,7 +44,7 @@ export default function BlogIndex() {
 
       <div className={styles.content}>
         <div className={styles.cards}>
-          {blogPosts.map((post) => (
+          {blogPosts.filter((post) => !post.robots?.includes('noindex')).map((post) => (
             <article key={post.slug} className={styles.card}>
               <h2>{post.h1}</h2>
               <p>{post.excerpt}</p>

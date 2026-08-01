@@ -3,13 +3,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { APARTMENT } from '../data/apartment';
 import { useSectionNavigation, isPlainLeftClick } from '../hooks/useSectionNavigation';
 import { useFocusTrap } from '../hooks/useFocusTrap';
-import { trackPhone, trackWhatsapp, trackTelegram, telegramHref, whatsappHref } from '../utils/analytics';
+import { phoneDisplay, phoneHref, trackPhone, trackWhatsapp, trackTelegram, telegramHref, whatsappHref } from '../utils/analytics';
 import styles from './Navbar.module.css';
 
 const LINKS = [
   { id: 'about', label: 'Апартаменты', meta: 'Два уровня, 45 м²' },
   { id: 'features', label: 'Удобства', meta: 'Умный дом и комфорт' },
-  { id: 'reviews', label: 'Отзывы', meta: '5.0 от гостей' },
+  { id: 'reviews', label: 'Отзывы', meta: 'Оценки на площадках' },
   { id: 'faq', label: 'FAQ', meta: 'Правила и заселение' },
 ];
 
@@ -100,8 +100,8 @@ export default function Navbar() {
             </li>
           </ul>
 
-          <a href={`tel:${APARTMENT.phone}`} className={styles.navPhone} onClick={trackPhone}>
-            {APARTMENT.phone}
+          <a href={phoneHref} className={styles.navPhone} onClick={() => trackPhone({ placement: 'header' })}>
+            {phoneDisplay}
           </a>
         </div>
 
@@ -185,13 +185,13 @@ export default function Navbar() {
               R14<span>·</span>APART
             </Link>
             <div className={styles.mobileActions}>
-              <a href={`tel:${APARTMENT.phone}`} className={styles.mobileCall} onClick={() => { trackPhone(); setOpen(false); }}>
-                +7 906 033 00 14
+              <a href={phoneHref} className={styles.mobileCall} onClick={() => { trackPhone({ placement: 'mobile_menu' }); setOpen(false); }}>
+                {phoneDisplay}
               </a>
-              <a href={whatsappHref} className={styles.mobileMail} onClick={() => { trackWhatsapp(); setOpen(false); }}>
+              <a href={whatsappHref} className={styles.mobileMail} onClick={() => { trackWhatsapp({ placement: 'mobile_menu' }); setOpen(false); }}>
                 WhatsApp
               </a>
-              <a href={telegramHref} className={styles.mobileMail} onClick={() => { trackTelegram(); setOpen(false); }}>
+              <a href={telegramHref} className={styles.mobileMail} onClick={() => { trackTelegram({ placement: 'mobile_menu' }); setOpen(false); }}>
                 Telegram
               </a>
             </div>

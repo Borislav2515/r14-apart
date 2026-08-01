@@ -1,29 +1,50 @@
-import { APARTMENT } from '../data/apartment';
+import { APARTMENT, FAQ, REVIEW_PLATFORMS } from '../data/apartment';
 import { faqItems, seoDefaults } from '../data/seo';
+
+const addressId = `${seoDefaults.siteUrl}/#address`;
+const lodgingId = `${seoDefaults.siteUrl}/#lodging`;
+const apartmentId = `${seoDefaults.siteUrl}/#apartment`;
+
+const faqSchemaFor = (items, id) => ({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  '@id': id,
+  mainEntity: items.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.a,
+    },
+  })),
+});
 
 const lodgingSchema = {
   '@context': 'https://schema.org',
   '@graph': [
     {
+      '@type': 'PostalAddress',
+      '@id': addressId,
+      streetAddress: 'ул. Революции, 14',
+      addressLocality: APARTMENT.city,
+      addressRegion: APARTMENT.region,
+      addressCountry: 'RU',
+    },
+    {
       '@type': 'LodgingBusiness',
-      '@id': `${seoDefaults.siteUrl}/#lodging`,
+      '@id': lodgingId,
       name: APARTMENT.name,
       description: APARTMENT.description,
       url: seoDefaults.siteUrl,
-      telephone: APARTMENT.phone,
+      telephone: `+${APARTMENT.phone}`,
       email: APARTMENT.email,
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: 'ул. Революции, 14',
-        addressLocality: APARTMENT.city,
-        addressRegion: APARTMENT.region,
-        addressCountry: 'RU',
-      },
+      address: { '@id': addressId },
       geo: {
         '@type': 'GeoCoordinates',
         latitude: APARTMENT.latitude,
         longitude: APARTMENT.longitude,
       },
+      sameAs: REVIEW_PLATFORMS.filter((platform) => platform.sameAs !== false).map((platform) => platform.href),
       petsAllowed: true,
       amenityFeature: APARTMENT.amenities.map((amenity) => ({
         '@type': 'LocationFeatureSpecification',
@@ -31,18 +52,13 @@ const lodgingSchema = {
         value: true,
       })),
       priceRange: `от ${APARTMENT.priceFrom} RUB`,
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: String(APARTMENT.rating),
-        reviewCount: String(APARTMENT.reviewCount),
-      },
     },
     {
       '@type': 'Apartment',
-      '@id': `${seoDefaults.siteUrl}/#apartment`,
+      '@id': apartmentId,
       name: APARTMENT.name,
       url: seoDefaults.siteUrl,
-      address: { '@id': `${seoDefaults.siteUrl}/#lodging` },
+      address: { '@id': addressId },
       floorSize: {
         '@type': 'QuantitativeValue',
         value: String(APARTMENT.area),
@@ -54,32 +70,13 @@ const lodgingSchema = {
       },
       numberOfRooms: '2',
     },
-    {
-      '@type': 'Offer',
-      '@id': `${seoDefaults.siteUrl}/#offer`,
-      url: `${seoDefaults.siteUrl}/#hero`,
-      priceCurrency: 'RUB',
-      price: String(APARTMENT.priceFrom),
-      availability: 'https://schema.org/InStock',
-      itemOffered: { '@id': `${seoDefaults.siteUrl}/#apartment` },
-    },
   ],
 };
 
-export const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqItems.map((item) => ({
-    '@type': 'Question',
-    name: item.q,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: item.a,
-    },
-  })),
-};
+export const homeFaqSchema = faqSchemaFor(FAQ, `${seoDefaults.siteUrl}/#faq`);
+export const faqSchema = faqSchemaFor(faqItems, `${seoDefaults.siteUrl}/faq/#faq`);
 
-export default function StructuredData({ data = [lodgingSchema, faqSchema] }) {
+export default function StructuredData({ data = [lodgingSchema, homeFaqSchema] }) {
   if (typeof document !== 'undefined' && document.querySelector('script[data-prerender-schema="true"]')) {
     return null;
   }

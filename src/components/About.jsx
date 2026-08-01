@@ -169,7 +169,7 @@ export default function About() {
             type="button"
             className={styles.btnBook}
             onClick={() => {
-              trackBookingOpen();
+              trackBookingOpen({ placement: 'about' });
               openBooking();
             }}
           >

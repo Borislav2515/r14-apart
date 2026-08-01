@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { APARTMENT, REVIEW_PLATFORMS } from '../data/apartment';
 import { useSectionNavigation, isPlainLeftClick } from '../hooks/useSectionNavigation';
-import { trackPhone, trackTelegram, trackWhatsapp, telegramHref, whatsappHref } from '../utils/analytics';
+import { phoneDisplay, phoneHref, trackPhone, trackTelegram, trackWhatsapp, telegramHref, whatsappHref } from '../utils/analytics';
 import styles from './Footer.module.css';
 
 export default function Footer() {
@@ -49,11 +49,11 @@ export default function Footer() {
         <div className={styles.col}>
           <h3>Контакты</h3>
           <ul>
-            <li><a href={`tel:${APARTMENT.phone}`} onClick={trackPhone}>{APARTMENT.phone}</a></li>
+            <li><a href={phoneHref} onClick={() => trackPhone({ placement: 'footer' })}>{phoneDisplay}</a></li>
             <li><a href={`mailto:${APARTMENT.email}`}>{APARTMENT.email}</a></li>
             <li><span className={styles.address}>{APARTMENT.address}</span></li>
-            <li><a href={telegramHref} onClick={trackTelegram}>Telegram</a></li>
-            <li><a href={whatsappHref} onClick={trackWhatsapp}>WhatsApp</a></li>
+            <li><a href={telegramHref} onClick={() => trackTelegram({ placement: 'footer' })}>Telegram</a></li>
+            <li><a href={whatsappHref} onClick={() => trackWhatsapp({ placement: 'footer' })}>WhatsApp</a></li>
           </ul>
         </div>
 
@@ -62,7 +62,7 @@ export default function Footer() {
           <ul>
             {REVIEW_PLATFORMS.map((platform) => (
               <li key={platform.name}>
-                <a href={platform.href} target="_blank" rel="noreferrer">{platform.name}</a>
+                <a href={platform.href} target="_blank" rel="noopener noreferrer">{platform.name}</a>
               </li>
             ))}
           </ul>

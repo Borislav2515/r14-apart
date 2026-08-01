@@ -38,6 +38,13 @@
   max-width: 420px;
 }
 
+.statusMeta {
+  color: rgba(245, 240, 232, 0.58);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 .statusActions {
   display: flex;
   gap: 10px;
@@ -45,6 +52,7 @@
   justify-content: center;
 }
 
+.statusButton,
 .statusLink {
   min-height: 40px;
   display: inline-flex;
@@ -61,7 +69,30 @@
   transition: border-color 0.3s var(--ease-smooth), background 0.3s var(--ease-smooth);
 }
 
+.statusButton {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--charcoal);
+}
+
+.statusButton:hover {
+  background: var(--gold-light);
+  border-color: var(--gold-light);
+}
+
 .statusLink:hover {
   border-color: var(--gold);
   background: rgba(184, 150, 90, 0.1);
+}
+
+@media (max-width: 520px) {
+  .statusActions {
+    width: 100%;
+  }
+
+  .statusButton,
+  .statusLink {
+    flex: 1 1 132px;
+    justify-content: center;
+  }
 }

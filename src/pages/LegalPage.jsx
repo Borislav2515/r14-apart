@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { APARTMENT } from '../data/apartment';
+import { phoneDisplay } from '../utils/analytics';
 import usePageMeta from '../hooks/usePageMeta';
 import styles from './LegalPage.module.css';
 
@@ -37,7 +38,7 @@ const PAGES = {
       {
         title: 'Связь',
         items: [
-          `Телефон для связи: ${APARTMENT.phone}.`,
+          `Телефон для связи: ${phoneDisplay}.`,
           `Email: ${APARTMENT.email}.`,
         ],
       },
@@ -75,7 +76,7 @@ const PAGES = {
         title: 'Контакты',
         items: [
           `По вопросам обработки данных: ${APARTMENT.email}.`,
-          `Телефон: ${APARTMENT.phone}.`,
+          `Телефон: ${phoneDisplay}.`,
         ],
       },
     ],
@@ -157,7 +158,7 @@ const PAGES = {
         items: [
           'Форма бронирования и контактные каналы используются для передачи заявок и обратной связи.',
           'Пользователь отвечает за корректность переданных контактных данных.',
-          `Связаться с R14-APART можно по телефону ${APARTMENT.phone} или email ${APARTMENT.email}.`,
+          `Связаться с R14-APART можно по телефону ${phoneDisplay} или email ${APARTMENT.email}.`,
         ],
       },
       {

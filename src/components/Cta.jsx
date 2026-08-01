@@ -1,6 +1,6 @@
 import { APARTMENT } from '../data/apartment';
 import { useBookingModal } from '../context/BookingModalContext';
-import { trackBookingOpen, trackPhone } from '../utils/analytics';
+import { phoneHref, trackBookingOpen, trackPhone } from '../utils/analytics';
 import Reveal from './Reveal';
 import ResponsivePicture from './ResponsivePicture';
 import styles from './Cta.module.css';
@@ -31,13 +31,13 @@ export default function Cta() {
             type="button"
             className={styles.btnSolid}
             onClick={() => {
-              trackBookingOpen();
+              trackBookingOpen({ placement: 'cta' });
               open();
             }}
           >
             Открыть форму бронирования
           </button>
-          <a href={`tel:${APARTMENT.phone.replace(/\s/g, '')}`} className={styles.btnOutline} onClick={trackPhone}>
+          <a href={phoneHref} className={styles.btnOutline} onClick={() => trackPhone({ placement: 'cta' })}>
             Позвонить нам
           </a>
         </Reveal>

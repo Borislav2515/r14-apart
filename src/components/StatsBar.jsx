@@ -18,7 +18,7 @@ export default function StatsBar() {
       >
         <strong className={styles.stars} aria-hidden="true">★★★★★</strong>
         <span className={styles.text}>
-          <span className={styles.rating}>5.0</span> · 91+ отзывов гостей на {REVIEW_PLATFORMS.length} площадках
+          отзывы гостей на {REVIEW_PLATFORMS.length} площадках · проверено 2026-08-01
         </span>
       </a>
     </div>

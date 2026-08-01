@@ -1,6 +1,6 @@
 import { APARTMENT } from '../data/apartment';
 import usePageMeta from '../hooks/usePageMeta';
-import { telegramHref, whatsappHref } from '../utils/analytics';
+import { phoneHref, telegramHref, whatsappHref } from '../utils/analytics';
 import styles from './GuestGuide.module.css';
 
 const HOME_ASSISTANT_URL = 'https://ha.r14-apart.com';
@@ -251,7 +251,7 @@ export default function GuestGuide() {
           </a>
           <a className={styles.secondary} href={whatsappHref}>WhatsApp</a>
           <a className={styles.secondary} href={telegramHref}>Telegram</a>
-          <a className={styles.secondary} href={`tel:+${APARTMENT.phone}`}>Позвонить</a>
+          <a className={styles.secondary} href={phoneHref}>Позвонить</a>
         </div>
       </section>
     </main>

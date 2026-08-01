@@ -91,7 +91,7 @@ function RichBlocks({ blocks }) {
       return (
         <section key={block.text} className={styles.section}>
           <p>{block.text}</p>
-          <Link to="/" state={{ scrollTo: 'hero' }} className={styles.articleCta} onClick={trackBookingOpen}>
+          <Link to="/" state={{ scrollTo: 'hero' }} className={styles.articleCta} onClick={() => trackBookingOpen({ placement: 'blog_inline_cta' })}>
             Проверить даты и забронировать апартаменты
           </Link>
         </section>
@@ -120,6 +120,7 @@ export default function BlogPost() {
     description: post.description,
     path: post.path,
     type: 'article',
+    robots: post.robots,
   });
 
   const articleSchema = {
@@ -128,8 +129,8 @@ export default function BlogPost() {
     headline: post.h1,
     description: post.description,
     image: seoDefaults.image,
-    datePublished: seoDefaults.updatedAt,
-    dateModified: seoDefaults.updatedAt,
+    ...(post.publishedAt ? { datePublished: post.publishedAt } : {}),
+    ...(post.modifiedAt ? { dateModified: post.modifiedAt } : {}),
     author: {
       '@type': 'Organization',
       name: APARTMENT.name,
@@ -172,7 +173,7 @@ export default function BlogPost() {
           <h1 className={styles.title}>{post.h1}</h1>
           <p className={styles.lead}>{post.excerpt}</p>
           <div className={styles.actions}>
-            <Link to="/" state={{ scrollTo: 'hero' }} className={styles.primary} onClick={trackBookingOpen}>
+            <Link to="/" state={{ scrollTo: 'hero' }} className={styles.primary} onClick={() => trackBookingOpen({ placement: 'blog_hero' })}>
               Забронировать апартаменты
             </Link>
             <Link to="/blog" className={styles.secondary}>
@@ -211,7 +212,7 @@ export default function BlogPost() {
             <p>
               Апартаменты в центре Владикавказа для туристов, семейных поездок и маршрутов по Северной Осетии.
             </p>
-            <Link to="/" state={{ scrollTo: 'hero' }} className={styles.primary} onClick={trackBookingOpen}>
+            <Link to="/" state={{ scrollTo: 'hero' }} className={styles.primary} onClick={() => trackBookingOpen({ placement: 'blog_aside' })}>
               Проверить даты
             </Link>
           </aside>

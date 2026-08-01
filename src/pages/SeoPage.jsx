@@ -17,10 +17,10 @@ function BookingAside() {
         самостоятельное заселение и онлайн-бронирование.
       </p>
       <div className={styles.actions}>
-        <Link to="/" state={{ scrollTo: 'hero' }} className={styles.primary} onClick={trackBookingOpen}>
+        <Link to="/" state={{ scrollTo: 'hero' }} className={styles.primary} onClick={() => trackBookingOpen({ placement: 'seo_aside' })}>
           Забронировать
         </Link>
-        <a href={whatsappHref} className={styles.secondary} onClick={trackWhatsapp}>
+        <a href={whatsappHref} className={styles.secondary} onClick={() => trackWhatsapp({ placement: 'seo_aside' })}>
           WhatsApp
         </a>
       </div>
@@ -63,10 +63,10 @@ export default function SeoPage() {
           <h1 className={styles.title}>{page.h1}</h1>
           <p className={styles.lead}>{page.lead}</p>
           <div className={styles.actions}>
-            <Link to="/" state={{ scrollTo: 'hero' }} className={styles.primary} onClick={trackBookingOpen}>
+            <Link to="/" state={{ scrollTo: 'hero' }} className={styles.primary} onClick={() => trackBookingOpen({ placement: 'seo_hero' })}>
               Забронировать
             </Link>
-            <a href={whatsappHref} className={styles.secondary} onClick={trackWhatsapp}>
+            <a href={whatsappHref} className={styles.secondary} onClick={() => trackWhatsapp({ placement: 'seo_hero' })}>
               Написать в WhatsApp
             </a>
           </div>

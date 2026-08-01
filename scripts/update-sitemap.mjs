@@ -4,7 +4,9 @@ import { canonicalUrlFor, seoRoutes } from './seo-routes.mjs';
 
 const lastmod = new Date().toISOString().slice(0, 10);
 
-const urlEntries = seoRoutes
+const indexableRoutes = seoRoutes.filter((route) => !route.robots?.includes('noindex'));
+
+const urlEntries = indexableRoutes
   .map(({ path, changefreq, priority }) => `  <url>
     <loc>${canonicalUrlFor(path)}</loc>
     <lastmod>${lastmod}</lastmod>
@@ -20,4 +22,4 @@ ${urlEntries}
 `;
 
 writeFileSync(resolve(process.cwd(), 'public', 'sitemap.xml'), sitemap, 'utf8');
-console.log(`Generated sitemap with ${seoRoutes.length} URLs and lastmod ${lastmod}`);
+console.log(`Generated sitemap with ${indexableRoutes.length} URLs and lastmod ${lastmod}`);
