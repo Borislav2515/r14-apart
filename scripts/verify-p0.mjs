@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { blogPosts } from '../src/data/seo.js';
 
 const root = process.cwd();
 
@@ -86,6 +87,16 @@ for (const path of temporarilyNoindex) {
 
   if (routesIndex === -1 || !seoRoutes.slice(routesIndex, routesIndex + 220).includes("robots: 'noindex, follow'")) {
     fail(`${path} missing noindex marker in scripts/seo-routes.mjs`);
+  }
+}
+
+for (const post of blogPosts.filter((item) => !item.robots?.includes('noindex'))) {
+  const serialized = JSON.stringify(post);
+
+  for (const path of temporarilyNoindex.map((item) => item.replace(/\/$/, ''))) {
+    if (serialized.includes(path)) {
+      fail(`indexable post ${post.slug} links to temporarily noindex page ${path}`);
+    }
   }
 }
 

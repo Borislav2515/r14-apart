@@ -1,7 +1,6 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Hero from '../components/Hero';
-import StatsBar from '../components/StatsBar';
 import StructuredData from '../components/StructuredData';
 import BookingWidget from '../components/BookingWidget';
 import BookingModal from '../components/BookingModal';
@@ -67,7 +66,6 @@ export default function Home() {
       <main>
         <StructuredData />
         <Hero />
-        <StatsBar />
         <HomeSection id="about" minHeight={640}>
           <About />
         </HomeSection>
