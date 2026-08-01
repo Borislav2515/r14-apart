@@ -1,4 +1,4 @@
-import { APARTMENT, FAQ, REVIEW_PLATFORMS } from './apartment';
+import { APARTMENT_INFO as APARTMENT, FAQ, REVIEW_PLATFORMS } from './apartment-data.js';
 
 const ostrovokPlatform = REVIEW_PLATFORMS.find((platform) => platform.brand === 'ostrovok');
 

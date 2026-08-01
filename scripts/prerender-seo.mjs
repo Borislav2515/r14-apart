@@ -8,6 +8,8 @@ import {
   seoRoutes,
   serviceRoutes,
 } from './seo-routes.mjs';
+import { APARTMENT_INFO, REVIEW_PLATFORMS } from '../src/data/apartment-data.js';
+import { seoPages, blogPosts, faqItems } from '../src/data/seo.js';
 
 const distDir = resolve(process.cwd(), 'dist');
 const templatePath = join(distDir, 'index.html');
@@ -29,80 +31,6 @@ const commercialRoutes = seoRoutes.filter(
   (route) => route.type !== 'article' && !['/blog', '/rules'].includes(route.path)
 );
 
-const apartment = {
-  name: 'R14-APART',
-  description:
-    'Двухуровневые апартаменты посуточно в историческом центре Владикавказа: отдельный вход, умный дом, кухня, Wi-Fi, парковка и бесконтактное заселение 24/7.',
-  phone: '+79060330014',
-  email: 'r14.group@gmail.com',
-  streetAddress: 'ул. Революции, 14',
-  city: 'Владикавказ',
-  region: 'Республика Северная Осетия — Алания',
-  latitude: 43.0281528,
-  longitude: 44.6838663,
-  area: 45,
-  guests: 4,
-  priceFrom: 7500,
-  rating: 5.0,
-  reviewCount: 91,
-  amenities: [
-    'Wi-Fi 200 Мбит/с',
-    'Смарт-ТВ',
-    'Кофемашина',
-    'Стиральная машина',
-    'Кондиционер',
-    'Умное отопление',
-    'Умное освещение',
-    'Полная кухня',
-    'Ванна',
-    'Парковка',
-    'Смарт-замок',
-    'Заселение 24/7',
-    'Отчётные документы',
-  ],
-  sameAs: [
-    'https://travel.yandex.ru/search/?text=R14-APART%20%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BA%D0%B0%D0%B2%D0%BA%D0%B0%D0%B7',
-    'https://ostrovok.ru/hotel/russia/vladikavkaz/mid13166131/r14_flat/',
-    'https://sutochno.ru/front/searchapp/detail/1938216',
-    'https://tvil.ru/city/vladikavkaz/flats/?q=R14-APART',
-  ],
-};
-
-const faqItems = [
-  {
-    q: 'Можно ли с детьми?',
-    a: 'Да, в R14-APART можно проживать с детьми. Максимальная вместимость — до 4 гостей.',
-  },
-  {
-    q: 'Есть ли парковка?',
-    a: 'Да, рядом с апартаментами доступна парковка. Детали можно уточнить перед заездом.',
-  },
-  {
-    q: 'Можно ли заселиться ночью?',
-    a: 'Да, заселение доступно 24/7 по индивидуальному коду от смарт-замка.',
-  },
-  {
-    q: 'Есть ли Wi-Fi?',
-    a: 'Да, в апартаментах есть Wi-Fi до 200 Мбит/с.',
-  },
-  {
-    q: 'Сколько гостей помещается?',
-    a: 'Апартаменты рассчитаны на размещение до 4 гостей.',
-  },
-  {
-    q: 'Есть ли кухня?',
-    a: 'Да, есть полностью оборудованная кухня, посуда и кофемашина.',
-  },
-  {
-    q: 'Можно ли с животными?',
-    a: 'Можно с воспитанными животными по предварительному согласованию при бронировании.',
-  },
-  {
-    q: 'Как происходит заселение?',
-    a: 'После подтверждения бронирования гость получает инструкцию и код от смарт-замка для самостоятельного заезда.',
-  },
-];
-
 const replaceTag = (html, pattern, replacement) => {
   if (pattern.test(html)) return html.replace(pattern, replacement);
   return html.replace('</head>', `    ${replacement}\n  </head>`);
@@ -121,54 +49,54 @@ const lodgingGraphFor = (route) => {
     {
       '@type': 'LodgingBusiness',
       '@id': lodgingId,
-      name: apartment.name,
-      description: apartment.description,
+      name: APARTMENT_INFO.name,
+      description: APARTMENT_INFO.description,
       url: SITE_URL,
       image: [OG_IMAGE],
-      telephone: apartment.phone,
-      email: apartment.email,
-      priceRange: `от ${apartment.priceFrom} RUB`,
+      telephone: `+7${APARTMENT_INFO.phone.slice(1)}`,
+      email: APARTMENT_INFO.email,
+      priceRange: `от ${APARTMENT_INFO.priceFrom} RUB`,
       address: {
         '@type': 'PostalAddress',
-        streetAddress: apartment.streetAddress,
-        addressLocality: apartment.city,
-        addressRegion: apartment.region,
+        streetAddress: 'ул. Революции, 14',
+        addressLocality: APARTMENT_INFO.city,
+        addressRegion: APARTMENT_INFO.region,
         addressCountry: 'RU',
       },
       geo: {
         '@type': 'GeoCoordinates',
-        latitude: apartment.latitude,
-        longitude: apartment.longitude,
+        latitude: APARTMENT_INFO.latitude,
+        longitude: APARTMENT_INFO.longitude,
       },
-      sameAs: apartment.sameAs,
+      sameAs: REVIEW_PLATFORMS.map((platform) => platform.href),
       petsAllowed: true,
-      amenityFeature: apartment.amenities.map((name) => ({
+      amenityFeature: APARTMENT_INFO.amenities.map((amenity) => ({
         '@type': 'LocationFeatureSpecification',
-        name,
+        name: amenity.label,
         value: true,
       })),
       aggregateRating: {
         '@type': 'AggregateRating',
-        ratingValue: String(apartment.rating),
-        reviewCount: String(apartment.reviewCount),
+        ratingValue: String(APARTMENT_INFO.rating),
+        reviewCount: String(APARTMENT_INFO.reviewCount),
       },
     },
     {
       '@type': 'Apartment',
       '@id': apartmentId,
-      name: apartment.name,
-      description: apartment.description,
+      name: APARTMENT_INFO.name,
+      description: APARTMENT_INFO.description,
       url,
       image: [OG_IMAGE],
       address: { '@id': lodgingId },
       floorSize: {
         '@type': 'QuantitativeValue',
-        value: String(apartment.area),
+        value: String(APARTMENT_INFO.area),
         unitCode: 'MTK',
       },
       occupancy: {
         '@type': 'QuantitativeValue',
-        maxValue: String(apartment.guests),
+        maxValue: String(APARTMENT_INFO.guests),
       },
       numberOfRooms: '2',
     },
@@ -177,7 +105,7 @@ const lodgingGraphFor = (route) => {
       '@id': offerId,
       url,
       priceCurrency: 'RUB',
-      price: String(apartment.priceFrom),
+      price: String(APARTMENT_INFO.priceFrom),
       availability: 'https://schema.org/InStock',
       itemOffered: { '@id': apartmentId },
       offeredBy: { '@id': lodgingId },
@@ -306,27 +234,75 @@ const breadcrumbSchemaFor = (route) => ({
   })),
 });
 
+const blogBlockHtml = (block) => {
+  if (block.type === 'photo') {
+    return `
+      <figure>
+        <div><span>${escapeHtml(block.title)}</span><small>${escapeHtml(block.fileHint || '')}</small></div>
+        <figcaption>${escapeHtml(block.caption || '')}</figcaption>
+      </figure>`;
+  }
+
+  if (block.type === 'heading') {
+    const texts = (block.texts || []).map((text) => `<p>${escapeHtml(text)}</p>`).join('');
+    const list = block.list
+      ? `<ul>${block.list.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
+      : '';
+    return `<section><h2>${escapeHtml(block.title)}</h2>${texts}${list}</section>`;
+  }
+
+  if (block.type === 'links') {
+    const items = block.items.map((item) => `<a href="${canonicalPathFor(item.to)}">${escapeHtml(item.label)}</a>`).join('');
+    return `<section><h2>${escapeHtml(block.title)}</h2><div>${items}</div></section>`;
+  }
+
+  if (block.type === 'faq') {
+    const items = block.items
+      .map((item) => `<article><h3>${escapeHtml(item.q)}</h3><p>${escapeHtml(item.a)}</p></article>`)
+      .join('');
+    return `<section><h2>${escapeHtml(block.title)}</h2><div>${items}</div></section>`;
+  }
+
+  if (block.type === 'table') {
+    const headers = block.headers.map((header) => `<th>${escapeHtml(header)}</th>`).join('');
+    const rows = block.rows
+      .map((row) => `<tr>${row.map((cell) => `<td>${escapeHtml(cell)}</td>`).join('')}</tr>`)
+      .join('');
+    return `<section><h2>${escapeHtml(block.title)}</h2><table><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table></section>`;
+  }
+
+  if (block.type === 'cta') {
+    return `<section><p>${escapeHtml(block.text)}</p><a href="/">Проверить даты и забронировать апартаменты</a></section>`;
+  }
+
+  return `<section><p>${escapeHtml(block.text)}</p></section>`;
+};
+
 const staticArticle = (route) => {
-  const title = escapeHtml(stripBrand(route.title));
-  const description = escapeHtml(route.description);
+  const post = blogPosts.find((item) => item.path === route.path);
+  if (!post) return staticService(route);
+
+  const body = post.blocks
+    ? post.blocks.map(blogBlockHtml).join('')
+    : post.sections
+        .map(([title, text]) => `<section><h2>${escapeHtml(title)}</h2><p>${escapeHtml(text)}</p></section>`)
+        .join('');
+
+  const related = post.related?.length
+    ? `
+      <nav aria-label="Читайте также">
+        <h2>Читайте также</h2>
+        <div>${post.related.map((item) => `<a href="${canonicalPathFor(item.to)}">${escapeHtml(item.label)}</a>`).join('')}</div>
+      </nav>`
+    : '';
 
   return `
     <article>
       <p>Блог R14-APART</p>
-      <h1>${title}</h1>
-      <p>${description}</p>
-      <section>
-        <h2>Главное для поездки</h2>
-        <p>Материал помогает быстро сориентироваться перед поездкой во Владикавказ: выбрать район, понять бытовые детали и заранее оценить, какой формат проживания будет удобнее.</p>
-      </section>
-      <section>
-        <h2>База в центре города</h2>
-        <p>R14-APART находится на ул. Революции, 14 в историческом центре Владикавказа. Формат подходит туристам, семейным поездкам, командировкам и маршрутам по Северной Осетии.</p>
-      </section>
-      <section>
-        <h2>Условия проживания</h2>
-        <p>Апартаменты рассчитаны на размещение до 4 гостей: 45 м², отдельный вход, кухня, Wi-Fi, парковка рядом, самостоятельное заселение 24/7 и прямое онлайн-бронирование.</p>
-      </section>
+      <h1>${escapeHtml(post.h1)}</h1>
+      <p>${escapeHtml(post.excerpt)}</p>
+      ${body}
+      ${related}
       <nav aria-label="Другие статьи">
         <h2>Другие материалы</h2>
         <ul>${linkList(blogRoutes.filter((item) => item.path !== route.path).slice(0, 6))}</ul>
@@ -349,31 +325,55 @@ const staticBlogIndex = () => `
       </section>
     </main>`;
 
+const priceCompareHtml = (compare) => {
+  if (!compare) return '';
+
+  const rows = compare.rows
+    .map((row) => {
+      const sourceCell = row.href
+        ? `<a href="${row.href}">${escapeHtml(row.source)}</a>`
+        : escapeHtml(row.source);
+      return `<tr><td>${sourceCell}</td><td>${escapeHtml(row.price)}</td><td>${escapeHtml(row.note)}</td></tr>`;
+    })
+    .join('');
+
+  return `
+      <section>
+        <h2>${escapeHtml(compare.title)}</h2>
+        <p>${escapeHtml(compare.intro)}</p>
+        <table>
+          <thead><tr><th>Площадка</th><th>Цена</th><th>Комментарий</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+        ${compare.note ? `<p>${escapeHtml(compare.note)}</p>` : ''}
+      </section>`;
+};
+
 const staticCommercialPage = (route) => {
-  const title = escapeHtml(stripBrand(route.title));
-  const description = escapeHtml(route.description);
+  const page = seoPages.find((item) => item.path === route.path);
+  if (!page) return staticService(route);
+
   const related = commercialRoutes.filter((item) => item.path !== route.path).slice(0, 8);
+  const isFaqPage = page.slug === 'faq';
+
+  const body = isFaqPage
+    ? faqItems
+        .map((item) => `<section><h2>${escapeHtml(item.q)}</h2><p>${escapeHtml(item.a)}</p></section>`)
+        .join('')
+    : page.sections.map((section) => `<section><h2>${escapeHtml(section.title)}</h2><p>${escapeHtml(section.text)}</p></section>`).join('') +
+      priceCompareHtml(page.priceCompare) +
+      `
+      <section>
+        <h2>Почему выбирают R14-APART</h2>
+        <ul>${APARTMENT_INFO.features.map((feature) => `<li>${escapeHtml(feature.title)}: ${escapeHtml(feature.text)}</li>`).join('')}</ul>
+      </section>`;
 
   return `
     <main>
       <p>R14-APART · Владикавказ, ул. Революции, 14</p>
-      <h1>${title}</h1>
-      <p>${description}</p>
-      <section>
-        <h2>Коротко об апартаментах</h2>
-        <p>Двухуровневые апартаменты площадью 45 м² в историческом центре Владикавказа. Подходят для пары, семьи, туристической поездки и командировки.</p>
-        <ul>
-          <li>До 4 гостей</li>
-          <li>Стоимость от 7500 ₽ в сутки</li>
-          <li>Wi-Fi, кухня, кондиционер, ванная и стиральная машина</li>
-          <li>Отдельный вход и бесконтактное заселение 24/7 по коду</li>
-          <li>Парковка рядом и отчётные документы по запросу</li>
-        </ul>
-      </section>
-      <section>
-        <h2>Бронирование</h2>
-        <p>Можно забронировать даты онлайн на сайте, написать в WhatsApp или Telegram, либо позвонить по телефону +7 906 033 00 14.</p>
-      </section>
+      <h1>${escapeHtml(page.h1)}</h1>
+      <p>${escapeHtml(page.lead)}</p>
+      ${body}
       <nav aria-label="Полезные страницы">
         <h2>Полезные страницы</h2>
         <ul>${linkList(related)}</ul>
