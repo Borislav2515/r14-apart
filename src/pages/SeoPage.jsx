@@ -142,6 +142,31 @@ export default function SeoPage() {
                   {page.priceCompare.note && <p>{page.priceCompare.note}</p>}
                 </section>
               )}
+              {page.distances && (
+                <section className={styles.section}>
+                  <h2>{page.distances.title}</h2>
+                  <p>{page.distances.intro}</p>
+                  <div className={styles.tableWrap}>
+                    <table className={styles.articleTable}>
+                      <thead>
+                        <tr>
+                          <th>Куда</th>
+                          <th>Расстояние</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {page.distances.rows.map((row) => (
+                          <tr key={row.place}>
+                            <td>{row.place}</td>
+                            <td>{row.distance}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  {page.distances.note && <p>{page.distances.note}</p>}
+                </section>
+              )}
               <section className={styles.section}>
                 <h2>Почему выбирают R14-APART</h2>
                 <ul>

@@ -349,6 +349,25 @@ const priceCompareHtml = (compare) => {
       </section>`;
 };
 
+const distancesHtml = (distances) => {
+  if (!distances) return '';
+
+  const rows = distances.rows
+    .map((row) => `<tr><td>${escapeHtml(row.place)}</td><td>${escapeHtml(row.distance)}</td></tr>`)
+    .join('');
+
+  return `
+      <section>
+        <h2>${escapeHtml(distances.title)}</h2>
+        <p>${escapeHtml(distances.intro)}</p>
+        <table>
+          <thead><tr><th>Куда</th><th>Расстояние</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+        ${distances.note ? `<p>${escapeHtml(distances.note)}</p>` : ''}
+      </section>`;
+};
+
 const staticCommercialPage = (route) => {
   const page = seoPages.find((item) => item.path === route.path);
   if (!page) return staticService(route);
@@ -362,6 +381,7 @@ const staticCommercialPage = (route) => {
         .join('')
     : page.sections.map((section) => `<section><h2>${escapeHtml(section.title)}</h2><p>${escapeHtml(section.text)}</p></section>`).join('') +
       priceCompareHtml(page.priceCompare) +
+      distancesHtml(page.distances) +
       `
       <section>
         <h2>Почему выбирают R14-APART</h2>

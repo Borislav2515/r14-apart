@@ -24,9 +24,8 @@ export default function Footer() {
         <div className={styles.col}>
           <h3>Апартаменты</h3>
           <ul>
-            <li><a href="/#about" onClick={e => handleSectionLink(e, 'about')}>Об апартаментах</a></li>
+            <li><a href="/#about" onClick={e => handleSectionLink(e, 'about')}>Об апартаментах и фотогалерея</a></li>
             <li><a href="/#features" onClick={e => handleSectionLink(e, 'features')}>Удобства</a></li>
-            <li><a href="/#about" onClick={e => handleSectionLink(e, 'about')}>Фотогалерея</a></li>
             <li><a href="/#reviews" onClick={e => handleSectionLink(e, 'reviews')}>Отзывы</a></li>
             <li><Link to="/blog">Блог</Link></li>
           </ul>

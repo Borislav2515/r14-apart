@@ -39,8 +39,8 @@ export default function Reviews() {
               <div className={styles.meta}>
                 <div className={styles.avatar} aria-hidden="true">{r.author[0]}</div>
                 <div>
-                  <p className={styles.author} itemProp="author">{r.author} · {r.city}</p>
-                  <p className={styles.source}>{r.source}</p>
+                  <p className={styles.author} itemProp="author">{r.author}</p>
+                  <p className={styles.source}>{r.source}{r.date ? `, ${r.date}` : ''}</p>
                 </div>
               </div>
             </article>
