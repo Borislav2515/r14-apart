@@ -192,7 +192,9 @@ export default function BlogPost() {
               post.sections.map(([title, text]) => (
                 <section key={title} className={styles.section}>
                   <h2>{title}</h2>
-                  <p>{text}</p>
+                  {(Array.isArray(text) ? text : [text]).map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
                 </section>
               ))
             )}
