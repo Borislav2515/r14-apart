@@ -116,6 +116,9 @@
 }
 
 .priceProof a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
   color: var(--gold-light);
   text-underline-offset: 4px;
 }

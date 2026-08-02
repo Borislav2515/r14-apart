@@ -22,9 +22,10 @@
 
 .panel {
   position: relative;
-  width: min(560px, 100%);
-  max-height: min(720px, 90vh);
+  width: min(860px, 100%);
+  max-height: min(760px, calc(100svh - 40px));
   overflow-y: auto;
+  overscroll-behavior: contain;
   border: 1px solid rgba(184, 150, 90, 0.28);
   background: #171611;
   padding: 40px 32px 32px;
@@ -81,7 +82,13 @@
 }
 
 .widgetSlot {
-  min-height: 112px;
+  min-height: min(520px, 62svh);
+}
+
+.widgetSlot :global(select),
+.widgetSlot :global(button),
+.widgetSlot :global(a) {
+  min-height: 44px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -93,13 +100,18 @@
 
 @media (max-width: 640px) {
   .overlay {
-    padding: 12px;
+    padding: 0;
     align-items: flex-end;
   }
   .panel {
     width: 100%;
-    max-height: min(640px, 88vh);
+    max-height: 100svh;
+    min-height: 92svh;
     padding: 32px 20px 24px;
     padding-bottom: max(24px, env(safe-area-inset-bottom));
+  }
+
+  .widgetSlot {
+    min-height: 68svh;
   }
 }

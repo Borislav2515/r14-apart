@@ -8,49 +8,66 @@ import ResponsivePicture from './ResponsivePicture';
 import styles from './About.module.css';
 
 const AMENITY_GROUPS = ['Комфорт', 'Умный дом', 'Быт'];
+const GALLERY_ZONES = ['Все', 'Гостиная', 'Кухня', 'Спальня', 'Ванная', 'Второй уровень', 'Вход и подъезд', 'Вид из окна', 'Детали'];
 
 const PHOTOS = [
   {
     image: APARTMENT.images.living,
-    alt: 'R14-APART — дизайнерские апартаменты посуточно, гостиная',
+    alt: 'R14-APART — гостиная, диван и двухуровневое пространство',
     label: 'Гостиная',
+    zone: 'Гостиная',
+    width: 1400,
+    height: 875,
   },
   {
     image: APARTMENT.images.bedroom,
-    alt: 'Спальня R14-APART — удобная кровать, качественное бельё',
+    alt: 'R14-APART — спальня, кровать и качественное бельё',
     label: 'Спальня',
+    zone: 'Спальня',
+    width: 1400,
+    height: 875,
   },
   {
     image: APARTMENT.images.kitchen,
-    alt: 'Кухня R14-APART — полностью оснащённая кухня',
+    alt: 'R14-APART — кухня, рабочая зона и техника',
     label: 'Кухня',
+    zone: 'Кухня',
+    width: 1400,
+    height: 875,
   },
   {
     image: APARTMENT.images.bathroom,
-    alt: 'Ванная R14-APART — современная ванная комната',
+    alt: 'R14-APART — ванная, современная ванная комната',
     label: 'Ванная',
+    zone: 'Ванная',
+    width: 1400,
+    height: 875,
   },
 ];
 
 export default function About() {
   const { open: openBooking } = useBookingModal();
   const [activeIndex, setActiveIndex] = useState(null);
+  const [activeZone, setActiveZone] = useState('Все');
   const touchStartX = useRef(null);
   const lightboxRef = useRef(null);
   const closeBtnRef = useRef(null);
+  const visiblePhotos = activeZone === 'Все' ? PHOTOS : PHOTOS.filter((photo) => photo.zone === activeZone);
+  const leadPhoto = visiblePhotos[0] ?? PHOTOS[0];
+  const availableZones = GALLERY_ZONES.filter((zone) => zone === 'Все' || PHOTOS.some((photo) => photo.zone === zone));
 
   useFocusTrap(activeIndex !== null, lightboxRef, { initialFocusRef: closeBtnRef });
 
   useEffect(() => {
-    if (activeIndex === null) return undefined;
-    const onKey = (e) => {
-      if (e.key === 'Escape') setActiveIndex(null);
-      if (e.key === 'ArrowRight') setActiveIndex((v) => (v + 1) % PHOTOS.length);
-      if (e.key === 'ArrowLeft') setActiveIndex((v) => (v - 1 + PHOTOS.length) % PHOTOS.length);
+      if (activeIndex === null) return undefined;
+      const onKey = (e) => {
+        if (e.key === 'Escape') setActiveIndex(null);
+      if (e.key === 'ArrowRight') setActiveIndex((v) => (v + 1) % visiblePhotos.length);
+      if (e.key === 'ArrowLeft') setActiveIndex((v) => (v - 1 + visiblePhotos.length) % visiblePhotos.length);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [activeIndex]);
+  }, [activeIndex, visiblePhotos.length]);
 
   const openLightbox = (index) => {
     trackGalleryOpen();
@@ -70,9 +87,9 @@ export default function About() {
     if (Math.abs(delta) < 40) return;
 
     if (delta < 0) {
-      setActiveIndex((v) => (v + 1) % PHOTOS.length);
+      setActiveIndex((v) => (v + 1) % visiblePhotos.length);
     } else {
-      setActiveIndex((v) => (v - 1 + PHOTOS.length) % PHOTOS.length);
+      setActiveIndex((v) => (v - 1 + visiblePhotos.length) % visiblePhotos.length);
     }
   };
 
@@ -93,21 +110,40 @@ export default function About() {
       </div>
 
       <div className={styles.showcase} itemScope itemType="https://schema.org/Apartment">
+        <Reveal className={styles.galleryFilters} y={24}>
+          {availableZones.map((zone) => (
+            <button
+              key={zone}
+              type="button"
+              className={`${styles.filterBtn} ${activeZone === zone ? styles.filterActive : ''}`}
+              onClick={() => {
+                setActiveZone(zone);
+                setActiveIndex(null);
+              }}
+              aria-pressed={activeZone === zone}
+            >
+              {zone}
+            </button>
+          ))}
+        </Reveal>
+
         {/* Main image */}
         <Reveal className={styles.mainWrap} y={40}>
           <button
             type="button"
             className={styles.mainBtn}
             onClick={() => openLightbox(0)}
-            aria-label={`Открыть фото: ${PHOTOS[0].alt}`}
+            aria-label={`Открыть фото: ${leadPhoto.alt}`}
           >
             <ResponsivePicture
-              image={PHOTOS[0].image}
-              alt={PHOTOS[0].alt}
+              image={leadPhoto.image}
+              alt={leadPhoto.alt}
               className={styles.mainImg}
               sizes="(max-width: 768px) 100vw, 1400px"
               loading="eager"
               fetchPriority="high"
+              width={leadPhoto.width}
+              height={leadPhoto.height}
               itemProp="image"
             />
           </button>
@@ -120,7 +156,7 @@ export default function About() {
 
         {/* Sub images grid */}
         <div className={styles.subGrid}>
-          {PHOTOS.slice(1).map((photo, i) => (
+          {visiblePhotos.slice(1).map((photo, i) => (
             <Reveal key={photo.alt} delay={0.1 * (i + 1)} y={40}>
               <button
                 type="button"
@@ -133,6 +169,8 @@ export default function About() {
                   alt={photo.alt}
                   className={styles.subImg}
                   sizes="(max-width: 768px) 50vw, 33vw"
+                  width={photo.width}
+                  height={photo.height}
                   style={{ filter: 'saturate(0.88)' }}
                 />
                 <span className={styles.subCaption}>{photo.label}</span>
@@ -193,7 +231,7 @@ export default function About() {
             className={styles.lightboxBtn}
             onClick={(e) => {
               e.stopPropagation();
-              setActiveIndex((v) => (v - 1 + PHOTOS.length) % PHOTOS.length);
+              setActiveIndex((v) => (v - 1 + visiblePhotos.length) % visiblePhotos.length);
             }}
             aria-label="Предыдущее фото"
           >
@@ -212,22 +250,24 @@ export default function About() {
               Закрыть
             </button>
             <ResponsivePicture
-              image={PHOTOS[activeIndex].image}
-              alt={PHOTOS[activeIndex].alt}
+              image={visiblePhotos[activeIndex].image}
+              alt={visiblePhotos[activeIndex].alt}
               className={styles.lightboxImg}
               sizes="100vw"
               loading="eager"
+              width={visiblePhotos[activeIndex].width}
+              height={visiblePhotos[activeIndex].height}
               onClick={(e) => e.stopPropagation()}
               onTouchStart={onTouchStart}
               onTouchEnd={onTouchEnd}
             />
-            <span className={styles.counter}>{activeIndex + 1} / {PHOTOS.length}</span>
+            <span className={styles.counter}>{activeIndex + 1} / {visiblePhotos.length}</span>
           </div>
           <button
             className={styles.lightboxBtn}
             onClick={(e) => {
               e.stopPropagation();
-              setActiveIndex((v) => (v + 1) % PHOTOS.length);
+              setActiveIndex((v) => (v + 1) % visiblePhotos.length);
             }}
             aria-label="Следующее фото"
           >

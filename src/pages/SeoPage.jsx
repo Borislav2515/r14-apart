@@ -106,7 +106,9 @@ export default function SeoPage() {
               {page.sections.map((section) => (
                 <section key={section.title} className={styles.section}>
                   <h2>{section.title}</h2>
-                  <p>{section.text}</p>
+                  {(Array.isArray(section.text) ? section.text : [section.text]).map((text) => (
+                    <p key={text}>{text}</p>
+                  ))}
                 </section>
               ))}
               {page.priceCompare && (

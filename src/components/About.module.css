@@ -32,11 +32,38 @@
 /* Showcase */
 .showcase { display: flex; flex-direction: column; gap: 16px; }
 
+.galleryFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.filterBtn {
+  min-height: 44px;
+  border: 1px solid rgba(184,150,90,0.22);
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(245,240,232,0.76);
+  padding: 0 15px;
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  transition: border-color 0.25s var(--ease-smooth), color 0.25s var(--ease-smooth), background 0.25s var(--ease-smooth);
+}
+
+.filterBtn:hover,
+.filterActive {
+  border-color: rgba(212,175,122,0.62);
+  background: rgba(184,150,90,0.12);
+  color: var(--cream);
+}
+
 .mainWrap { position: relative; }
 
 .mainBtn {
   display: block;
   width: 100%;
+  min-height: 44px;
   border: none;
   padding: 0;
   background: none;
@@ -78,6 +105,7 @@
   position: relative;
   display: block;
   width: 100%;
+  min-height: 44px;
   border: none;
   padding: 0;
   background: none;
@@ -238,6 +266,7 @@
   right: 20px;
   border: 1px solid rgba(184, 150, 90, 0.5);
   background: rgba(46, 44, 40, 0.8);
+  min-height: 44px;
   padding: 11px 14px;
 }
 

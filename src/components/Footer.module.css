@@ -35,6 +35,8 @@
   text-decoration: none; transition: color 0.3s;
   display: inline-flex;
   align-items: center;
+  min-height: 44px;
+  padding-right: 8px;
 }
 .col ul a:hover { color: var(--cream); }
 .address {

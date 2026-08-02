@@ -73,6 +73,9 @@
 
 .breadcrumbs a {
   color: rgba(245,240,232,0.68);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
   transition: color 0.2s var(--ease-smooth);
 }
 
@@ -222,6 +225,8 @@
 
 .inlineLinks a {
   display: inline-flex;
+  min-height: 44px;
+  align-items: center;
   width: fit-content;
   color: var(--gold-light);
   font-size: 13px;
@@ -408,6 +413,9 @@
 }
 
 .card a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
   color: var(--gold-light);
   font-size: 12px;
   font-weight: 700;
