@@ -15,6 +15,16 @@ const distDir = resolve(process.cwd(), 'dist');
 const templatePath = join(distDir, 'index.html');
 const template = readFileSync(templatePath, 'utf8');
 const renderedAt = new Date().toISOString().slice(0, 10);
+const yandexMapUrl = 'https://yandex.ru/maps/org/r14_apart/95912541487/';
+const verifiedReviewSchema = {
+  '@type': 'Review',
+  author: { '@type': 'Person', name: 'Константин' },
+  datePublished: '2026-07-15',
+  reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+  reviewBody:
+    'Апартаменты полностью соответствуют представленным фотографиям. Внутри очень уютно, видно, что хозяева вложили душу в дизайн и ремонт.',
+  publisher: { '@type': 'Organization', name: 'Ostrovok.ru' },
+};
 
 const escapeHtml = (value) =>
   String(value)
@@ -73,7 +83,26 @@ const lodgingGraphFor = (route) => {
         longitude: APARTMENT_INFO.longitude,
       },
       sameAs: REVIEW_PLATFORMS.filter((platform) => platform.sameAs !== false).map((platform) => platform.href),
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '4.8',
+        reviewCount: '21',
+        bestRating: '5',
+        worstRating: '1',
+      },
+      review: [verifiedReviewSchema],
+      hasMap: yandexMapUrl,
+      checkinTime: '14:00',
+      checkoutTime: '12:00',
+      openingHoursSpecification: {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        opens: '00:00',
+        closes: '23:59',
+      },
       petsAllowed: true,
+      currenciesAccepted: 'RUB',
+      paymentAccepted: 'Cash, Credit Card',
       amenityFeature: APARTMENT_INFO.amenities.map((amenity) => ({
         '@type': 'LocationFeatureSpecification',
         name: amenity.label,
@@ -97,7 +126,7 @@ const lodgingGraphFor = (route) => {
         '@type': 'QuantitativeValue',
         maxValue: String(APARTMENT_INFO.guests),
       },
-      numberOfRooms: '2',
+      numberOfRooms: 1,
     },
   ];
 };

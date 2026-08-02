@@ -13,9 +13,10 @@ export const seoRoutes = [
     path: '/',
     title: 'Квартира посуточно во Владикавказе | R14-APART, ул. Революции 14',
     description:
-      'Снять квартиру посуточно во Владикавказе: R14-APART в историческом центре, ул. Революции 14. До 4 гостей, 45 м², Wi-Fi, парковка, бесконтактное заселение 24/7, от 7500 ₽.',
+      'Снять квартиру посуточно во Владикавказе: R14-APART в историческом центре, ул. Революции 14. До 4 гостей, 46 м², Wi-Fi 500 Мбит/с, парковка, бесконтактное заселение 24/7, от 7500 ₽.',
     changefreq: 'weekly',
     priority: '1.0',
+    lastmod: '2026-08-02',
     type: 'website',
   },
   {
@@ -25,6 +26,7 @@ export const seoRoutes = [
       'Квартира посуточно в центре Владикавказа: ул. Революции 14, тихая улица, отдельный вход, парковка, Wi-Fi и самостоятельное заселение.',
     changefreq: 'monthly',
     priority: '0.9',
+    lastmod: '2026-08-02',
     type: 'website',
   },
   {
@@ -33,7 +35,8 @@ export const seoRoutes = [
     description:
       'Квартира для командировки во Владикавказе: быстрый Wi-Fi, отчётные документы, самостоятельное заселение 24/7, кухня, центр города.',
     changefreq: 'monthly',
-    priority: '0.85',
+    priority: '0.9',
+    lastmod: '2026-08-02',
     type: 'website',
   },
   {
@@ -42,7 +45,8 @@ export const seoRoutes = [
     description:
       'Квартира посуточно во Владикавказе без посредников: R14-APART, прямое бронирование, центр, самостоятельное заселение, Wi-Fi, парковка.',
     changefreq: 'monthly',
-    priority: '0.85',
+    priority: '0.9',
+    lastmod: '2026-08-02',
     type: 'website',
   },
   {
@@ -51,7 +55,8 @@ export const seoRoutes = [
     description:
       'Ответы на частые вопросы о R14-APART: дети, парковка, ночное заселение, Wi-Fi, кухня, животные, вместимость и самостоятельный заезд.',
     changefreq: 'monthly',
-    priority: '0.75',
+    priority: '0.7',
+    lastmod: '2026-08-01',
     type: 'website',
     schemaType: 'FAQPage',
   },
@@ -62,6 +67,7 @@ export const seoRoutes = [
       'Полезные материалы R14-APART о поездках во Владикавказ, маршрутах по Северной Осетии, проживании в центре и путешествиях на выходные.',
     changefreq: 'weekly',
     priority: '0.8',
+    lastmod: '2026-08-02',
     type: 'website',
     schemaType: 'Blog',
   },
@@ -71,7 +77,8 @@ export const seoRoutes = [
     description:
       'Какой район Владикавказа выбрать туристу: центр у проспекта Мира или окраина. Реальные расстояния до музея, театра и набережной пешком.',
     changefreq: 'monthly',
-    priority: '0.7',
+    priority: '0.6',
+    lastmod: '2026-08-01',
     type: 'article',
     schemaType: 'BlogPosting',
   },
@@ -82,6 +89,7 @@ export const seoRoutes = [
       'Маршрут на 2 дня по Владикавказу пешком: проспект Мира, набережная Терека, мечеть Мухтарова, парк Хетагурова — и куда выехать на второй день.',
     changefreq: 'monthly',
     priority: '0.7',
+    lastmod: '2026-08-01',
     type: 'article',
     schemaType: 'BlogPosting',
   },
@@ -91,18 +99,19 @@ export const seoRoutes = [
     description:
       'Как доехать из Владикавказа до горнолыжного курорта Цей: расстояние, состояние дороги, автобус от автовокзала и сколько времени закладывать на поездку.',
     changefreq: 'monthly',
-    priority: '0.7',
+    priority: '0.6',
+    lastmod: '2026-08-01',
     type: 'article',
     schemaType: 'BlogPosting',
   },
   {
     path: '/blog/dargavs-guide',
-    robots: 'noindex, follow',
     title: 'Как доехать до Даргавса из Владикавказа: маршрутка, цена, город мёртвых | R14-APART',
     description:
       'Как добраться до Даргавса из Владикавказа без машины: где садиться на маршрутку, сколько стоит вход в некрополь и сколько времени закладывать на поездку.',
     changefreq: 'monthly',
     priority: '0.7',
+    lastmod: '2026-08-01',
     type: 'article',
     schemaType: 'BlogPosting',
   },
@@ -112,7 +121,8 @@ export const seoRoutes = [
     description:
       'Три однодневных маршрута из Владикавказа: некрополь Даргавс, Кадаргаванский каньон в Куртатинском ущелье и горнолыжный курорт Цей. Расстояния и время в пути.',
     changefreq: 'monthly',
-    priority: '0.7',
+    priority: '0.6',
+    lastmod: '2026-08-01',
     type: 'article',
     schemaType: 'BlogPosting',
   },
@@ -122,7 +132,8 @@ export const seoRoutes = [
     description:
       'Как выбрать жильё для командировки во Владикавказе: отчётные документы без НДС, Wi-Fi, поздний заезд без привязки к рейсу и центр города.',
     changefreq: 'monthly',
-    priority: '0.7',
+    priority: '0.6',
+    lastmod: '2026-08-01',
     type: 'article',
     schemaType: 'BlogPosting',
   },
@@ -132,40 +143,41 @@ export const seoRoutes = [
     description:
       'Как работает самостоятельное заселение по смарт-коду в R14-APART: когда приходит код, что делать при позднем заезде и как связаться с хозяином.',
     changefreq: 'monthly',
-    priority: '0.7',
+    priority: '0.6',
+    lastmod: '2026-08-01',
     type: 'article',
     schemaType: 'BlogPosting',
   },
   {
     path: '/blog/gde-ostanovitsya-vo-vladikavkaze',
-    robots: 'noindex, follow',
     title: 'Где остановиться во Владикавказе: апартаменты, гостиница или хостел | R14-APART',
     description:
       'Сравниваем гостиницы, хостелы и апартаменты посуточно во Владикавказе — что выбрать туристу, семье или командировочному в 2026 году.',
     changefreq: 'monthly',
     priority: '0.7',
+    lastmod: '2026-08-01',
     type: 'article',
     schemaType: 'BlogPosting',
   },
   {
     path: '/blog/kak-dobratsya-do-vladikavkaza',
-    robots: 'noindex, follow',
     title: 'Как добраться до Владикавказа: самолёт, поезд, машина | R14-APART',
     description:
       'Все способы доехать до Владикавказа в 2026 году — самолётом через аэропорт Беслан, поездом из Москвы, на машине по трассам Кавказа. Время в пути и что учесть.',
     changefreq: 'monthly',
     priority: '0.7',
+    lastmod: '2026-08-01',
     type: 'article',
     schemaType: 'BlogPosting',
   },
   {
     path: '/blog/kurtatinskoe-ushchelye-kadarganvanskiy-kanyon',
-    robots: 'noindex, follow',
     title: 'Куртатинское ущелье и Кадаргаванский каньон: как добраться и что посмотреть | R14-APART',
     description:
       'Маршрут по Куртатинскому ущелью — Кадаргаванский каньон, Тропа чудес, крепость Дзивгис. Как доехать из Владикавказа, сколько времени закладывать и что взять с собой.',
     changefreq: 'monthly',
     priority: '0.7',
+    lastmod: '2026-08-01',
     type: 'article',
     schemaType: 'BlogPosting',
   },
@@ -174,8 +186,9 @@ export const seoRoutes = [
     title: 'Правила дома | R14-APART',
     description:
       'Правила проживания в апартаментах R14-APART: заезд, выезд, гости, дети, питомцы, связь и бережное использование пространства.',
-    changefreq: 'monthly',
+    changefreq: 'yearly',
     priority: '0.3',
+    lastmod: '2026-08-02',
     type: 'website',
   },
 ];

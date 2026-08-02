@@ -127,7 +127,7 @@ export default function SeoPage() {
                           <tr key={row.source}>
                             <td>
                               {row.href ? (
-                                <a href={row.href} target="_blank" rel="noreferrer">{row.source}</a>
+                                <a href={row.href} target="_blank" rel="noopener">{row.source}</a>
                               ) : (
                                 row.source
                               )}

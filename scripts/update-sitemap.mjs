@@ -2,12 +2,10 @@ import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { canonicalUrlFor, seoRoutes } from './seo-routes.mjs';
 
-const lastmod = new Date().toISOString().slice(0, 10);
+const sitemapRoutes = seoRoutes.filter((route) => !route.robots?.includes('noindex'));
 
-const indexableRoutes = seoRoutes.filter((route) => !route.robots?.includes('noindex'));
-
-const urlEntries = indexableRoutes
-  .map(({ path, changefreq, priority }) => `  <url>
+const urlEntries = sitemapRoutes
+  .map(({ path, changefreq, priority, lastmod }) => `  <url>
     <loc>${canonicalUrlFor(path)}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>${changefreq}</changefreq>
@@ -22,4 +20,4 @@ ${urlEntries}
 `;
 
 writeFileSync(resolve(process.cwd(), 'public', 'sitemap.xml'), sitemap, 'utf8');
-console.log(`Generated sitemap with ${indexableRoutes.length} URLs and lastmod ${lastmod}`);
+console.log(`Generated sitemap with ${sitemapRoutes.length} URLs`);

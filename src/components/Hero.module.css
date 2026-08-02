@@ -107,6 +107,23 @@
   backdrop-filter: blur(12px);
 }
 
+.priceProof {
+  max-width: 640px;
+  margin: 0 auto 18px;
+  color: rgba(245,240,232,0.82);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.priceProof a {
+  color: var(--gold-light);
+  text-underline-offset: 4px;
+}
+
+.priceProof a:hover {
+  color: var(--white);
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -181,6 +198,11 @@
   .subtitle { font-size: 14px; }
   .facts { gap: 6px; }
   .facts span { font-size: 11px; padding: 7px 9px; }
+  .priceProof {
+    max-width: 320px;
+    margin-bottom: 14px;
+    font-size: 12px;
+  }
   .widgetWrap,
   .widgetWrap > div {
     min-height: 112px;

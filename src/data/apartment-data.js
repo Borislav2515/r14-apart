@@ -5,7 +5,7 @@
 export const APARTMENT_INFO = {
   name: 'R14-APART',
   tagline: 'Двухуровневые апартаменты посуточно в историческом центре Владикавказа',
-  area: 45,
+  area: 46,
   guests: 4,
   rating: 5.0,
   reviewCount: 91,
@@ -21,7 +21,7 @@ export const APARTMENT_INFO = {
   description:
     'R14-APART — двухуровневые апартаменты в отдельностоящем здании с отдельным входом с улицы. Исторический центр Владикавказа, тихая улица, премиальный ремонт, умный дом и бесконтактное заселение 24/7 по паролю.',
   amenities: [
-    { icon: '📶', label: 'WiFi 200 Мбит/с', group: 'Комфорт' },
+    { icon: '📶', label: 'Wi-Fi 500 Мбит/с', group: 'Комфорт' },
     { icon: '📺', label: 'Смарт-ТВ', group: 'Комфорт' },
     { icon: '☕', label: 'Кофемашина', group: 'Комфорт' },
     { icon: '❄️', label: 'Кондиционер', group: 'Комфорт' },
@@ -44,7 +44,7 @@ export const APARTMENT_INFO = {
     {
       icon: '✦',
       title: 'Премиальный двухуровневый интерьер',
-      text: '45 м² стильного пространства в отдельностоящем здании с отдельным входом. Тишина и приватность в центре города.',
+      text: '46 м² стильного пространства в отдельностоящем здании с отдельным входом. Тишина и приватность в центре города.',
     },
     {
       icon: '⌂',
@@ -133,16 +133,16 @@ export const FAQ = [
 export const STATS = [
   { value: 247, label: 'довольных гостей', decimal: false },
   { value: 5.0, label: 'средняя оценка', decimal: true },
-  { value: 45, label: 'м² площадь', decimal: false },
+  { value: 46, label: 'м² площадь', decimal: false },
   { value: 24, label: 'заселение 24/7', decimal: false },
 ];
 
 export const REVIEW_PLATFORMS = [
   {
-    name: 'Яндекс Путешествия',
-    rating: '5 из 5',
-    score: 'Суперхозяин',
-    reviews: '10+ отзывов',
+    name: 'Яндекс Карты',
+    rating: '4.6 из 5',
+    score: '12 оценок',
+    reviews: '10 отзывов',
     checkedAt: '2026-08-01',
     brand: 'yandex',
     href: 'https://yandex.ru/maps/org/r14_apart/95912541487/reviews/',
@@ -163,6 +163,7 @@ export const REVIEW_PLATFORMS = [
     reviews: '25+ отзывов',
     checkedAt: '2026-08-01',
     brand: 'sutochno',
+    sameAs: false,
     href: 'https://sutochno.ru/front/searchapp/detail/1938216',
   },
   {

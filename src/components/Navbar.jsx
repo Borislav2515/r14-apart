@@ -7,7 +7,7 @@ import { phoneDisplay, phoneHref, trackPhone, trackWhatsapp, trackTelegram, tele
 import styles from './Navbar.module.css';
 
 const LINKS = [
-  { id: 'about', label: 'Апартаменты', meta: 'Два уровня, 45 м²' },
+  { id: 'about', label: 'Апартаменты', meta: 'Два уровня, 46 м²' },
   { id: 'features', label: 'Удобства', meta: 'Умный дом и комфорт' },
   { id: 'reviews', label: 'Отзывы', meta: 'Оценки на площадках' },
   { id: 'faq', label: 'FAQ', meta: 'Правила и заселение' },

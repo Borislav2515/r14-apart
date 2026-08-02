@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { APARTMENT } from '../data/apartment';
+import { APARTMENT, REVIEW_PLATFORMS } from '../data/apartment';
 import { trackTelegram, trackWhatsapp, telegramHref, whatsappHref } from '../utils/analytics';
 import { useBookingModal } from '../context/BookingModalContext';
 import Reveal from './Reveal';
@@ -10,6 +10,8 @@ export default function Hero() {
   const heroRef = useRef(null);
   const bgRef = useRef(null);
   const { setHeroSlot } = useBookingModal();
+  const ostrovokHref = REVIEW_PLATFORMS.find((platform) => platform.brand === 'ostrovok')?.href;
+  const directSaving = 8692 - APARTMENT.priceFrom;
 
   // Parallax on scroll
   useEffect(() => {
@@ -81,13 +83,16 @@ export default function Hero() {
           Исторический центр Владикавказа · Бронирование онлайн
         </Reveal>
 
-        <Reveal as="h1" className={styles.title} delay={0.55} y={24} immediate>
+        <Reveal as="p" className={styles.title} delay={0.55} y={24} immediate>
           <span className={styles.brandLine}>
             R14<span className={styles.dot}>·</span>
             <br />
             <em>APART</em>
           </span>
-          <span className={styles.seoLine}>Квартира посуточно во Владикавказе</span>
+        </Reveal>
+
+        <Reveal as="h1" className={styles.seoLine} delay={0.62} y={20} immediate>
+          Квартира посуточно во Владикавказе
         </Reveal>
 
         <Reveal as="p" className={styles.subtitle} delay={0.8} y={24} immediate>
@@ -99,6 +104,18 @@ export default function Hero() {
           <span>от {APARTMENT.priceFrom.toLocaleString('ru-RU')} ₽/сутки</span>
           <span>до {APARTMENT.guests} гостей</span>
           <span>самостоятельное заселение</span>
+        </Reveal>
+
+        <Reveal as="p" className={styles.priceProof} delay={0.93} y={18} immediate>
+          напрямую у собственника · на {directSaving.toLocaleString('ru-RU')} ₽ дешевле, чем на Островке
+          {ostrovokHref && (
+            <>
+              {' '}
+              <a href={ostrovokHref} target="_blank" rel="noopener">
+                Проверить
+              </a>
+            </>
+          )}
         </Reveal>
 
         <Reveal className={styles.widgetWrap} delay={0.96} y={24} immediate>

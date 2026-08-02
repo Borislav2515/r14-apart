@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "verify:p0": "node ./scripts/verify-p0.mjs",
     "verify:data": "node ./scripts/verify-data.mjs",
+    "verify:hydration": "node ./scripts/verify-hydration.mjs",
     "go": "bash ./scripts/go.sh",
     "setup:local-ssh": "bash ./scripts/local-ssh-config.sh",
     "setup:copy-key": "bash ./scripts/copy-ssh-key.sh",
@@ -25,6 +26,7 @@
     "@types/react": "^18.3.31",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.2",
+    "playwright": "^1.62.1",
     "vite": "^6.4.3"
   }
 }

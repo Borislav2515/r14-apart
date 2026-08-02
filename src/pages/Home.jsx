@@ -26,13 +26,14 @@ function HomeSection({ id, minHeight = 320, children }) {
   );
 }
 
-export default function Home() {
+export default function Home({ runtimeBookingRoute = false }) {
   const location = useLocation();
 
   usePageMeta({
     title: seoDefaults.home.title,
     description: seoDefaults.home.description,
-    path: '/',
+    path: runtimeBookingRoute ? location.pathname : '/',
+    robots: runtimeBookingRoute ? 'noindex, follow' : 'index, follow',
   });
 
   useEffect(() => {

@@ -60,7 +60,7 @@ picture { display: block; }
 
 @font-face {
   font-family: 'Fraunces';
-  src: url('/fonts/fraunces-300.ttf?v=20260618') format('truetype');
+  src: url('/fonts/fraunces-300.woff2?v=20260802') format('woff2');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -68,7 +68,7 @@ picture { display: block; }
 
 @font-face {
   font-family: 'Fraunces';
-  src: url('/fonts/fraunces-400.ttf?v=20260618') format('truetype');
+  src: url('/fonts/fraunces-400.woff2?v=20260802') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -76,7 +76,7 @@ picture { display: block; }
 
 @font-face {
   font-family: 'Fraunces';
-  src: url('/fonts/fraunces-italic-400.ttf?v=20260618') format('truetype');
+  src: url('/fonts/fraunces-italic-400.woff2?v=20260802') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -84,7 +84,7 @@ picture { display: block; }
 
 @font-face {
   font-family: 'Manrope';
-  src: url('/fonts/manrope-400.ttf?v=20260618') format('truetype');
+  src: url('/fonts/manrope-400.woff2?v=20260802') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -92,7 +92,7 @@ picture { display: block; }
 
 @font-face {
   font-family: 'Manrope';
-  src: url('/fonts/manrope-500.ttf?v=20260618') format('truetype');
+  src: url('/fonts/manrope-500.woff2?v=20260802') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -100,7 +100,7 @@ picture { display: block; }
 
 @font-face {
   font-family: 'Manrope';
-  src: url('/fonts/manrope-600.ttf?v=20260618') format('truetype');
+  src: url('/fonts/manrope-600.woff2?v=20260802') format('woff2');
   font-weight: 600;
   font-style: normal;
   font-display: swap;

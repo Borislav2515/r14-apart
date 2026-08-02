@@ -1,9 +1,13 @@
 import { useState } from 'react';
-import { REVIEWS } from '../data/apartment';
+import { REVIEW_PLATFORMS, REVIEWS } from '../data/apartment';
 import Reveal from './Reveal';
 import styles from './Reviews.module.css';
 
 const ALL = [...REVIEWS, ...REVIEWS]; // duplicate for seamless loop
+const platformByBrand = Object.fromEntries(REVIEW_PLATFORMS.map((platform) => [platform.brand, platform]));
+const sourceForReview = (review) => (
+  review.source === 'Яндекс Карты' ? platformByBrand.yandex : platformByBrand.ostrovok
+);
 
 export default function Reviews() {
   const [paused, setPaused] = useState(false);
@@ -27,9 +31,12 @@ export default function Reviews() {
       <div className={styles.trackWrap} role="region" aria-label="Лента отзывов">
         <div className={`${styles.track} ${paused ? styles.paused : ''}`}>
           {ALL.map((r, i) => (
-            <article
+            <a
               key={`${r.id}-${i}`}
+              href={sourceForReview(r)?.href}
               className={styles.card}
+              target="_blank"
+              rel="noopener"
               itemScope itemType="https://schema.org/Review"
             >
               <div className={styles.stars} aria-label={`${r.stars} из 5 звёзд`}>
@@ -43,10 +50,21 @@ export default function Reviews() {
                   <p className={styles.source}>{r.source}{r.date ? `, ${r.date}` : ''}</p>
                 </div>
               </div>
-            </article>
+            </a>
           ))}
         </div>
       </div>
+
+      <Reveal as="p" className={styles.sources} y={18}>
+        Все отзывы:{' '}
+        <a href={platformByBrand.yandex.href} target="_blank" rel="noopener">
+          Яндекс Карты (4.6, 10 отзывов)
+        </a>
+        {' · '}
+        <a href={platformByBrand.ostrovok.href} target="_blank" rel="noopener">
+          Островок (10/10, 11 отзывов)
+        </a>
+      </Reveal>
     </section>
   );
 }

@@ -38,6 +38,82 @@ function LegacyHashRedirect() {
   return null;
 }
 
+const BOOKING_DATE_PARAMS = ['begin_date', 'end_date'];
+
+const normalizeBookingUrl = (value) => {
+  if (value == null || typeof window === 'undefined') return value;
+
+  const raw = String(value);
+  const isAbsolute = /^[a-z][a-z\d+.-]*:\/\//i.test(raw);
+  const url = new URL(raw, window.location.href);
+  const cleanSearch = url.search.slice(1).replace(/\?/g, '&');
+  const params = new URLSearchParams(cleanSearch);
+
+  for (const name of BOOKING_DATE_PARAMS) {
+    const values = params.getAll(name).filter(Boolean);
+    params.delete(name);
+    if (values.length) params.set(name, values[values.length - 1]);
+  }
+
+  const nextSearch = params.toString();
+  url.search = nextSearch ? `?${nextSearch}` : '';
+
+  if (isAbsolute) return url.href;
+  return `${url.pathname}${url.search}${url.hash}`;
+};
+
+const differsOnlyByBookingDates = (currentUrl, nextUrl) => {
+  if (currentUrl.pathname !== nextUrl.pathname) return false;
+
+  const current = new URLSearchParams(currentUrl.search);
+  const next = new URLSearchParams(nextUrl.search);
+
+  for (const name of BOOKING_DATE_PARAMS) {
+    current.delete(name);
+    next.delete(name);
+  }
+
+  return current.toString() === next.toString();
+};
+
+function BookingHistoryGuard() {
+  useEffect(() => {
+    const originalPushState = window.history.pushState.bind(window.history);
+    const originalReplaceState = window.history.replaceState.bind(window.history);
+
+    window.history.replaceState = (state, unused, url) => (
+      originalReplaceState(state, unused, normalizeBookingUrl(url))
+    );
+
+    window.history.pushState = (state, unused, url) => {
+      const normalized = normalizeBookingUrl(url);
+
+      if (normalized != null) {
+        const currentUrl = new URL(window.location.href);
+        const nextUrl = new URL(String(normalized), window.location.href);
+
+        if (differsOnlyByBookingDates(currentUrl, nextUrl)) {
+          return originalReplaceState(state, unused, normalized);
+        }
+      }
+
+      return originalPushState(state, unused, normalized);
+    };
+
+    const normalizedCurrent = normalizeBookingUrl(window.location.href);
+    if (normalizedCurrent !== window.location.href) {
+      originalReplaceState(window.history.state, '', normalizedCurrent);
+    }
+
+    return () => {
+      window.history.pushState = originalPushState;
+      window.history.replaceState = originalReplaceState;
+    };
+  }, []);
+
+  return null;
+}
+
 function ScrollToTop() {
   const location = useLocation();
 
@@ -63,6 +139,9 @@ function AnimatedRoutes() {
       <Route path="/komandirovka-vladikavkaz" element={<SeoPage />} />
       <Route path="/bez-posrednikov" element={<SeoPage />} />
       <Route path="/faq" element={<SeoPage />} />
+      <Route path="/search" element={<Home runtimeBookingRoute />} />
+      <Route path="/search/*" element={<Home runtimeBookingRoute />} />
+      <Route path="/detail/*" element={<Home runtimeBookingRoute />} />
       {/* Consolidated 11 -> 5 SEO pages (2026-08). Real 301s live in nginx
           (scripts/server-bootstrap.sh); these are a client-side safety net
           for anyone landing here before that config is deployed. */}
@@ -90,6 +169,7 @@ function AnimatedRoutes() {
 export default function App() {
   return (
     <BrowserRouter>
+      <BookingHistoryGuard />
       <LegacyHashRedirect />
       <ScrollToTop />
       <SkipLink />

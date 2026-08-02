@@ -12,12 +12,20 @@ const fail = (message) => {
 const indexHtml = read('dist/index.html');
 const faqHtml = read('dist/faq/index.html');
 
-if (indexHtml.includes('"aggregateRating"')) {
-  fail('aggregateRating is still present on the home page schema');
-}
-
 if (indexHtml.includes('"availability"')) {
   fail('static Offer availability is still present on the home page schema');
+}
+
+if (!indexHtml.includes('"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"21"')) {
+  fail('verified aggregateRating 4.8/21 is missing from the home page schema');
+}
+
+if (!indexHtml.includes('"reviewBody":"Апартаменты полностью соответствуют представленным фотографиям.')) {
+  fail('verified Ostrovok review is missing from the home page schema');
+}
+
+if (!indexHtml.includes('"floorSize":{"@type":"QuantitativeValue","value":"46"')) {
+  fail('Apartment floorSize must be 46 m²');
 }
 
 if (!indexHtml.includes('"@id":"https://r14-apart.com/#address"')) {

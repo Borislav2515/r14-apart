@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { blogPosts } from '../src/data/seo.js';
+import { canonicalUrlFor } from './seo-routes.mjs';
 
 const root = process.cwd();
 
@@ -17,13 +17,39 @@ const blockedPatterns = [
   /booking_submit/,
   /Позже можно/,
   /Место для фото/,
+  /200 Мбит/,
+  /45 м²/,
 ];
 
-const temporarilyNoindex = [
+const expectedSitemapPaths = [
+  '/',
+  '/bez-posrednikov/',
+  '/kvartira-posutochno-vladikavkaz-center/',
+  '/komandirovka-vladikavkaz/',
+  '/faq/',
+  '/rules/',
+  '/blog/',
   '/blog/dargavs-guide/',
   '/blog/gde-ostanovitsya-vo-vladikavkaze/',
   '/blog/kak-dobratsya-do-vladikavkaza/',
   '/blog/kurtatinskoe-ushchelye-kadarganvanskiy-kanyon/',
+  '/blog/2-days-vladikavkaz/',
+  '/blog/where-to-stay-vladikavkaz/',
+  '/blog/ossetia-mountains-trip/',
+  '/blog/best-places-ossetia/',
+  '/blog/business-trip-vladikavkaz/',
+  '/blog/apartment-with-self-checkin-vladikavkaz/',
+];
+
+const redirectOnlyPaths = [
+  '/kvartira-posutochno-vladikavkaz/',
+  '/snyat-kvartiru-posutochno-vladikavkaz/',
+  '/kvartira-na-sutki-vladikavkaz/',
+  '/apartments-vladikavkaz/',
+  '/center-vladikavkaz/',
+  '/family-apartment/',
+  '/weekend-vladikavkaz/',
+  '/tourism-vladikavkaz/',
 ];
 
 const read = (path) => readFileSync(resolve(root, path), 'utf8');
@@ -69,34 +95,22 @@ for (const file of textFiles) {
 }
 
 const sitemap = read('public/sitemap.xml');
-for (const path of temporarilyNoindex) {
+const sitemapLocs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+
+if (sitemapLocs.length !== expectedSitemapPaths.length) {
+  fail(`expected ${expectedSitemapPaths.length} sitemap URLs, found ${sitemapLocs.length}`);
+}
+
+for (const path of expectedSitemapPaths) {
+  const url = canonicalUrlFor(path);
+  if (!sitemapLocs.includes(url)) {
+    fail(`${url} is missing from public/sitemap.xml`);
+  }
+}
+
+for (const path of redirectOnlyPaths) {
   if (sitemap.includes(path)) {
-    fail(`${path} is still present in public/sitemap.xml`);
-  }
-}
-
-const seoData = read('src/data/seo.js');
-const seoRoutes = read('scripts/seo-routes.mjs');
-for (const path of temporarilyNoindex) {
-  const dataIndex = seoData.indexOf(`path: '${path.replace(/\/$/, '')}'`);
-  const routesIndex = seoRoutes.indexOf(`path: '${path.replace(/\/$/, '')}'`);
-
-  if (dataIndex === -1 || !seoData.slice(dataIndex, dataIndex + 220).includes("robots: 'noindex, follow'")) {
-    fail(`${path} missing noindex marker in src/data/seo.js`);
-  }
-
-  if (routesIndex === -1 || !seoRoutes.slice(routesIndex, routesIndex + 220).includes("robots: 'noindex, follow'")) {
-    fail(`${path} missing noindex marker in scripts/seo-routes.mjs`);
-  }
-}
-
-for (const post of blogPosts.filter((item) => !item.robots?.includes('noindex'))) {
-  const serialized = JSON.stringify(post);
-
-  for (const path of temporarilyNoindex.map((item) => item.replace(/\/$/, ''))) {
-    if (serialized.includes(path)) {
-      fail(`indexable post ${post.slug} links to temporarily noindex page ${path}`);
-    }
+    fail(`${path} must not be present in public/sitemap.xml`);
   }
 }
 
