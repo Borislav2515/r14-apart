@@ -3,7 +3,7 @@ import Breadcrumbs, { breadcrumbSchema } from '../components/Breadcrumbs';
 import StructuredData, { faqSchema } from '../components/StructuredData';
 import ResponsivePicture from '../components/ResponsivePicture';
 import { APARTMENT } from '../data/apartment';
-import { faqItems, getPageBySlug, seoDefaults } from '../data/seo';
+import { canonicalPathFor, faqItems, getPageBySlug } from '../data/seo';
 import usePageMeta from '../hooks/usePageMeta';
 import { trackBookingOpen, trackWhatsapp, whatsappHref } from '../utils/analytics';
 import styles from './SeoPage.module.css';
@@ -35,7 +35,7 @@ export default function SeoPage() {
   const isFaq = page.slug === 'faq';
   const crumbs = [
     { label: 'Главная', to: '/' },
-    { label: page.h1, to: page.path },
+    { label: page.h1, to: canonicalPathFor(page.path) },
   ];
 
   usePageMeta({

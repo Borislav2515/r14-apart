@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { commercialPageLinks } from '../data/seo';
 import usePageMeta from '../hooks/usePageMeta';
 import styles from './LegalPage.module.css';
 
@@ -24,10 +25,10 @@ export default function NotFound() {
           <Link to="/" state={{ scrollTo: 'hero' }} className={styles.primaryAction}>
             Проверить даты
           </Link>
-          <Link to="/blog" className={styles.secondaryAction}>
+          <Link to="/blog/" className={styles.secondaryAction}>
             Открыть блог
           </Link>
-          <Link to="/bez-posrednikov" className={styles.secondaryAction}>
+          <Link to={commercialPageLinks.find((link) => link.to.includes('/bez-posrednikov/'))?.to ?? '/bez-posrednikov/'} className={styles.secondaryAction}>
             Об апартаментах
           </Link>
         </div>

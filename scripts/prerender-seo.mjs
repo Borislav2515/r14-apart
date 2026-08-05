@@ -18,6 +18,7 @@ const renderedAt = new Date().toISOString().slice(0, 10);
 const yandexMapUrl = 'https://yandex.ru/maps/org/r14_apart/95912541487/';
 const verifiedReviewSchema = {
   '@type': 'Review',
+  itemReviewed: { '@id': `${SITE_URL}/#lodging`, '@type': 'LodgingBusiness', name: APARTMENT_INFO.name },
   author: { '@type': 'Person', name: 'Константин' },
   datePublished: '2026-07-15',
   reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
@@ -484,8 +485,8 @@ const staticNotFound = () => `
       <nav aria-label="Полезные ссылки">
         <ul>
           <li><a href="/">Главная</a></li>
-          <li><a href="/blog">Блог</a></li>
-          <li><a href="/bez-posrednikov">Об апартаментах</a></li>
+          <li><a href="/blog/">Блог</a></li>
+          <li><a href="/bez-posrednikov/">Об апартаментах</a></li>
         </ul>
       </nav>
     </main>`;

@@ -15,6 +15,31 @@ export const canonicalPathFor = (path) => {
 
 export const canonicalUrlFor = (path) => new URL(canonicalPathFor(path), SITE_URL).toString();
 
+export const commercialPageLinks = [
+  {
+    label: 'Квартира в центре',
+    to: canonicalPathFor('/kvartira-posutochno-vladikavkaz-center'),
+    description: 'Исторический центр, ул. Революции 14, пешком до музея, театра и парка.',
+  },
+  {
+    label: 'Для командировки',
+    to: canonicalPathFor('/komandirovka-vladikavkaz'),
+    description: 'Wi-Fi, самостоятельный заезд и отчётные документы для рабочей поездки.',
+  },
+  {
+    label: 'Без посредников',
+    to: canonicalPathFor('/bez-posrednikov'),
+    description: 'Прямое бронирование у собственника без комиссии агрегатора.',
+  },
+];
+
+export const legalPageLinks = [
+  { label: 'Конфиденциальность', to: canonicalPathFor('/privacy') },
+  { label: 'Согласие на обработку', to: canonicalPathFor('/consent') },
+  { label: 'Политика cookie', to: canonicalPathFor('/cookies') },
+  { label: 'Пользовательское соглашение', to: canonicalPathFor('/agreement') },
+];
+
 export const seoDefaults = {
   siteUrl: SITE_URL,
   image: OG_IMAGE,

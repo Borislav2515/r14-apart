@@ -152,7 +152,7 @@ function AnimatedRoutes() {
       <Route path="/family-apartment" element={<Navigate to="/" replace />} />
       <Route path="/weekend-vladikavkaz" element={<Navigate to="/" replace />} />
       <Route path="/tourism-vladikavkaz" element={<Navigate to="/" replace />} />
-      <Route path="/center-vladikavkaz" element={<Navigate to="/kvartira-posutochno-vladikavkaz-center" replace />} />
+      <Route path="/center-vladikavkaz" element={<Navigate to="/kvartira-posutochno-vladikavkaz-center/" replace />} />
       <Route path="/blog" element={<BlogIndex />} />
       <Route path="/blog/:slug" element={<BlogPost />} />
       <Route path="/rules" element={<LegalPage type="rules" />} />

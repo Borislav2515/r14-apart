@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { legalPageLinks } from '../data/seo';
 import { safeGetItem, safeSetItem } from '../utils/safeStorage';
 import styles from './CookieConsent.module.css';
 
 const STORAGE_KEY = 'r14apart-cookie-consent';
+const cookiesLink = legalPageLinks.find((link) => link.to.includes('/cookies/'))?.to ?? '/cookies/';
 
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
@@ -55,7 +57,7 @@ export default function CookieConsent() {
       <div className={styles.banner} role="region" aria-label="Уведомление о cookies">
         <p>
           Используем cookies для работы сайта, аналитики и улучшения сервиса.
-          Подробнее — в <Link to="/cookies">политике использования cookie</Link>.
+          Подробнее — в <Link to={cookiesLink}>политике использования cookie</Link>.
         </p>
         <div className={styles.actions}>
           <button type="button" className={styles.secondary} onClick={() => setSettingsOpen(true)}>

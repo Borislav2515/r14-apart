@@ -8,6 +8,7 @@ const yandexMapUrl = 'https://yandex.ru/maps/org/r14_apart/95912541487/';
 
 const verifiedReviewSchema = {
   '@type': 'Review',
+  itemReviewed: { '@id': lodgingId, '@type': 'LodgingBusiness', name: APARTMENT.name },
   author: { '@type': 'Person', name: 'Константин' },
   datePublished: '2026-07-15',
   reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },

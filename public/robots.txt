@@ -1,9 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /privacy
-Disallow: /cookies
-Disallow: /consent
-Disallow: /agreement
+Disallow: /guest-guide/
 
 Sitemap: https://r14-apart.com/sitemap.xml
-Host: r14-apart.com

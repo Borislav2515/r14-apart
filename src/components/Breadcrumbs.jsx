@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { seoDefaults } from '../data/seo';
+import { canonicalUrlFor } from '../data/seo';
 import styles from '../pages/SeoPage.module.css';
 
 export const breadcrumbSchema = (items) => ({
@@ -9,7 +9,7 @@ export const breadcrumbSchema = (items) => ({
     '@type': 'ListItem',
     position: index + 1,
     name: item.label,
-    item: new URL(item.to ?? '/', seoDefaults.siteUrl).toString(),
+    item: canonicalUrlFor(item.to ?? '/'),
   })),
 });
 

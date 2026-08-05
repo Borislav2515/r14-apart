@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { APARTMENT, REVIEW_PLATFORMS } from '../data/apartment';
+import { commercialPageLinks, legalPageLinks } from '../data/seo';
 import { useSectionNavigation, isPlainLeftClick } from '../hooks/useSectionNavigation';
 import { phoneDisplay, phoneHref, trackPhone, trackTelegram, trackWhatsapp, telegramHref, whatsappHref } from '../utils/analytics';
 import styles from './Footer.module.css';
@@ -27,7 +28,7 @@ export default function Footer() {
             <li><a href="/#about" onClick={e => handleSectionLink(e, 'about')}>Об апартаментах и фотогалерея</a></li>
             <li><a href="/#features" onClick={e => handleSectionLink(e, 'features')}>Удобства</a></li>
             <li><a href="/#reviews" onClick={e => handleSectionLink(e, 'reviews')}>Отзывы</a></li>
-            <li><Link to="/blog">Блог</Link></li>
+            <li><Link to="/blog/">Блог</Link></li>
           </ul>
         </div>
 
@@ -36,13 +37,13 @@ export default function Footer() {
           <ul>
             <li><a href="/#faq" onClick={e => handleSectionLink(e, 'faq')}>Вопросы и ответы</a></li>
             <li><a href="/#features" onClick={e => handleSectionLink(e, 'features')}>Условия аренды</a></li>
-            <li><Link to="/rules">Правила дома</Link></li>
-            <li><Link to="/privacy">Конфиденциальность</Link></li>
-            <li><Link to="/consent">Согласие на обработку</Link></li>
-            <li><Link to="/cookies">Политика cookie</Link></li>
-            <li><Link to="/agreement">Пользовательское соглашение</Link></li>
-            <li><Link to="/bez-posrednikov">Без посредников</Link></li>
-            <li><Link to="/komandirovka-vladikavkaz">Для командировки</Link></li>
+            <li><Link to="/rules/">Правила дома</Link></li>
+            {commercialPageLinks.map((link) => (
+              <li key={link.to}><Link to={link.to}>{link.label}</Link></li>
+            ))}
+            {legalPageLinks.map((link) => (
+              <li key={link.to}><Link to={link.to}>{link.label}</Link></li>
+            ))}
           </ul>
         </div>
 

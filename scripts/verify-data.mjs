@@ -24,6 +24,10 @@ if (!indexHtml.includes('"reviewBody":"Апартаменты полностью
   fail('verified Ostrovok review is missing from the home page schema');
 }
 
+if (!indexHtml.includes('"itemReviewed":{"@id":"https://r14-apart.com/#lodging"')) {
+  fail('verified review itemReviewed link is missing from the home page schema');
+}
+
 if (!indexHtml.includes('"floorSize":{"@type":"QuantitativeValue","value":"46"')) {
   fail('Apartment floorSize must be 46 m²');
 }

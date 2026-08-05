@@ -10,6 +10,7 @@ import { scrollToSection } from '../hooks/useSectionNavigation';
 import { seoDefaults } from '../data/seo';
 
 const About = lazy(() => import('../components/About'));
+const CommercialLinks = lazy(() => import('../components/CommercialLinks'));
 const Features = lazy(() => import('../components/Features'));
 const Reviews = lazy(() => import('../components/Reviews'));
 const FaqSection = lazy(() => import('../components/FaqSection'));
@@ -69,6 +70,9 @@ export default function Home({ runtimeBookingRoute = false }) {
         <Hero />
         <HomeSection id="about" minHeight={640}>
           <About />
+        </HomeSection>
+        <HomeSection id="commercial-links" minHeight={360}>
+          <CommercialLinks />
         </HomeSection>
         <HomeSection id="features" minHeight={420}>
           <Features />

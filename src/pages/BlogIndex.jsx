@@ -3,14 +3,14 @@ import Breadcrumbs, { breadcrumbSchema } from '../components/Breadcrumbs';
 import StructuredData from '../components/StructuredData';
 import ResponsivePicture from '../components/ResponsivePicture';
 import { APARTMENT } from '../data/apartment';
-import { blogIndexMeta, blogPosts } from '../data/seo';
+import { blogIndexMeta, blogPosts, canonicalPathFor } from '../data/seo';
 import usePageMeta from '../hooks/usePageMeta';
 import styles from './SeoPage.module.css';
 
 export default function BlogIndex() {
   const crumbs = [
     { label: 'Главная', to: '/' },
-    { label: 'Блог', to: '/blog' },
+    { label: 'Блог', to: canonicalPathFor('/blog') },
   ];
 
   usePageMeta({
@@ -48,7 +48,7 @@ export default function BlogIndex() {
             <article key={post.slug} className={styles.card}>
               <h2>{post.h1}</h2>
               <p>{post.excerpt}</p>
-              <Link to={post.path}>Читать</Link>
+              <Link to={canonicalPathFor(post.path)}>Читать</Link>
             </article>
           ))}
         </div>

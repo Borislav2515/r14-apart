@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { REVIEW_PLATFORMS, REVIEWS } from '../data/apartment';
+import { APARTMENT, REVIEW_PLATFORMS, REVIEWS } from '../data/apartment';
+import { seoDefaults } from '../data/seo';
 import Reveal from './Reveal';
 import styles from './Reviews.module.css';
 
@@ -39,6 +40,15 @@ export default function Reviews() {
               rel="noopener"
               itemScope itemType="https://schema.org/Review"
             >
+              <span itemProp="itemReviewed" itemScope itemType="https://schema.org/LodgingBusiness" hidden>
+                <meta itemProp="name" content={APARTMENT.name} />
+                <link itemProp="url" href={seoDefaults.siteUrl} />
+              </span>
+              <span itemProp="reviewRating" itemScope itemType="https://schema.org/Rating" hidden>
+                <meta itemProp="ratingValue" content={String(r.stars)} />
+                <meta itemProp="bestRating" content="5" />
+                <meta itemProp="worstRating" content="1" />
+              </span>
               <div className={styles.stars} aria-label={`${r.stars} из 5 звёзд`}>
                 {'★'.repeat(r.stars)}
               </div>

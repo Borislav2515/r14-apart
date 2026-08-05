@@ -96,6 +96,15 @@ for (const file of textFiles) {
 
 const sitemap = read('public/sitemap.xml');
 const sitemapLocs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+const robots = read('public/robots.txt');
+
+if (!robots.includes('Sitemap: https://r14-apart.com/sitemap.xml')) {
+  fail('robots.txt must include an absolute https Sitemap URL');
+}
+
+if (/^\s*(Host|Content-Signal):/im.test(robots)) {
+  fail('robots.txt contains a non-Yandex directive');
+}
 
 if (sitemapLocs.length !== expectedSitemapPaths.length) {
   fail(`expected ${expectedSitemapPaths.length} sitemap URLs, found ${sitemapLocs.length}`);

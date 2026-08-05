@@ -3,7 +3,7 @@ import Breadcrumbs, { breadcrumbSchema } from '../components/Breadcrumbs';
 import StructuredData from '../components/StructuredData';
 import ResponsivePicture from '../components/ResponsivePicture';
 import { APARTMENT } from '../data/apartment';
-import { blogPosts, getPostBySlug, seoDefaults } from '../data/seo';
+import { blogPosts, canonicalPathFor, canonicalUrlFor, getPostBySlug, seoDefaults } from '../data/seo';
 import usePageMeta from '../hooks/usePageMeta';
 import { trackBookingOpen } from '../utils/analytics';
 import styles from './SeoPage.module.css';
@@ -42,7 +42,7 @@ function RichBlocks({ blocks }) {
           <h2>{block.title}</h2>
           <div className={styles.inlineLinks}>
             {block.items.map((item) => (
-              <Link key={item.to} to={item.to}>{item.label}</Link>
+              <Link key={item.to} to={canonicalPathFor(item.to)}>{item.label}</Link>
             ))}
           </div>
         </section>
@@ -111,8 +111,8 @@ export default function BlogPost() {
   const post = getPostBySlug(slug) ?? blogPosts[0];
   const crumbs = [
     { label: 'Главная', to: '/' },
-    { label: 'Блог', to: '/blog' },
-    { label: post.h1, to: post.path },
+    { label: 'Блог', to: canonicalPathFor('/blog') },
+    { label: post.h1, to: canonicalPathFor(post.path) },
   ];
 
   usePageMeta({
@@ -139,7 +139,7 @@ export default function BlogPost() {
       '@type': 'Organization',
       name: APARTMENT.name,
     },
-    mainEntityOfPage: `${seoDefaults.siteUrl}${post.path}`,
+    mainEntityOfPage: canonicalUrlFor(post.path),
   };
   const postFaq = post.blocks?.find((block) => block.type === 'faq');
   const postFaqSchema = postFaq && {
@@ -176,7 +176,7 @@ export default function BlogPost() {
             <Link to="/" state={{ scrollTo: 'hero' }} className={styles.primary} onClick={() => trackBookingOpen({ placement: 'blog_hero' })}>
               Забронировать апартаменты
             </Link>
-            <Link to="/blog" className={styles.secondary}>
+            <Link to="/blog/" className={styles.secondary}>
               Все статьи
             </Link>
           </div>
@@ -203,7 +203,7 @@ export default function BlogPost() {
                 <h2>Читайте также</h2>
                 <div className={styles.inlineLinks}>
                   {post.related.map((item) => (
-                    <Link key={item.to} to={item.to}>{item.label}</Link>
+                    <Link key={item.to} to={canonicalPathFor(item.to)}>{item.label}</Link>
                   ))}
                 </div>
               </section>

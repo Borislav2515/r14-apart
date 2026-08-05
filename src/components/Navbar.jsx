@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { APARTMENT } from '../data/apartment';
+import { commercialPageLinks } from '../data/seo';
 import { useSectionNavigation, isPlainLeftClick } from '../hooks/useSectionNavigation';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import { phoneDisplay, phoneHref, trackPhone, trackWhatsapp, trackTelegram, telegramHref, whatsappHref } from '../utils/analytics';
@@ -14,8 +15,8 @@ const LINKS = [
 ];
 
 const PAGE_LINKS = [
-  { to: '/blog', label: 'Блог', meta: 'Маршруты и гиды' },
-  { to: '/bez-posrednikov', label: 'SEO', meta: 'Посуточно во Владикавказе' },
+  { to: '/blog/', label: 'Блог', meta: 'Маршруты и гиды' },
+  ...commercialPageLinks.map((link) => ({ to: link.to, label: link.label, meta: 'Посуточно во Владикавказе' })),
 ];
 
 export default function Navbar() {
@@ -96,7 +97,7 @@ export default function Navbar() {
               </li>
             ))}
             <li>
-              <Link to="/blog" className={styles.link}>Блог</Link>
+              <Link to="/blog/" className={styles.link}>Блог</Link>
             </li>
           </ul>
 
